@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--
+      FAVICON
+      See https://medium.com/web-dev-survey-from-kyoto/favicon-nightmare-how-to-maintain-sanity-7628bfc39918
+
+      1. Prepare an svg favicon.
+      2. Add dark-theme <style> to svg file.
+      3. Generate favicon.ico and apple-touch-icon.png from svg. (realfavicongenerator.net)
+      4. Optimise svg with svgo. (Remember to re-check dark-mode styles.)
+    -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  %sveltekit.head%
+</head>
+
+<body>
+  %sveltekit.body%
+</body>
+
+</html>

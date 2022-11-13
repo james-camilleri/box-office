@@ -1,0 +1,16 @@
+// TODO: Don't forget to subset fonts!
+// The command:
+// pyftsubset font.woff2
+//   --unicodes="0020-007F,00A0-00FF,0100-017F"
+//   --layout-features="*"
+//   --flavor="woff2"
+//   --with-zopfli
+// will subset the Latin and Extended Latin character sets (includes Maltese).
+
+@font-face {
+  font-family: "";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/font.woff2") format("woff2");
+}

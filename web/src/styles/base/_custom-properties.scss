@@ -1,0 +1,12 @@
+@use "../setup/config";
+@use "size";
+
+:root {
+  --xxs: #{size.$xxs};
+  --xs: #{size.$xs};
+  --sm: #{size.$sm};
+  --md: #{size.$md};
+  --lg: #{size.$lg};
+  --xl: #{size.$xl};
+  --xxl: #{size.$xxl};
+}

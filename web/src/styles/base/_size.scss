@@ -1,0 +1,40 @@
+@use "sass:math";
+@use "sass:meta";
+@use "../setup/config";
+
+// From Accoutrement.
+// https://github.com/oddbird/accoutrement/blob/master/sass/core/_ratios.scss
+$ratios: (
+  "octave": 2,
+  "major-seventh": math.div(15, 8),
+  "minor-seventh": math.div(16, 9),
+  "major-sixth": math.div(5, 3),
+  "minor-sixth": math.div(8, 5),
+  "fifth": math.div(3, 2),
+  "augmented-fourth": math.div(45, 32),
+  "fourth": math.div(4, 3),
+  "major-third": math.div(5, 4),
+  "minor-third": math.div(6, 5),
+  "major-second": math.div(9, 8),
+  "minor-second": math.div(16, 15),
+  "cinema": 2.39,
+  "golden": 1.618,
+);
+
+$ratio: map-get($ratios, config.$ratio);
+
+@if (meta.type-of($ratio) != number) {
+  @warn 'Typographic ratio not defined.';
+}
+
+$md: 1rem;
+
+$sm: math.div($md, $ratio);
+$xs: math.div($sm, $ratio);
+$xxs: math.div($xs, $ratio);
+
+$lg: $md * $ratio;
+$xl: $lg * $ratio;
+$xxl: $xl * $ratio;
+
+$heading-sizes: ($xxl, $xl, $lg, $md, $md, $md);

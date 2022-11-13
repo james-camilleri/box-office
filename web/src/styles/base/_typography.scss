@@ -1,0 +1,105 @@
+@use "sass:list";
+@use "sass:math";
+
+@use "size";
+@use "../setup/config";
+@use "../breakpoints";
+
+$system-defaults: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu", "Cantarell", "Noto Sans", sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+html {
+  // Shrink font size and break text anywhere on mobile.
+  font-size: math.div(config.$base-font-size, 16px) * 90%;
+  overflow-wrap: anywhere;
+
+  @media (min-width: breakpoints.$sm) {
+    font-size: math.div(config.$base-font-size, 16px) * 100%;
+    overflow-wrap: normal;
+  }
+}
+
+html,
+input,
+textarea,
+button {
+  font-family: #{config.$font-family}, $system-defaults;
+  line-height: config.$line-height;
+
+  @if (config.$base-font-weight) {
+    font-variation-settings: "wght" config.$base-font-weight;
+
+    // Increase the weight of the base font
+    // ever so slightly for lower-DPI screens.
+    @media (max-resolution: 1.5dppx) {
+      font-variation-settings: "wght" config.$base-font-weight * 1.2;
+    }
+  }
+}
+
+input,
+textarea,
+button {
+  font-size: 1rem;
+}
+
+p:first-child {
+  margin-top: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+// Specific font families for code or pre-formatted blocks.
+code,
+kbd,
+samp,
+pre {
+  font-family: "Menlo", "Consolas", "Roboto Mono", "Ubuntu Monospace", "Noto Mono", "Oxygen Mono", "Liberation Mono",
+    monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+// Heading styles.
+// Generate font-size and margins according to typographic scale.
+// Bump mobile font sizes down a level.
+
+// Mobile sizes.
+@for $i from 1 through 5 {
+  $heading: "h#{$i}";
+
+  #{$heading} {
+    margin: list.nth(size.$heading-sizes, $i) 0 var(--sm);
+    font-size: list.nth(size.$heading-sizes, $i + 1);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+// Larger than mobile size, "standard sizing".
+@media (min-width: breakpoints.$sm) {
+  @for $i from 1 through 5 {
+    $heading: "h#{$i}";
+
+    #{$heading} {
+      margin: list.nth(size.$heading-sizes, $i) 0 var(--sm);
+      font-size: list.nth(size.$heading-sizes, $i);
+    }
+  }
+}
+
+mark,
+::selection {
+  color: var(--foreground);
+  background-color: var(--primary);
+}
+
+a {
+  color: var(--primary);
+
+  &:hover {
+    color: var(--secondary);
+  }
+}
