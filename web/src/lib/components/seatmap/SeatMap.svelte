@@ -1,6 +1,7 @@
 <script lang="ts">
   import Section from './Section.svelte'
   import Row from './Row.svelte'
+  import Seat from './Seat.svelte'
 
   import { selection, unavailable } from './stores'
 </script>
@@ -27,6 +28,312 @@
       <rect x="1029.6" y="82.3" class="st1" width="160.8" height="31.7" />
       <text transform="matrix(1 0 0 1 1043.0406 111.9497)" class="st2 st3 st4">Stage</text>
     </g>
+    <Section id="TABLES">
+      <circle cx="1477.4" cy="613.1" r="50" />
+      <circle cx="1722.4" cy="613.1" r="50" />
+      <circle cx="1109.9" cy="799.1" r="50" />
+      <circle cx="619.9" cy="427.1" r="50" />
+      <circle cx="742.4" cy="613.1" r="50" />
+      <circle cx="864.9" cy="427.1" r="50" />
+      <circle cx="1599.9" cy="427.1" r="50" />
+      <circle cx="497.4" cy="613.1" r="50" />
+      <circle cx="1232.4" cy="613.1" r="50" />
+      <circle cx="1109.9" cy="427.1" r="50" />
+      <circle cx="1354.9" cy="427.1" r="50" />
+      <circle cx="1354.9" cy="799.1" r="50" />
+      <circle cx="1599.9" cy="799.1" r="50" />
+      <circle cx="619.9" cy="799.1" r="50" />
+      <circle cx="864.9" cy="799.1" r="50" />
+      <circle cx="987.4" cy="613.1" r="50" />
+      <Row id="A">
+        <Seat number={1}>
+          <circle cx="540.1" cy="427.4" r="15" />
+          <circle cx="548.1" cy="462" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="570.3" cy="489.7" r="15" />
+          <circle cx="602.4" cy="505.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="637.9" cy="505" r="15" />
+          <circle cx="669.9" cy="489.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="692" cy="461.8" r="15" />
+          <circle cx="699.9" cy="427" r="15" />
+        </Seat>
+      </Row>
+      <Row id="B">
+        <Seat number={1}>
+          <circle cx="785.1" cy="427.4" r="15" />
+          <circle cx="793.1" cy="462" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="815.3" cy="489.7" r="15" />
+          <circle cx="847.4" cy="505.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="882.9" cy="505" r="15" />
+          <circle cx="914.9" cy="489.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="937" cy="461.8" r="15" />
+          <circle cx="944.9" cy="427" r="15" />
+        </Seat>
+      </Row>
+      <Row id="C">
+        <Seat number={1}>
+          <circle cx="1030.1" cy="427.4" r="15" />
+          <circle cx="1038.1" cy="462" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1060.3" cy="489.7" r="15" />
+          <circle cx="1092.4" cy="505.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1127.9" cy="505" r="15" />
+          <circle cx="1159.9" cy="489.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1182" cy="461.8" r="15" />
+          <circle cx="1189.9" cy="427" r="15" />
+        </Seat>
+      </Row>
+      <Row id="D">
+        <Seat number={1}>
+          <circle cx="1275.1" cy="427.4" r="15" />
+          <circle cx="1283.1" cy="462" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1305.3" cy="489.7" r="15" />
+          <circle cx="1337.4" cy="505.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1372.9" cy="505" r="15" />
+          <circle cx="1404.9" cy="489.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1427" cy="461.8" r="15" />
+          <circle cx="1434.9" cy="427" r="15" />
+        </Seat>
+      </Row>
+      <Row id="E">
+        <Seat number={1}>
+          <circle cx="1520.1" cy="427.4" r="15" />
+          <circle cx="1528.1" cy="462" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1550.3" cy="489.7" r="15" />
+          <circle cx="1582.4" cy="505.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1617.9" cy="505" r="15" />
+          <circle cx="1649.9" cy="489.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1672" cy="461.8" r="15" />
+          <circle cx="1679.9" cy="427" r="15" />
+        </Seat>
+      </Row>
+      <Row id="F">
+        <Seat number={1}>
+          <circle cx="417.6" cy="613.4" r="15" />
+          <circle cx="425.6" cy="648" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="447.8" cy="675.7" r="15" />
+          <circle cx="479.9" cy="691.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="515.4" cy="691" r="15" />
+          <circle cx="547.4" cy="675.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="569.5" cy="647.8" r="15" />
+          <circle cx="577.4" cy="613" r="15" />
+        </Seat>
+      </Row>
+      <Row id="G">
+        <Seat number={1}>
+          <circle cx="662.6" cy="613.4" r="15" />
+          <circle cx="670.6" cy="648" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="692.8" cy="675.7" r="15" />
+          <circle cx="724.9" cy="691.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="760.4" cy="691" r="15" />
+          <circle cx="792.4" cy="675.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="814.5" cy="647.8" r="15" />
+          <circle cx="822.4" cy="613" r="15" />
+        </Seat>
+      </Row>
+      <Row id="H">
+        <Seat number={1}>
+          <circle cx="907.6" cy="613.4" r="15" />
+          <circle cx="915.6" cy="648" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="937.8" cy="675.7" r="15" />
+          <circle cx="969.9" cy="691.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1005.4" cy="691" r="15" />
+          <circle cx="1037.4" cy="675.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1059.5" cy="647.8" r="15" />
+          <circle cx="1067.4" cy="613" r="15" />
+        </Seat>
+      </Row>
+      <Row id="I">
+        <Seat number={1}>
+          <circle cx="1152.6" cy="613.4" r="15" />
+          <circle cx="1160.6" cy="648" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1182.8" cy="675.7" r="15" />
+          <circle cx="1214.9" cy="691.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1250.4" cy="691" r="15" />
+          <circle cx="1282.4" cy="675.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1304.5" cy="647.8" r="15" />
+          <circle cx="1312.4" cy="613" r="15" />
+        </Seat>
+      </Row>
+      <Row id="J">
+        <Seat number={1}>
+          <circle cx="1397.6" cy="613.4" r="15" />
+          <circle cx="1405.6" cy="648" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1427.8" cy="675.7" r="15" />
+          <circle cx="1459.9" cy="691.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1495.4" cy="691" r="15" />
+          <circle cx="1527.4" cy="675.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1549.5" cy="647.8" r="15" />
+          <circle cx="1557.4" cy="613" r="15" />
+        </Seat>
+      </Row>
+      <Row id="K">
+        <Seat number={1}>
+          <circle cx="1642.6" cy="613.4" r="15" />
+          <circle cx="1650.6" cy="648" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1672.8" cy="675.7" r="15" />
+          <circle cx="1704.9" cy="691.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1740.4" cy="691" r="15" />
+          <circle cx="1772.4" cy="675.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1794.5" cy="647.8" r="15" />
+          <circle cx="1802.4" cy="613" r="15" />
+        </Seat>
+      </Row>
+      <Row id="L">
+        <Seat number={1}>
+          <circle cx="540.1" cy="799.4" r="15" />
+          <circle cx="548.1" cy="834" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="570.3" cy="861.7" r="15" />
+          <circle cx="602.4" cy="877.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="637.9" cy="877" r="15" />
+          <circle cx="669.9" cy="861.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="692" cy="833.8" r="15" />
+          <circle cx="699.9" cy="799" r="15" />
+        </Seat>
+      </Row>
+      <Row id="M">
+        <Seat number={1}>
+          <circle cx="785.1" cy="799.4" r="15" />
+          <circle cx="793.1" cy="834" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="815.3" cy="861.7" r="15" />
+          <circle cx="847.4" cy="877.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="882.9" cy="877" r="15" />
+          <circle cx="914.9" cy="861.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="937" cy="833.8" r="15" />
+          <circle cx="944.9" cy="799" r="15" />
+        </Seat>
+      </Row>
+      <Row id="N">
+        <Seat number={1}>
+          <circle cx="1030.1" cy="799.4" r="15" />
+          <circle cx="1038.1" cy="834" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1060.3" cy="861.7" r="15" />
+          <circle cx="1092.4" cy="877.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1127.9" cy="877" r="15" />
+          <circle cx="1159.9" cy="861.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1182" cy="833.8" r="15" />
+          <circle cx="1189.9" cy="799" r="15" />
+        </Seat>
+      </Row>
+      <Row id="O">
+        <Seat number={1}>
+          <circle cx="1275.1" cy="799.4" r="15" />
+          <circle cx="1283.1" cy="834" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1305.3" cy="861.7" r="15" />
+          <circle cx="1337.4" cy="877.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1372.9" cy="877" r="15" />
+          <circle cx="1404.9" cy="861.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1427" cy="833.8" r="15" />
+          <circle cx="1434.9" cy="799" r="15" />
+        </Seat>
+      </Row>
+      <Row id="P">
+        <Seat number={1}>
+          <circle cx="1520.1" cy="799.4" r="15" />
+          <circle cx="1528.1" cy="834" r="15" />
+        </Seat>
+        <Seat number={2}>
+          <circle cx="1550.3" cy="861.7" r="15" />
+          <circle cx="1582.4" cy="877.1" r="15" />
+        </Seat>
+        <Seat number={3}>
+          <circle cx="1617.9" cy="877" r="15" />
+          <circle cx="1649.9" cy="861.6" r="15" />
+        </Seat>
+        <Seat number={4}>
+          <circle cx="1672" cy="833.8" r="15" />
+          <circle cx="1679.9" cy="799" r="15" />
+        </Seat>
+      </Row>
+    </Section>
     <Section id="STALLS">
       <Row
         id="A"
@@ -949,238 +1256,6 @@
         <path d="M2218,1793v328H2v-328H2218 M2219,1792H1v330h2218V1792L2219,1792z" />
       </g>
     </Section>
-    <!-- <Section id="tables">
-	<g>
-		<g>
-			<g>
-				<g>
-					{ x: 619.9, y: 427.1" r="50 },
-					<g>
-						{ x: 540.1, y: 427.4 },
-						{ x: 699.9, y: 427 },
-					</g>
-					{ x: 548.1, y: 462 },
-					{ x: 570.3, y: 489.7 },
-					{ x: 602.4, y: 505.1 },
-					{ x: 637.9, y: 505 },
-					{ x: 669.9, y: 489.6 },
-					{ x: 692, y: 461.8 },
-				</g>
-				<g>
-					{ x: 864.9, y: 427.1" r="50 },
-					<g>
-						{ x: 785.1, y: 427.4 },
-						{ x: 944.9, y: 427 },
-					</g>
-					{ x: 793.1, y: 462 },
-					{ x: 815.3, y: 489.7 },
-					{ x: 847.4, y: 505.1 },
-					{ x: 882.9, y: 505 },
-					{ x: 914.9, y: 489.6 },
-					{ x: 937, y: 461.8 },
-				</g>
-				<g>
-					{ x: 1109.9, y: 427.1" r="50 },
-					<g>
-						{ x: 1030.1, y: 427.4 },
-						{ x: 1189.9, y: 427 },
-					</g>
-					{ x: 1038.1, y: 462 },
-					{ x: 1060.3, y: 489.7 },
-					{ x: 1092.4, y: 505.1 },
-					{ x: 1127.9, y: 505 },
-					{ x: 1159.9, y: 489.6 },
-					{ x: 1182, y: 461.8 },
-				</g>
-				<g>
-					{ x: 1354.9, y: 427.1" r="50 },
-					<g>
-						{ x: 1275.1, y: 427.4 },
-						{ x: 1434.9, y: 427 },
-					</g>
-					{ x: 1283.1, y: 462 },
-					{ x: 1305.3, y: 489.7 },
-					{ x: 1337.4, y: 505.1 },
-					{ x: 1372.9, y: 505 },
-					{ x: 1404.9, y: 489.6 },
-					{ x: 1427, y: 461.8 },
-				</g>
-				<g>
-					{ x: 1599.9, y: 427.1" r="50 },
-					<g>
-						{ x: 1520.1, y: 427.4 },
-						{ x: 1679.9, y: 427 },
-					</g>
-					{ x: 1528.1, y: 462 },
-					{ x: 1550.3, y: 489.7 },
-					{ x: 1582.4, y: 505.1 },
-					{ x: 1617.9, y: 505 },
-					{ x: 1649.9, y: 489.6 },
-					{ x: 1672, y: 461.8 },
-				</g>
-			</g>
-			<g>
-				<g>
-					{ x: 497.4, y: 613.1" r="50 },
-					<g>
-						{ x: 417.6, y: 613.4 },
-						{ x: 577.4, y: 613 },
-					</g>
-					{ x: 425.6, y: 648 },
-					{ x: 447.8, y: 675.7 },
-					{ x: 479.9, y: 691.1 },
-					{ x: 515.4, y: 691 },
-					{ x: 547.4, y: 675.6 },
-					{ x: 569.5, y: 647.8 },
-				</g>
-				<g>
-					{ x: 742.4, y: 613.1" r="50 },
-					<g>
-						{ x: 662.6, y: 613.4 },
-						{ x: 822.4, y: 613 },
-					</g>
-					{ x: 670.6, y: 648 },
-					{ x: 692.8, y: 675.7 },
-					{ x: 724.9, y: 691.1 },
-					{ x: 760.4, y: 691 },
-					{ x: 792.4, y: 675.6 },
-					{ x: 814.5, y: 647.8 },
-				</g>
-				<g>
-					{ x: 987.4, y: 613.1" r="50 },
-					<g>
-						{ x: 907.6, y: 613.4 },
-						{ x: 1067.4, y: 613 },
-					</g>
-					{ x: 915.6, y: 648 },
-					{ x: 937.8, y: 675.7 },
-					{ x: 969.9, y: 691.1 },
-					{ x: 1005.4, y: 691 },
-					{ x: 1037.4, y: 675.6 },
-					{ x: 1059.5, y: 647.8 },
-				</g>
-				<g>
-					{ x: 1232.4, y: 613.1" r="50 },
-					<g>
-						{ x: 1152.6, y: 613.4 },
-						{ x: 1312.4, y: 613 },
-					</g>
-					{ x: 1160.6, y: 648 },
-					{ x: 1182.8, y: 675.7 },
-					{ x: 1214.9, y: 691.1 },
-					{ x: 1250.4, y: 691 },
-					{ x: 1282.4, y: 675.6 },
-					{ x: 1304.5, y: 647.8 },
-				</g>
-				<g>
-					{ x: 1477.4, y: 613.1" r="50 },
-					<g>
-						{ x: 1397.6, y: 613.4 },
-						{ x: 1557.4, y: 613 },
-					</g>
-					{ x: 1405.6, y: 648 },
-					{ x: 1427.8, y: 675.7 },
-					{ x: 1459.9, y: 691.1 },
-					{ x: 1495.4, y: 691 },
-					{ x: 1527.4, y: 675.6 },
-					{ x: 1549.5, y: 647.8 },
-				</g>
-				<g>
-					{ x: 1722.4, y: 613.1" r="50 },
-					<g>
-						{ x: 1642.6, y: 613.4 },
-						{ x: 1802.4, y: 613 },
-					</g>
-					{ x: 1650.6, y: 648 },
-					{ x: 1672.8, y: 675.7 },
-					{ x: 1704.9, y: 691.1 },
-					{ x: 1740.4, y: 691 },
-					{ x: 1772.4, y: 675.6 },
-					{ x: 1794.5, y: 647.8 },
-				</g>
-			</g>
-			<g>
-				<g>
-					{ x: 619.9, y: 799.1" r="50 },
-					<g>
-						{ x: 540.1, y: 799.4 },
-						{ x: 699.9, y: 799 },
-					</g>
-					{ x: 548.1, y: 834 },
-					{ x: 570.3, y: 861.7 },
-					{ x: 602.4, y: 877.1 },
-					{ x: 637.9, y: 877 },
-					{ x: 669.9, y: 861.6 },
-					{ x: 692, y: 833.8 },
-				</g>
-				<g>
-					{ x: 864.9, y: 799.1" r="50 },
-					<g>
-						{ x: 785.1, y: 799.4 },
-						{ x: 944.9, y: 799 },
-					</g>
-					{ x: 793.1, y: 834 },
-					{ x: 815.3, y: 861.7 },
-					{ x: 847.4, y: 877.1 },
-					{ x: 882.9, y: 877 },
-					{ x: 914.9, y: 861.6 },
-					{ x: 937, y: 833.8 },
-				</g>
-				<g>
-					{ x: 1109.9, y: 799.1" r="50 },
-					<g>
-						{ x: 1030.1, y: 799.4 },
-						{ x: 1189.9, y: 799 },
-					</g>
-					{ x: 1038.1, y: 834 },
-					{ x: 1060.3, y: 861.7 },
-					{ x: 1092.4, y: 877.1 },
-					{ x: 1127.9, y: 877 },
-					{ x: 1159.9, y: 861.6 },
-					{ x: 1182, y: 833.8 },
-				</g>
-				<g>
-					{ x: 1354.9, y: 799.1" r="50 },
-					<g>
-						{ x: 1275.1, y: 799.4 },
-						{ x: 1434.9, y: 799 },
-					</g>
-					{ x: 1283.1, y: 834 },
-					{ x: 1305.3, y: 861.7 },
-					{ x: 1337.4, y: 877.1 },
-					{ x: 1372.9, y: 877 },
-					{ x: 1404.9, y: 861.6 },
-					{ x: 1427, y: 833.8 },
-				</g>
-				<g>
-					{ x: 1599.9, y: 799.1" r="50 },
-					<g>
-						{ x: 1520.1, y: 799.4 },
-						{ x: 1679.9, y: 799 },
-					</g>
-					{ x: 1528.1, y: 834 },
-					{ x: 1550.3, y: 861.7 },
-					{ x: 1582.4, y: 877.1 },
-					{ x: 1617.9, y: 877 },
-					{ x: 1649.9, y: 861.6 },
-					{ x: 1672, y: 833.8 },
-				</g>
-			</g>
-		</g>
-		<g>
-			<g>
-				<path d="M1866,328v613H354V328H1866 M1867,327H353v615h1514V327L1867,327z"/>
-			</g>
-		</g>
-	</g>
-</Section> -->
-    <!-- <Section id="fixed">
-	<g>
-		<path class="st0" d="M2033,0.5c0,125.4-413.2,227-923,227S187,125.9,187,0.5H2033z"/>
-		<rect x="1029.6" y="82.3" class="st1" width="160.8" height="31.7"/>
-		<text transform="matrix(1 0 0 1 1043.0406 111.9497)" class="st2 st3 st4">Stage</text>
-	</g>
-</g> -->
   </svg>
 </div>
 

@@ -6,8 +6,12 @@
   import { ROW_ID } from './Row.svelte'
 
   export let number: string
-  export let x: number
-  export let y: number
+  export let x: number | undefined = undefined
+  export let y: number | undefined = undefined
+
+  if (!$$slots.default && (x == null || y == null)) {
+    throw Error('Position must be defined if seat SVG elements not passed as props.')
+  }
 
   $: disabled = $unavailable.has(id)
   $: selected = $selection.has(id)
@@ -23,27 +27,16 @@
     selected ? $selection.delete(id) : $selection.add(id)
     $selection = $selection
   }
-
-  // const dispatch = createEventDispatcher()
-  // function dispatchSelectionEvent() {
-  //   const event = selected ? 'deselected' : 'selected'
-  //   console.log(`${id} ${event}`)
-  //   dispatch(event, id)
-  // }
 </script>
 
-<circle
-  cx={x}
-  cy={y}
-  r="15"
-  class:disabled
-  class:selected
-  on:click={toggleSelection}
-  on:keypress={toggleSelection}
-/>
+<g class:disabled class:selected on:click={toggleSelection} on:keypress={toggleSelection}>
+  <slot>
+    <circle cx={x} cy={y} r="15" />
+  </slot>
+</g>
 
 <style lang="scss">
-  circle {
+  g {
     cursor: pointer;
     color: var(--seat-colour);
 
