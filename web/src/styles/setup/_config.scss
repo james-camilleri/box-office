@@ -33,6 +33,10 @@ $ratio: "fourth";
   --error: rgb(255 0 0);
   --success: rgb(0 255 0);
 
+  --disabled: rgb(127 127 127);
+  // TODO: Temporary.
+  --selected: rgb(0 255 0);
+
   // Spacing
   --gutter: var(--xl);
 

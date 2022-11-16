@@ -16,13 +16,13 @@
 </script>
 
 <div class="grid">
-  <Header />
+  <!-- <Header /> -->
   <main>
     <PageTransition {url}>
       <slot />
     </PageTransition>
   </main>
-  <Footer />
+  <!-- <Footer /> -->
 </div>
 
 <style>
