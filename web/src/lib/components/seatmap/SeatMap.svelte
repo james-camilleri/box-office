@@ -6,12 +6,12 @@
   import { selection, unavailable } from './stores'
 </script>
 
-<div class="selection">
+<!-- <div class="selection">
   <strong>SELECTION:</strong><br />
   {#each Array.from($selection) as selection}
     {selection}<br />
   {/each}
-</div>
+</div> -->
 <div class="seatmap">
   <svg
     version="1.1"
