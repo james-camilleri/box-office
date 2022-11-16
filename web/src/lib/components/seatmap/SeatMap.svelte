@@ -24,9 +24,9 @@
     color="var(--disabled)"
   >
     <g>
-      <text transform="matrix(1 0 0 1 1043.0406 111.9497)" class="st2 st3 st4">Stage</text>
       <path class="st0" d="M2033,0.5c0,125.4-413.2,227-923,227S187,125.9,187,0.5H2033z" />
       <rect x="1029.6" y="82.3" class="st1" width="160.8" height="31.7" />
+      <text transform="matrix(1 0 0 1 1043.0406 111.9497)" class="st2 st3 st4">STAGE</text>
     </g>
     <Section id="TABLES">
       <circle cx="497.4" cy="613.1" r="50" />
