@@ -46,24 +46,24 @@
       <circle cx="1599.9" cy="799.1" r="50" />
       <circle cx="1722.4" cy="613.1" r="50" />
 
-      <text transform="translate(-9, 9)" x="619.9" y="427.1">A</text>
-      <text transform="translate(-9, 9)" x="864.9" y="427.1">B</text>
-      <text transform="translate(-9, 9)" x="1109.9" y="427.1">C</text>
-      <text transform="translate(-9, 9)" x="1354.9" y="427.1">D</text>
-      <text transform="translate(-9, 9)" x="1599.9" y="427.1">E</text>
+      <text transform="translate(-18, 10)" x="619.9" y="427.1">TA</text>
+      <text transform="translate(-18, 10)" x="864.9" y="427.1">TB</text>
+      <text transform="translate(-18, 10)" x="1109.9" y="427.1">TC</text>
+      <text transform="translate(-18, 10)" x="1354.9" y="427.1">TD</text>
+      <text transform="translate(-18, 10)" x="1599.9" y="427.1">TE</text>
 
-      <text transform="translate(-9, 9)" x="497.4" y="613.1">F</text>
-      <text transform="translate(-9, 9)" x="742.4" y="613.1">G</text>
-      <text transform="translate(-9, 9)" x="987.4" y="613.1">H</text>
-      <text transform="translate(-3, 9)" x="1232.4" y="613.1">I</text>
-      <text transform="translate(-9, 9)" x="1477.4" y="613.1">J</text>
-      <text transform="translate(-9, 9)" x="1722.4" y="613.1">K</text>
+      <text transform="translate(-18, 10)" x="497.4" y="613.1">TF</text>
+      <text transform="translate(-18, 10)" x="742.4" y="613.1">TG</text>
+      <text transform="translate(-18, 10)" x="987.4" y="613.1">TH</text>
+      <text transform="translate(-15, 10)" x="1232.4" y="613.1">TI</text>
+      <text transform="translate(-18, 10)" x="1477.4" y="613.1">TJ</text>
+      <text transform="translate(-18, 10)" x="1722.4" y="613.1">TK</text>
 
-      <text transform="translate(-9, 9)" x="619.9" y="799.1">L</text>
-      <text transform="translate(-9, 9)" x="864.9" y="799.1">M</text>
-      <text transform="translate(-9, 9)" x="1109.9" y="799.1">N</text>
-      <text transform="translate(-10, 9)" x="1354.9" y="799.1">O</text>
-      <text transform="translate(-9, 9)" x="1599.9" y="799.1">P</text>
+      <text transform="translate(-18, 10)" x="619.9" y="799.1">TL</text>
+      <text transform="translate(-18, 10)" x="864.9" y="799.1">TM</text>
+      <text transform="translate(-18, 10)" x="1109.9" y="799.1">TN</text>
+      <text transform="translate(-20, 10)" x="1354.9" y="799.1">TO</text>
+      <text transform="translate(-18, 10)" x="1599.9" y="799.1">TP</text>
 
       <Row id="TA">
         <Seat number="1-2">
