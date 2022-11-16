@@ -333,6 +333,9 @@
           <circle cx="1679.9" cy="799" r="15" />
         </Seat>
       </Row>
+      <g>
+        <path d="M1866,328v613H354V328H1866 M1867,327H353v615h1514V327L1867,327z" />
+      </g>
     </Section>
     <Section id="STALLS">
       <Row
