@@ -1,0 +1,16 @@
+export const data = {
+  TABLES: 'platinum',
+  BALCONY: 'platinum',
+  'STALLS-A': 'gold',
+  'STALLS-E': 'gold',
+  'STALLS-I': 'gold',
+  'STALLS-B': 'silver',
+  'STALLS-C': 'silver',
+  'STALLS-F': 'silver',
+  'STALLS-G': 'silver',
+  'STALLS-J': 'silver',
+  'STALLS-K': 'silver',
+  'STALLS-D': 'bronze',
+  'STALLS-H': 'bronze',
+  'STALLS-L': 'bronze',
+}

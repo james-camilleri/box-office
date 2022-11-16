@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, getContext } from 'svelte'
 
-  import { selection, unavailable } from './stores'
+  import { pricing, selection, unavailable } from './stores'
   import { SECTION_ID } from './Section.svelte'
   import { ROW_ID } from './Row.svelte'
 
@@ -13,14 +13,20 @@
     throw Error('Position must be defined if seat SVG elements not passed as props.')
   }
 
-  $: disabled = $unavailable.has(id)
-  $: selected = $selection.has(id)
-
   const section = getContext(SECTION_ID) ?? ''
   const row = getContext(ROW_ID) ?? ''
   const id = [section, row, number].filter(Boolean).join('-')
 
+  $: disabled = $unavailable.has(id)
+  $: selected = $selection.has(id)
+  $: priceTier =
+    $pricing.get(id) ?? $pricing.get(`${section}-${row}`) ?? $pricing.get(section) ?? 'default'
+
   function toggleSelection() {
+    if (disabled) {
+      return
+    }
+
     const event = selected ? 'deselected' : 'selected'
     console.log(`${id} ${event}`)
 
@@ -29,7 +35,13 @@
   }
 </script>
 
-<g class:disabled class:selected on:click={toggleSelection} on:keypress={toggleSelection}>
+<g
+  style:--seat-colour="var(--pricing-{priceTier})"
+  class:disabled
+  class:selected
+  on:click={toggleSelection}
+  on:keypress={toggleSelection}
+>
   <slot>
     <circle cx={x} cy={y} r="15" />
   </slot>

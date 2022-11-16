@@ -20,8 +20,8 @@
     x="0px"
     y="0px"
     viewBox="0 0 2219 2122"
-    style="enable-background:new 0 0 2219 2122;"
     xml:space="preserve"
+    color="var(--foreground)"
   >
     <g>
       <path class="st0" d="M2033,0.5c0,125.4-413.2,227-923,227S187,125.9,187,0.5H2033z" />
@@ -333,9 +333,7 @@
           <circle cx="1679.9" cy="799" r="15" />
         </Seat>
       </Row>
-      <g>
-        <path d="M1866,328v613H354V328H1866 M1867,327H353v615h1514V327L1867,327z" />
-      </g>
+      <path d="M1866,328v613H354V328H1866 M1867,327H353v615h1514V327L1867,327z" />
     </Section>
     <Section id="STALLS">
       <Row
@@ -950,9 +948,7 @@
           { x: 1889.5, y: 1627 },
         ]}
       />
-      <g>
-        <path d="M1979,1043v648H241v-648H1979 M1980,1042H240v650h1740V1042L1980,1042z" />
-      </g>
+      <path d="M1979,1043v648H241v-648H1979 M1980,1042H240v650h1740V1042L1980,1042z" />
     </Section>
     <Section id="BALCONY">
       <Row
