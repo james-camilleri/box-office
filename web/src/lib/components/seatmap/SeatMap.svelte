@@ -21,314 +21,334 @@
     y="0px"
     viewBox="0 0 2219 2122"
     xml:space="preserve"
-    color="var(--foreground)"
+    color="var(--disabled)"
   >
     <g>
+      <text transform="matrix(1 0 0 1 1043.0406 111.9497)" class="st2 st3 st4">Stage</text>
       <path class="st0" d="M2033,0.5c0,125.4-413.2,227-923,227S187,125.9,187,0.5H2033z" />
       <rect x="1029.6" y="82.3" class="st1" width="160.8" height="31.7" />
-      <text transform="matrix(1 0 0 1 1043.0406 111.9497)" class="st2 st3 st4">Stage</text>
     </g>
     <Section id="TABLES">
-      <circle cx="1477.4" cy="613.1" r="50" />
-      <circle cx="1722.4" cy="613.1" r="50" />
-      <circle cx="1109.9" cy="799.1" r="50" />
+      <circle cx="497.4" cy="613.1" r="50" />
       <circle cx="619.9" cy="427.1" r="50" />
+      <circle cx="619.9" cy="799.1" r="50" />
       <circle cx="742.4" cy="613.1" r="50" />
       <circle cx="864.9" cy="427.1" r="50" />
-      <circle cx="1599.9" cy="427.1" r="50" />
-      <circle cx="497.4" cy="613.1" r="50" />
-      <circle cx="1232.4" cy="613.1" r="50" />
-      <circle cx="1109.9" cy="427.1" r="50" />
-      <circle cx="1354.9" cy="427.1" r="50" />
-      <circle cx="1354.9" cy="799.1" r="50" />
-      <circle cx="1599.9" cy="799.1" r="50" />
-      <circle cx="619.9" cy="799.1" r="50" />
       <circle cx="864.9" cy="799.1" r="50" />
       <circle cx="987.4" cy="613.1" r="50" />
-      <Row id="A">
-        <Seat number={1}>
+      <circle cx="1109.9" cy="427.1" r="50" />
+      <circle cx="1109.9" cy="799.1" r="50" />
+      <circle cx="1232.4" cy="613.1" r="50" />
+      <circle cx="1354.9" cy="427.1" r="50" />
+      <circle cx="1354.9" cy="799.1" r="50" />
+      <circle cx="1477.4" cy="613.1" r="50" />
+      <circle cx="1599.9" cy="427.1" r="50" />
+      <circle cx="1599.9" cy="799.1" r="50" />
+      <circle cx="1722.4" cy="613.1" r="50" />
+
+      <text transform="translate(-9, 9)" x="619.9" y="427.1">A</text>
+      <text transform="translate(-9, 9)" x="864.9" y="427.1">B</text>
+      <text transform="translate(-9, 9)" x="1109.9" y="427.1">C</text>
+      <text transform="translate(-9, 9)" x="1354.9" y="427.1">D</text>
+      <text transform="translate(-9, 9)" x="1599.9" y="427.1">E</text>
+
+      <text transform="translate(-9, 9)" x="497.4" y="613.1">F</text>
+      <text transform="translate(-9, 9)" x="742.4" y="613.1">G</text>
+      <text transform="translate(-9, 9)" x="987.4" y="613.1">H</text>
+      <text transform="translate(-3, 9)" x="1232.4" y="613.1">I</text>
+      <text transform="translate(-9, 9)" x="1477.4" y="613.1">J</text>
+      <text transform="translate(-9, 9)" x="1722.4" y="613.1">K</text>
+
+      <text transform="translate(-9, 9)" x="619.9" y="799.1">L</text>
+      <text transform="translate(-9, 9)" x="864.9" y="799.1">M</text>
+      <text transform="translate(-9, 9)" x="1109.9" y="799.1">N</text>
+      <text transform="translate(-10, 9)" x="1354.9" y="799.1">O</text>
+      <text transform="translate(-9, 9)" x="1599.9" y="799.1">P</text>
+
+      <Row id="TA">
+        <Seat number="1-2">
           <circle cx="540.1" cy="427.4" r="15" />
           <circle cx="548.1" cy="462" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="570.3" cy="489.7" r="15" />
           <circle cx="602.4" cy="505.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="637.9" cy="505" r="15" />
           <circle cx="669.9" cy="489.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="692" cy="461.8" r="15" />
           <circle cx="699.9" cy="427" r="15" />
         </Seat>
       </Row>
-      <Row id="B">
-        <Seat number={1}>
+      <Row id="TB">
+        <Seat number="1-2">
           <circle cx="785.1" cy="427.4" r="15" />
           <circle cx="793.1" cy="462" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="815.3" cy="489.7" r="15" />
           <circle cx="847.4" cy="505.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="882.9" cy="505" r="15" />
           <circle cx="914.9" cy="489.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="937" cy="461.8" r="15" />
           <circle cx="944.9" cy="427" r="15" />
         </Seat>
       </Row>
-      <Row id="C">
-        <Seat number={1}>
+      <Row id="TC">
+        <Seat number="1-2">
           <circle cx="1030.1" cy="427.4" r="15" />
           <circle cx="1038.1" cy="462" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1060.3" cy="489.7" r="15" />
           <circle cx="1092.4" cy="505.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1127.9" cy="505" r="15" />
           <circle cx="1159.9" cy="489.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1182" cy="461.8" r="15" />
           <circle cx="1189.9" cy="427" r="15" />
         </Seat>
       </Row>
-      <Row id="D">
-        <Seat number={1}>
+      <Row id="TD">
+        <Seat number="1-2">
           <circle cx="1275.1" cy="427.4" r="15" />
           <circle cx="1283.1" cy="462" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1305.3" cy="489.7" r="15" />
           <circle cx="1337.4" cy="505.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1372.9" cy="505" r="15" />
           <circle cx="1404.9" cy="489.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1427" cy="461.8" r="15" />
           <circle cx="1434.9" cy="427" r="15" />
         </Seat>
       </Row>
-      <Row id="E">
-        <Seat number={1}>
+      <Row id="TE">
+        <Seat number="1-2">
           <circle cx="1520.1" cy="427.4" r="15" />
           <circle cx="1528.1" cy="462" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1550.3" cy="489.7" r="15" />
           <circle cx="1582.4" cy="505.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1617.9" cy="505" r="15" />
           <circle cx="1649.9" cy="489.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1672" cy="461.8" r="15" />
           <circle cx="1679.9" cy="427" r="15" />
         </Seat>
       </Row>
-      <Row id="F">
-        <Seat number={1}>
+      <Row id="TF">
+        <Seat number="1-2">
           <circle cx="417.6" cy="613.4" r="15" />
           <circle cx="425.6" cy="648" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="447.8" cy="675.7" r="15" />
           <circle cx="479.9" cy="691.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="515.4" cy="691" r="15" />
           <circle cx="547.4" cy="675.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="569.5" cy="647.8" r="15" />
           <circle cx="577.4" cy="613" r="15" />
         </Seat>
       </Row>
-      <Row id="G">
-        <Seat number={1}>
+      <Row id="TG">
+        <Seat number="1-2">
           <circle cx="662.6" cy="613.4" r="15" />
           <circle cx="670.6" cy="648" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="692.8" cy="675.7" r="15" />
           <circle cx="724.9" cy="691.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="760.4" cy="691" r="15" />
           <circle cx="792.4" cy="675.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="814.5" cy="647.8" r="15" />
           <circle cx="822.4" cy="613" r="15" />
         </Seat>
       </Row>
-      <Row id="H">
-        <Seat number={1}>
+      <Row id="TH">
+        <Seat number="1-2">
           <circle cx="907.6" cy="613.4" r="15" />
           <circle cx="915.6" cy="648" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="937.8" cy="675.7" r="15" />
           <circle cx="969.9" cy="691.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1005.4" cy="691" r="15" />
           <circle cx="1037.4" cy="675.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1059.5" cy="647.8" r="15" />
           <circle cx="1067.4" cy="613" r="15" />
         </Seat>
       </Row>
-      <Row id="I">
-        <Seat number={1}>
+      <Row id="TI">
+        <Seat number="1-2">
           <circle cx="1152.6" cy="613.4" r="15" />
           <circle cx="1160.6" cy="648" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1182.8" cy="675.7" r="15" />
           <circle cx="1214.9" cy="691.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1250.4" cy="691" r="15" />
           <circle cx="1282.4" cy="675.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1304.5" cy="647.8" r="15" />
           <circle cx="1312.4" cy="613" r="15" />
         </Seat>
       </Row>
-      <Row id="J">
-        <Seat number={1}>
+      <Row id="TJ">
+        <Seat number="1-2">
           <circle cx="1397.6" cy="613.4" r="15" />
           <circle cx="1405.6" cy="648" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1427.8" cy="675.7" r="15" />
           <circle cx="1459.9" cy="691.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1495.4" cy="691" r="15" />
           <circle cx="1527.4" cy="675.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1549.5" cy="647.8" r="15" />
           <circle cx="1557.4" cy="613" r="15" />
         </Seat>
       </Row>
-      <Row id="K">
-        <Seat number={1}>
+      <Row id="TK">
+        <Seat number="1-2">
           <circle cx="1642.6" cy="613.4" r="15" />
           <circle cx="1650.6" cy="648" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1672.8" cy="675.7" r="15" />
           <circle cx="1704.9" cy="691.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1740.4" cy="691" r="15" />
           <circle cx="1772.4" cy="675.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1794.5" cy="647.8" r="15" />
           <circle cx="1802.4" cy="613" r="15" />
         </Seat>
       </Row>
-      <Row id="L">
-        <Seat number={1}>
+      <Row id="TL">
+        <Seat number="1-2">
           <circle cx="540.1" cy="799.4" r="15" />
           <circle cx="548.1" cy="834" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="570.3" cy="861.7" r="15" />
           <circle cx="602.4" cy="877.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="637.9" cy="877" r="15" />
           <circle cx="669.9" cy="861.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="692" cy="833.8" r="15" />
           <circle cx="699.9" cy="799" r="15" />
         </Seat>
       </Row>
-      <Row id="M">
-        <Seat number={1}>
+      <Row id="TM">
+        <Seat number="1-2">
           <circle cx="785.1" cy="799.4" r="15" />
           <circle cx="793.1" cy="834" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="815.3" cy="861.7" r="15" />
           <circle cx="847.4" cy="877.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="882.9" cy="877" r="15" />
           <circle cx="914.9" cy="861.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="937" cy="833.8" r="15" />
           <circle cx="944.9" cy="799" r="15" />
         </Seat>
       </Row>
-      <Row id="N">
-        <Seat number={1}>
+      <Row id="TN">
+        <Seat number="1-2">
           <circle cx="1030.1" cy="799.4" r="15" />
           <circle cx="1038.1" cy="834" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1060.3" cy="861.7" r="15" />
           <circle cx="1092.4" cy="877.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1127.9" cy="877" r="15" />
           <circle cx="1159.9" cy="861.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1182" cy="833.8" r="15" />
           <circle cx="1189.9" cy="799" r="15" />
         </Seat>
       </Row>
-      <Row id="O">
-        <Seat number={1}>
+      <Row id="TO">
+        <Seat number="1-2">
           <circle cx="1275.1" cy="799.4" r="15" />
           <circle cx="1283.1" cy="834" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1305.3" cy="861.7" r="15" />
           <circle cx="1337.4" cy="877.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1372.9" cy="877" r="15" />
           <circle cx="1404.9" cy="861.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1427" cy="833.8" r="15" />
           <circle cx="1434.9" cy="799" r="15" />
         </Seat>
       </Row>
-      <Row id="P">
-        <Seat number={1}>
+      <Row id="TP">
+        <Seat number="1-2">
           <circle cx="1520.1" cy="799.4" r="15" />
           <circle cx="1528.1" cy="834" r="15" />
         </Seat>
-        <Seat number={2}>
+        <Seat number="3-4">
           <circle cx="1550.3" cy="861.7" r="15" />
           <circle cx="1582.4" cy="877.1" r="15" />
         </Seat>
-        <Seat number={3}>
+        <Seat number="5-6">
           <circle cx="1617.9" cy="877" r="15" />
           <circle cx="1649.9" cy="861.6" r="15" />
         </Seat>
-        <Seat number={4}>
+        <Seat number="7-8">
           <circle cx="1672" cy="833.8" r="15" />
           <circle cx="1679.9" cy="799" r="15" />
         </Seat>
@@ -1270,5 +1290,10 @@
     left: 2em;
     width: 200px;
     padding: 1em;
+  }
+
+  text {
+    font: normal 30px sans-serif;
+    color: var(--foreground);
   }
 </style>
