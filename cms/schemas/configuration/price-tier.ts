@@ -26,4 +26,15 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
   ],
+  preview: {
+    select: {
+      name: 'name',
+      price: 'price',
+    },
+    prepare({ name, price }) {
+      return {
+        title: `${name} (€${price})`,
+      }
+    },
+  },
 })

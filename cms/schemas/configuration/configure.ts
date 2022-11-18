@@ -44,9 +44,9 @@ export default defineType({
               name: 'priceTier',
               type: 'reference',
               to: [{ type: 'priceTier' }],
-              options: {
-                disableNew: true,
-              },
+              // options: {
+              //   disableNew: true,
+              // },
             },
             {
               name: 'applyTo',
@@ -68,4 +68,11 @@ export default defineType({
       ],
     }),
   ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Configure',
+      }
+    },
+  },
 })
