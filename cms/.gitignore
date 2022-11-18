@@ -24,3 +24,6 @@
 
 # Typescript
 *.tsbuildinfo
+
+# Netlify stuff
+/.netlify
