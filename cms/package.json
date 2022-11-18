@@ -10,7 +10,8 @@
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "data:clean-assets": "env-cmd node ./scripts/clean-assets.js",
-    "data:generate-breakpoints": "env-cmd node ./scripts/generate-breakpoints.js"
+    "data:generate-breakpoints": "env-cmd node ./scripts/generate-breakpoints.js",
+    "generate-seatplan": "env-cmd ts-node --esm ./setup/setup.ts"
   },
   "author": "James Camilleri",
   "license": "ISC",
@@ -31,9 +32,11 @@
   "devDependencies": {
     "@netlify/functions": "^1.3.0",
     "@sanity/eslint-config-studio": "^2.0.1",
+    "@types/node": "^18.11.9",
     "env-cmd": "^10.1.0",
     "eslint": "^8.27.0",
     "prettier": "^2.7.1",
-    "typescript": "^4.8.4"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
   }
 }
