@@ -12,13 +12,20 @@ export default defineType({
     //   to: [{ type: 'section' }],
     // }),
     defineField({
+      name: 'name',
+      type: 'string',
+      readOnly: true,
+    }),
+    defineField({
       name: 'row',
       type: 'reference',
       to: [{ type: 'row' }],
+      readOnly: true,
     }),
     defineField({
       name: 'number',
       type: 'string',
+      readOnly: true,
     }),
   ],
 })
