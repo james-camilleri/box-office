@@ -40,30 +40,60 @@ export default defineType({
         {
           type: 'object',
           fields: [
-            {
+            defineField({
               name: 'priceTier',
               type: 'reference',
               to: [{ type: 'priceTier' }],
-              // options: {
-              //   disableNew: true,
-              // },
-            },
-            {
-              name: 'applyTo',
-              type: 'array',
-              of: [{ type: 'string' }],
-              options: {
-                initialValue: ['section', 'row', 'seat'],
-              },
-              validation: (Rule) => Rule.required(),
-            },
-            defineField({
-              name: 'section',
-              type: 'array',
-              of: [{ type: 'reference', to: [{ type: 'section' }] }],
               validation: (Rule) => Rule.required(),
             }),
+            defineField({
+              name: 'applyTo',
+              type: 'array',
+              of: [
+                { type: 'reference', to: [{ type: 'section' }, { type: 'row' }, { type: 'seat' }] },
+              ],
+              validation: (Rule) => Rule.required().min(1),
+              options: {
+                disableNew: true,
+              },
+            }),
+            defineField({
+              name: 'applyToAllShows',
+              type: 'boolean',
+              initialValue: true,
+            }),
+            defineField({
+              name: 'shows',
+              type: 'array',
+              of: [{ type: 'reference', to: [{ type: 'show' }] }],
+              options: {
+                disableNew: true,
+              },
+              hidden: ({ parent }) => parent?.applyToAllShows,
+            }),
           ],
+          options: {
+            collapsible: false,
+          },
+          preview: {
+            select: {
+              priceTier: 'priceTier.name',
+              price: 'priceTier.price',
+              applyTo0: 'applyTo.0.name',
+              applyTo1: 'applyTo.1.name',
+              applyTo2: 'applyTo.2.name',
+              applyTo3: 'applyTo.3.name',
+              applyTo4: 'applyTo.4.name',
+            },
+            prepare({ priceTier, price, applyTo0, applyTo1, applyTo2, applyTo3, applyTo4 }) {
+              return {
+                title: priceTier ? `${priceTier} (€${price})` : '⚠ Invalid configuration ⚠',
+                subtitle:
+                  [applyTo0, applyTo1, applyTo2, applyTo3].filter(Boolean).join(', ') +
+                  (applyTo4 ? '...' : ''),
+              }
+            },
+          },
         },
       ],
     }),
