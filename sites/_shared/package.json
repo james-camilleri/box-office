@@ -12,5 +12,8 @@
   "keywords": [],
   "author": "James Camilleri",
   "license": "ISC",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "sanity": "3.0.0"
+  }
 }
