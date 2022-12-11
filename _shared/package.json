@@ -1,0 +1,16 @@
+{
+  "name": "shared",
+  "version": "1.0.0",
+  "description": "Shared types and assorted utilities for both front and back end systems.",
+  "exports": {
+    "./types": "./types",
+    "./utils": "./utils"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "James Camilleri",
+  "license": "ISC",
+  "private": true
+}
