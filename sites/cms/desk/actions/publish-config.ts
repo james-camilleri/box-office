@@ -3,19 +3,12 @@ import { useEffect, useState } from 'react'
 import {
   DocumentActionDescription,
   DocumentActionProps,
-  Reference,
   SanityDocument,
   useDocumentOperation,
 } from 'sanity'
+import { Configuration } from 'shared/types/configuration'
 
-interface ConfigurationPage extends SanityDocument {
-  priceConfiguration?: Array<{
-    priceTier: Reference
-    applyTo: Reference[]
-    applyToAllShows: boolean
-    shows: Reference[]
-  }>
-}
+interface ConfigurationPage extends SanityDocument, Partial<Configuration> {}
 
 function generateCompositePricingConfiguration(draft: ConfigurationPage | null) {
   if (!draft || !draft.priceConfiguration) {
