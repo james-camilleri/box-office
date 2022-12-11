@@ -1,11 +1,12 @@
 import { visionTool } from '@sanity/vision'
-import { createConfig } from 'sanity'
+import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
+import { PublishConfig } from './desk/actions/publish-config'
 import { schemaTypes } from './schemas'
 import { structure } from './structure'
 
-export default createConfig({
+export default defineConfig({
   name: 'default',
   title: 'tickets',
 
@@ -16,5 +17,17 @@ export default createConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions(actions, context) {
+      if (context.schemaType === 'pageConfigure') {
+        actions = actions.map((previousAction) =>
+          previousAction.action === 'publish' ? PublishConfig : previousAction,
+        )
+      }
+
+      return actions
+    },
   },
 })

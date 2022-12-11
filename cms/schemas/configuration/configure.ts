@@ -97,6 +97,12 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: 'compositePriceConfiguration',
+      // Store this as a JSON string, since we can't do freeform objects.
+      type: 'string',
+      hidden: true,
+    }),
   ],
   preview: {
     prepare() {
