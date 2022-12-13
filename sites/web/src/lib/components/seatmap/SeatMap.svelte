@@ -1,9 +1,30 @@
+<script lang="ts" context="module">
+  export const PRICING = Symbol()
+</script>
+
 <script lang="ts">
+  import type { PriceConfiguration, PriceTier, Show } from 'shared/types/configuration'
+
   import Section from './Section.svelte'
   import Row from './Row.svelte'
   import Seat from './Seat.svelte'
 
-  import { selection, unavailable } from './stores'
+  import { pricing, selection, unavailable } from './stores'
+
+  export let priceTiers: PriceTier[]
+  export let defaultPriceTier: string
+  export let priceConfiguration: PriceConfiguration
+  export let show: Show
+
+  $: $pricing = new Map(
+    Object.entries({
+      default: defaultPriceTier,
+      ...priceConfiguration.default,
+      ...priceConfiguration[show._id],
+    }),
+  )
+
+  $: colours = priceTiers.map(({ _id, colour }) => `--pricing-${_id}: ${colour}`).join(';')
 </script>
 
 <div class="selection">
@@ -12,7 +33,7 @@
     {selection}<br />
   {/each}
 </div>
-<div class="seatmap">
+<div class="seatmap" style={colours}>
   <svg
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"

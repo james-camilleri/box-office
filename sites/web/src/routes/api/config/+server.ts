@@ -1,4 +1,3 @@
-import { error } from '@sveltejs/kit'
 import type { ConfigurationFull } from 'shared/types/configuration'
 
 import { sanity } from '../sanity.js'
@@ -13,7 +12,7 @@ const CONFIG_QUERY = `*[_id == '${PAGE_ID}']{
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
-  const configuration = (await sanity.fetch(CONFIG_QUERY))[0] as ConfigurationFull
+  const configuration = (await sanity.fetch(CONFIG_QUERY))[0]
 
   return new Response(
     JSON.stringify({

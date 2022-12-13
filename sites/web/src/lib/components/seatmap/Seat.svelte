@@ -20,7 +20,10 @@
   $: disabled = $unavailable.has(id)
   $: selected = $selection.has(id)
   $: priceTier =
-    $pricing.get(id) ?? $pricing.get(`${section}-${row}`) ?? $pricing.get(section) ?? 'default'
+    $pricing.get(id) ??
+    $pricing.get(`${section}-${row}`) ??
+    $pricing.get(`${section}`) ??
+    $pricing.get('default')
 
   function toggleSelection() {
     if (disabled) {
