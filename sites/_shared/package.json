@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Shared types and assorted utilities for both front and back end systems.",
   "exports": {
-    "./types": "./types",
-    "./utils": "./utils"
+    "./types/*.ts": "./types/*.ts",
+    "./types/*.js": "./types/*.js",
+    "./utils/*.ts": "./utils/*.ts",
+    "./utils/*.js": "./utils/*.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
