@@ -1,4 +1,5 @@
-import { defineField, defineType } from 'sanity'
+import { Reference, defineField, defineType } from 'sanity'
+import { BOOKED_SEATS } from 'shared/queries'
 
 export default defineType({
   name: 'booking',
@@ -23,7 +24,26 @@ export default defineType({
     defineField({
       name: 'seats',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'seat' }] }],
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'seat' }],
+          options: {
+            filter: ({ document }) => {
+              if (!document.show) {
+                return
+              }
+
+              return {
+                filter: `!(_id in ${BOOKED_SEATS})`,
+                params: {
+                  show: (document.show as Reference)._ref,
+                },
+              }
+            },
+          },
+        },
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
