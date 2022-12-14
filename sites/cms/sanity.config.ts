@@ -17,6 +17,10 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+    templates: (previous) =>
+      previous.filter(
+        ({ id }) => !['ticket', 'pageConfigure', 'row', 'seat', 'section'].includes(id),
+      ),
   },
 
   document: {

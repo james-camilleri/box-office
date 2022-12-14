@@ -21,10 +21,7 @@ export const structure = (S: StructureBuilder, context: ConfigContext) =>
         .title('Customers')
         .icon(FaUserFriends)
         .child(
-          S.documentList()
-            .title('Customers')
-            .filter('_type == "customers"')
-            .schemaType('customers'),
+          S.documentList().title('Customers').filter('_type == "customer"').schemaType('customer'),
         ),
       S.listItem()
         .title('Tickets')
