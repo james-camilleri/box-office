@@ -1,4 +1,5 @@
-import { defineField, defineType } from 'sanity'
+import { ValidationContext, defineField, defineType } from 'sanity'
+import { CUSTOMER_EXISTS } from 'shared/queries'
 
 export default defineType({
   name: 'customer',
@@ -10,11 +11,18 @@ export default defineType({
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
-    // TODO: Add async validation to check that email is unique.
     defineField({
       name: 'email',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required()
+          .email()
+          .custom(async (email, context: ValidationContext) => {
+            const client = context.getClient({ apiVersion: '2023-01-01' })
+            const customerExists = await client.fetch(CUSTOMER_EXISTS, { email })
+
+            return !customerExists || 'A customer with this email address already exists'
+          }),
     }),
     defineField({
       name: 'bookings',
