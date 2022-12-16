@@ -17,6 +17,6 @@
   "license": "ISC",
   "private": true,
   "devDependencies": {
-    "sanity": "3.0.0"
+    "@sanity/client": "^3.4.1"
   }
 }
