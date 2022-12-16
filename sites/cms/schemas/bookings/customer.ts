@@ -1,4 +1,5 @@
 import { ValidationContext, defineField, defineType } from 'sanity'
+import { API_VERSION } from 'shared/constants'
 import { CUSTOMER_EXISTS } from 'shared/queries'
 
 export default defineType({
@@ -18,7 +19,16 @@ export default defineType({
         Rule.required()
           .email()
           .custom(async (email, context: ValidationContext) => {
-            const client = context.getClient({ apiVersion: '2023-01-01' })
+            if (!email) {
+              return true
+            }
+
+            // Don't show the error on published documents.
+            if (!context.document?._id.includes('drafts')) {
+              return true
+            }
+
+            const client = context.getClient({ apiVersion: API_VERSION })
             const customerExists = await client.fetch(CUSTOMER_EXISTS, { email })
 
             return !customerExists || 'A customer with this email address already exists'
