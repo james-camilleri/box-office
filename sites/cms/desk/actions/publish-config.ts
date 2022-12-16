@@ -5,6 +5,7 @@ import {
   DocumentActionProps,
   SanityDocument,
   useDocumentOperation,
+  useValidationStatus,
 } from 'sanity'
 import { Configuration } from 'shared/types/configuration'
 
@@ -44,6 +45,7 @@ export function PublishConfig({
   onComplete,
 }: DocumentActionProps): DocumentActionDescription {
   const { patch, publish } = useDocumentOperation(id, type)
+  const { validation } = useValidationStatus(id, type)
   const [isPublishing, setIsPublishing] = useState(false)
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export function PublishConfig({
   }, [isPublishing, draft])
 
   return {
-    disabled: !!publish.disabled,
+    disabled: validation.length ? true : !!publish.disabled,
     label: isPublishing ? 'Publishing…' : 'Publish',
     icon: isPublishing ? SpinnerIcon : PublishIcon,
     shortcut: 'ctrl+alt+p',
