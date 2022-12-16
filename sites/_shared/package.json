@@ -5,9 +5,9 @@
   "exports": {
     "./types/*.ts": "./src/types/*.ts",
     "./types/*.js": "./src/types/*.js",
-    "./utils/*.ts": "./src/utils/*.ts",
-    "./utils/*.js": "./src/utils/*.js",
-    "./queries": "./src/queries.ts"
+    "./utils": "./src/utils/index.ts",
+    "./queries": "./src/queries.ts",
+    "./constants": "./src/constants/index.ts"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +17,9 @@
   "license": "ISC",
   "private": true,
   "devDependencies": {
-    "@sanity/client": "^3.4.1"
+    "@sanity/client": "^3.4.1",
+    "@types/qrcode": "^1.5.0",
+    "nanoid": "^4.0.0",
+    "qrcode": "^1.5.1"
   }
 }

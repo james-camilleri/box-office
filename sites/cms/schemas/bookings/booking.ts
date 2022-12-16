@@ -44,7 +44,8 @@ export default defineType({
           },
         },
       ],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().unique(),
+      hidden: ({ document }) => !document?.show,
     }),
     defineField({
       name: 'tickets',

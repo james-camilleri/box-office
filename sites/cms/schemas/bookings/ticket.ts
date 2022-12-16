@@ -24,6 +24,11 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'qrCode',
+      title: 'QR code',
+      type: 'image',
+    }),
+    defineField({
       name: 'valid',
       type: 'boolean',
       initialValue: false,
@@ -33,11 +38,22 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
     }),
-
-    // defineField({
-    //   name: 'qrData',
-    //   title: 'QR code data',
-    //   type: 'string',
-    // }),
   ],
+  preview: {
+    select: {
+      id: '_id',
+      show: 'show.date',
+      seat: 'seat._ref',
+    },
+    prepare({ id, show, seat }) {
+      const date = new Date(show)
+
+      return {
+        title: id,
+        subtitle: `${date.toLocaleDateString()} ${date
+          .toLocaleTimeString()
+          .replace(/:00$/, '')}, ${seat}`,
+      }
+    },
+  },
 })
