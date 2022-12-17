@@ -1,7 +1,7 @@
 <script lang="ts">
   // TODO: Style disabled checkbox.
   // TODO: Checkbox groups / multiple checkboxes.
-  import uniqueId from 'lodash/uniqueId.js'
+  import { uniqueId } from './uniqueId'
 
   export let name: string
   export let label: string = null
