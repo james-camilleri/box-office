@@ -12,6 +12,7 @@
     "deploy-graphql": "sanity graphql deploy",
     "data:clean-assets": "env-cmd node ./scripts/clean-assets.js",
     "data:generate-breakpoints": "env-cmd node ./scripts/generate-breakpoints.js",
+    "data:delete-all-booking-data": "env-cmd node ./scripts/delete-all-booking-data.js",
     "generate-seatplan": "env-cmd ts-node --esm ./setup/setup.ts"
   },
   "author": "James Camilleri",

@@ -1,7 +1,7 @@
 // Based on https://www.sanity.io/schemas/delete-unused-assets-2ef651b5
 // by Espen Hovlandsdal
 
-const sanityClient = require('@sanity/client')
+import sanityClient from '@sanity/client'
 
 const { SANITY_API_KEY } = process.env
 const client = sanityClient({

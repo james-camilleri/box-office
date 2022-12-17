@@ -1,12 +1,13 @@
 import sanityClient, { SanityDocument } from '@sanity/client'
+import { API_VERSION, DATASET, PROJECT_ID } from 'shared/constants'
 
 import CONFIG from './seat-configuration.js'
 
 const { SANITY_API_KEY } = process.env
 const client = sanityClient({
-  projectId: '8biawkr2',
-  apiVersion: '2022-11-01',
-  dataset: 'production',
+  projectId: PROJECT_ID,
+  apiVersion: API_VERSION,
+  dataset: DATASET,
   token: SANITY_API_KEY,
   useCdn: false,
 })
