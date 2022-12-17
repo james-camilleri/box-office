@@ -5,7 +5,7 @@
     "checkJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "nodenext",
+    // "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext } from 'svelte'
+  import { getContext } from 'svelte'
 
   import { pricing, selection, unavailable } from './stores'
   import { SECTION_ID } from './Section.svelte'
@@ -17,7 +17,7 @@
   const row = getContext(ROW_ID) ?? ''
   const id = [section, row, number].filter(Boolean).join('-')
 
-  $: disabled = $unavailable.has(id)
+  $: disabled = !$unavailable || $unavailable.has(id)
   $: selected = $selection.has(id)
   $: priceTier =
     $pricing.get(id) ??
@@ -29,9 +29,6 @@
     if (disabled) {
       return
     }
-
-    const event = selected ? 'deselected' : 'selected'
-    console.log(`${id} ${event}`)
 
     selected ? $selection.delete(id) : $selection.add(id)
     $selection = $selection

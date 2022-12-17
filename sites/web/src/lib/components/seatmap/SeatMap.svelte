@@ -15,6 +15,7 @@
   export let defaultPriceTier: string
   export let priceConfiguration: PriceConfiguration
   export let show: Show
+  export let unavailableSeats: string[] | undefined
 
   $: $pricing = new Map(
     Object.entries({
@@ -23,6 +24,8 @@
       ...priceConfiguration[show._id],
     }),
   )
+
+  $: $unavailable = !unavailableSeats ? unavailableSeats : new Set(unavailableSeats)
 
   $: colours = priceTiers.map(({ _id, colour }) => `--pricing-${_id}: ${colour}`).join(';')
 </script>

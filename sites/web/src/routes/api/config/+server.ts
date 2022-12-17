@@ -1,5 +1,3 @@
-import type { ConfigurationFull } from 'shared/types/configuration'
-
 import { sanity } from '../sanity.js'
 
 const PAGE_ID = 'configure'
