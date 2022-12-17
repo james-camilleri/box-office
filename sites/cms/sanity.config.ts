@@ -3,6 +3,7 @@ import { DocumentActionComponent, defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
 import { CreateBooking } from './desk/actions/create-booking'
+import { InvalidateTicket } from './desk/actions/invalidate-ticket'
 import { PublishConfig } from './desk/actions/publish-config'
 import { schemaTypes } from './schemas'
 import { structure } from './structure'
@@ -53,13 +54,17 @@ export default defineConfig({
         return [CreateBooking]
       }
 
+      if (['ticket'].includes(context.schemaType)) {
+        return [InvalidateTicket]
+      }
+
       if (['pageConfigure'].includes(context.schemaType)) {
         return actions.filter(({ action }) =>
           [ACTIONS.PUBLISH, ACTIONS.DISCARD_CHANGES].includes(action as ACTIONS),
         )
       }
 
-      if (['ticket', 'row', 'seat', 'section'].includes(context.schemaType)) {
+      if (['row', 'seat', 'section'].includes(context.schemaType)) {
         return []
       }
 
