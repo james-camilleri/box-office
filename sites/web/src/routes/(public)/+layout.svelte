@@ -1,7 +1,7 @@
 <script lang="ts">
-  import '../styles/global.scss'
+  import '../../styles/global.scss'
 
-  import type { PageData } from './$types'
+  import type { PageData } from '../$types'
 
   import { setContext } from 'svelte'
   import CONFIG from '$lib/config'
