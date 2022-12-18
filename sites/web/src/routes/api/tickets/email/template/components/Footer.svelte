@@ -29,7 +29,6 @@
   }
 
   .footer td,
-  .footer p,
   .footer span,
   .footer a {
     font-size: 12px;

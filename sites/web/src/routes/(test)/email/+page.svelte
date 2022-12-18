@@ -9,7 +9,13 @@
 </script>
 
 <Email
+  name="James Camilleri"
   event={{
     name: 'A Cool Event',
+    date: '19th January, 1992',
+    time: '07:00',
+    location: 'Malta',
+    map: 'https://maps.google.com/',
   }}
+  tickets={[]}
 />

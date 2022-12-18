@@ -2,25 +2,25 @@
   import { fade } from 'svelte/transition'
   import Exclamation from '@fortawesome/fontawesome-free/svgs/solid/circle-exclamation.svg'
   import FormGroup from './FormGroup.svelte'
-  import { uniqueId } from './uniqueId'
+  import { uniqueId } from './uniqueId.js'
 
   type Validation = (value: string) => string | undefined
 
   export let name: string
-  export let label: string = null
-  export let hint: string = null
-  export let type: string = 'text'
-  export let value: string = ''
+  export let label: string | null = null
+  export let hint: string | null = null
+  export let type = 'text'
+  export let value = ''
   export let optional = false
   export let width: 'short' | 'long' | 'full' = 'short'
 
   export let validations: Validation[] = []
   export let validate = false
   export let valid = true
-  let errorText
+  let errorText: string | false | undefined
 
   // Default validation for required fields.
-  const requiredValidation = (value) =>
+  const requiredValidation = (value: string) =>
     !optional && value == '' && `${label ?? capitalise(name)} is required`
 
   $: {

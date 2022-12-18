@@ -1,11 +1,11 @@
 <script lang="ts">
   import { getContext } from 'svelte'
 
-  import { pricing, selection, unavailable } from './stores'
+  import { pricing, selection, unavailable } from './stores.js'
   import { SECTION_ID } from './Section.svelte'
   import { ROW_ID } from './Row.svelte'
 
-  export let number: string
+  export let number: number | string
   export let x: number | undefined = undefined
   export let y: number | undefined = undefined
 
@@ -49,12 +49,12 @@
 
 <style lang="scss">
   g {
-    cursor: pointer;
     color: var(--seat-colour);
+    cursor: pointer;
 
     &.disabled {
-      cursor: not-allowed;
       color: var(--disabled);
+      cursor: not-allowed;
     }
 
     &.selected {

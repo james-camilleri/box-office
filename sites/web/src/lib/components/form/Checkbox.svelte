@@ -1,12 +1,12 @@
 <script lang="ts">
   // TODO: Style disabled checkbox.
   // TODO: Checkbox groups / multiple checkboxes.
-  import { uniqueId } from './uniqueId'
+  import { uniqueId } from './uniqueId.js'
 
   export let name: string
-  export let label: string = null
-  export let hint: string = null
-  export let value: boolean = false
+  export let label: string | null = null
+  export let hint: string | null = null
+  export let value = false
   export let disabled: boolean
 
   const id = uniqueId('checkbox-')

@@ -1,6 +1,6 @@
-import type { ConfigurationFull } from 'shared/types/configuration'
+import type { ConfigurationFull } from 'shared/types/configuration.js'
 
-import type { PageLoad } from './$types'
+import type { PageLoad } from './$types.js'
 
 export const prerender = true
 

@@ -19,7 +19,7 @@
     {#each seats as { x, y }, i}
       <Seat number={startFrom + i} {x} {y} />
     {/each}
-    <text x={seats.at(-1).x + 30} y={seats.at(-1).y + 10}>{id}</text>
+    <text x={seats[seats.length - 1].x + 30} y={seats[seats.length - 1].y + 10}>{id}</text>
   </slot>
 </g>
 

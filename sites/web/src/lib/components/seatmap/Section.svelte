@@ -13,6 +13,3 @@
 <g>
   <slot />
 </g>
-
-<style lang="scss">
-</style>

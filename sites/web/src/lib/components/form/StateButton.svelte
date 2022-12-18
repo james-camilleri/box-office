@@ -24,7 +24,7 @@
 
   export let primary = false
   export let disabled = false
-  export let linkTo: string = null
+  export let linkTo: string | undefined = undefined
   export let state: State = STATE.IDLE
   export let messages: StatusMessages = {}
 </script>

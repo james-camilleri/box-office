@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PageData } from './$types'
+  import type { PageData } from './$types.js'
   import SeatMap from '$lib/components/seatmap/SeatMap.svelte'
   import { page } from '$app/stores'
 

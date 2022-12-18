@@ -5,8 +5,8 @@
   import Twitter from '@fortawesome/fontawesome-free/svgs/brands/twitter.svg'
   import YouTube from '@fortawesome/fontawesome-free/svgs/brands/youtube.svg'
 
-  import { normaliseNavItems } from '$lib/utils/urls'
-  import CONFIG from '$lib/config'
+  import { normaliseNavItems } from '$lib/utils/urls.js'
+  import CONFIG from '$lib/config.js'
 
   const links = [
     {
@@ -33,11 +33,11 @@
     <div class="links">
       {#each normaliseNavItems(links) as { text, link, external }}
         {#if external}
-          <a href={link} rel="noopener" target="_blank">
+          <a href={link} rel="noreferrer" target="_blank">
             {text}
           </a>
         {:else}
-          <a href={link} sveltekit:prefetch>
+          <a href={link}>
             {text}
           </a>
         {/if}
@@ -48,7 +48,7 @@
   {#if Object.entries(social).length > 0}
     <div class="icons">
       {#each Object.entries(social) as [name, { icon, link }]}
-        <a href={link} rel="noopener" target="_blank">
+        <a href={link} rel="noreferrer" target="_blank">
           <svelte:component this={icon} />
           <span class="screen-reader-only">{name}</span>
         </a>
@@ -56,9 +56,7 @@
     </div>
   {/if}
 
-  <span class="copyright"
-    >&copy; {CONFIG.GENERAL.siteTitle} {new Date().getFullYear()}</span
-  >
+  <span class="copyright">&copy; {CONFIG.GENERAL.siteTitle} {new Date().getFullYear()}</span>
 </footer>
 
 <style lang="scss">

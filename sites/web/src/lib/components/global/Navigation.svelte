@@ -2,11 +2,11 @@
   import Cart from '@fortawesome/fontawesome-free/svgs/solid/cart-shopping.svg'
   import User from '@fortawesome/fontawesome-free/svgs/solid/user.svg'
 
-  import type { RawNavItem } from '$lib/utils/urls'
+  import type { RawNavItem } from '$lib/utils/urls.js'
 
   import { page } from '$app/stores'
-  import { normaliseNavItems } from '$lib/utils/urls'
-  import CONFIG from '$lib/config'
+  import { normaliseNavItems } from '$lib/utils/urls.js'
+  import CONFIG from '$lib/config.js'
 
   export let items: RawNavItem[] = []
 
@@ -14,7 +14,7 @@
   // There's no way to use bind:this conditionally as of 20/02/2022, so
   // we need to store all refs and just use the first one for focus capture.
   let navItemRefs: HTMLElement[] = []
-  let menuButtonRef: HTMLElement = null
+  let menuButtonRef: HTMLElement | null = null
 
   function close() {
     navOpen = false
@@ -42,7 +42,7 @@
 
       if (navItemRefs[0] === document.activeElement && e.shiftKey) {
         e.preventDefault()
-        menuButtonRef.focus()
+        menuButtonRef?.focus()
         console.log('document.activeElement', document.activeElement)
         return
       }
@@ -62,7 +62,6 @@
             href={link}
             on:click={close}
             bind:this={navItemRefs[i]}
-            sveltekit:prefetch
           >
             {text}
           </a>
@@ -269,8 +268,8 @@
       outline: none;
     }
 
-    // Scale button back down after it's cliccked on.
-    &:focus:not(:focus-visible):not(:hover) {
+    // Scale button back down after it's clicked on.
+    &:focus:not(:focus-visible, :hover) {
       transform: scale(1);
     }
 
@@ -311,8 +310,7 @@
 
     &::after {
       bottom: calc(var(--bar-height) * -1.5);
-      transition: bottom 0.1s 0.25s ease-in,
-        transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      transition: bottom 0.1s 0.25s ease-in, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19);
     }
   }
 
@@ -331,8 +329,7 @@
 
     &::after {
       bottom: 0;
-      transition: bottom 0.1s ease-out,
-        transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+      transition: bottom 0.1s ease-out, transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
       transform: rotate(-90deg);
     }
   }

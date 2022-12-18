@@ -13,15 +13,12 @@
   // https://gerireid.com/forms.html#buttons
   export let disabled = false
 
-  export let linkTo: string = null
+  export let linkTo: string | null = null
   export let dataAttributes: { [key: string]: string | number } = {}
-  dataAttributes = Object.entries(dataAttributes).reduce(
-    (dataAttributes, [key, value]) => {
-      const attribute = key.includes('data-') ? key : `data-${key}`
-      return { ...dataAttributes, [attribute]: value }
-    },
-    {},
-  )
+  dataAttributes = Object.entries(dataAttributes).reduce((dataAttributes, [key, value]) => {
+    const attribute = key.includes('data-') ? key : `data-${key}`
+    return { ...dataAttributes, [attribute]: value }
+  }, {})
 </script>
 
 {#if linkTo}
@@ -100,21 +97,21 @@
 
     // TODO: Remember to always style hover, active, and focus styles!
 
-    &:active:not(:disabled):not(.disabled) {
+    &:active:not(:disabled, .disabled) {
       color: var(--active-colour);
       background-color: var(--active-background-colour);
       box-shadow: 0 0 0 var(--border-width) var(--background-colour);
     }
 
-    &:hover:not(:active):not(:disabled):not(.disabled),
-    &:focus:not(:active):not(:disabled):not(.disabled) {
+    &:hover:not(:active, :disabled, .disabled),
+    &:focus:not(:active, :disabled, .disabled) {
       color: var(--highlight-colour);
       box-shadow: 0 0 0 var(--border-width) var(--highlight-colour);
     }
 
     // This mainly kicks in after a button is clicked.
     // Remove the focus effect once the mouse moves away.
-    &:focus:not(:focus-visible):not(:hover):not(:active) {
+    &:focus:not(:focus-visible, :hover, :active) {
       color: var(--colour);
       box-shadow: none;
     }

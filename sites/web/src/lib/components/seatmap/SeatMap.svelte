@@ -3,13 +3,13 @@
 </script>
 
 <script lang="ts">
-  import type { PriceConfiguration, PriceTier, Show } from 'shared/types/configuration'
+  import type { PriceConfiguration, PriceTier, Show } from 'shared/types/configuration.js'
 
   import Section from './Section.svelte'
   import Row from './Row.svelte'
   import Seat from './Seat.svelte'
 
-  import { pricing, selection, unavailable } from './stores'
+  import { pricing, selection, unavailable } from './stores.js'
 
   export let priceTiers: PriceTier[]
   export let defaultPriceTier: string
@@ -1309,11 +1309,11 @@
 
   .selection {
     position: fixed;
-    border: 5px solid black;
     top: 2em;
     left: 2em;
     width: 200px;
     padding: 1em;
+    border: 5px solid black;
   }
 
   text {

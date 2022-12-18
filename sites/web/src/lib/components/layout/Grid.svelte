@@ -1,18 +1,14 @@
 <script lang="ts">
   export let columns: number | Array<number | string> = 1
-  export let repeat: number | string = null
+  export let repeat: number | string | null = null
   export let stackAt = 'sm'
   export let gap = 'var(--gutter)'
 
   if (!Array.isArray(columns)) columns = Array(columns).fill(1)
 
   let cssColumns = repeat
-    ? `repeat(auto-fit, minmax(min(${repeat}${
-        typeof repeat == 'number' ? 'rem' : ''
-      }, 100%), 1fr))`
-    : columns
-        .map((ratio) => (typeof ratio === 'number' ? `${ratio}fr` : ratio))
-        .join(' ')
+    ? `repeat(auto-fit, minmax(min(${repeat}${typeof repeat == 'number' ? 'rem' : ''}, 100%), 1fr))`
+    : columns.map((ratio) => (typeof ratio === 'number' ? `${ratio}fr` : ratio)).join(' ')
 </script>
 
 <div class={`grid ${stackAt}`} style:--columns={cssColumns} style:--gap={gap}>

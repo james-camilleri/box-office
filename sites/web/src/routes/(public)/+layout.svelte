@@ -1,12 +1,12 @@
 <script lang="ts">
   import '../../styles/global.scss'
 
-  import type { PageData } from '../$types'
+  import type { PageData } from './$types.js'
 
   import { setContext } from 'svelte'
-  import CONFIG from '$lib/config'
-  import Header from '$lib/components/global/Header.svelte'
-  import Footer from '$lib/components/global/Footer.svelte'
+  import CONFIG from '$lib/config.js'
+  // import Header from '$lib/components/global/Header.svelte'
+  // import Footer from '$lib/components/global/Footer.svelte'
   import PageTransition from '$lib/components/transition/PageTransition.svelte'
 
   setContext('CONFIG', CONFIG)

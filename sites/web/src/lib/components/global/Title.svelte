@@ -1,9 +1,9 @@
 <script lang="ts">
-  import CONFIG from '$lib/config'
+  import CONFIG from '$lib/config.js'
 
   export let text: string
-  export let subtitle: string = null
-  export let hidden: boolean = false
+  export let subtitle: string | null = null
+  export let hidden = false
 
   const prefix = CONFIG.GENERAL.siteTitle
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Field } from '$lib/types/forms'
+  import type { Field } from '$lib/types/forms/index.js'
   import Checkbox from './Checkbox.svelte'
   import Input from './Input.svelte'
 
@@ -17,18 +17,8 @@
       bind:valid={field.valid}
     />
   {:else if field.type === 'checkbox'}
-    <Checkbox
-      {...field}
-      {validate}
-      bind:value={field.value}
-      bind:valid={field.valid}
-    />
+    <Checkbox {...field} {validate} bind:value={field.value} bind:valid={field.valid} />
   {:else}
-    <Input
-      {...field}
-      {validate}
-      bind:value={field.value}
-      bind:valid={field.valid}
-    />
+    <Input {...field} {validate} bind:value={field.value} bind:valid={field.valid} />
   {/if}
 {/each}

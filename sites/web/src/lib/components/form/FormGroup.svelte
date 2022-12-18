@@ -4,6 +4,7 @@
   const widths = {
     short: '20rem',
     long: '30rem',
+    full: undefined,
   }
 </script>
 
