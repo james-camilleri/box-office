@@ -16,5 +16,6 @@
         "ignorePseudoClasses": ["global"]
       }
     ]
-  }
+  },
+  "customSyntax": "postcss-html"
 }
