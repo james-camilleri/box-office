@@ -1,4 +1,5 @@
 import createClient, { type SanityClient } from '@sanity/client'
+import builder from '@sanity/image-url'
 
 import CONFIG from '../../config.js'
 
@@ -20,4 +21,6 @@ interface SanityCompoundClient extends SanityClient {
 const sanity = createClient(CLIENT_CONFIG) as SanityCompoundClient
 sanity.noCdn = createClient({ ...CLIENT_CONFIG, useCdn: false }) as SanityClient
 
-export { sanity }
+const imageUrlBuilder = builder(sanity)
+
+export { sanity, imageUrlBuilder }

@@ -3,8 +3,14 @@
   https://github.com/leemunroe/responsive-html-email-template
 -->
 <script lang="ts">
+  import type { Ticket } from 'shared/types'
+
+  import { parseFullName } from 'parse-full-name'
+  import { imageUrlBuilder } from '../../../sanity.js'
+
   import EmailWrapper from './components/EmailWrapper.svelte'
   import Footer from './components/Footer.svelte'
+  import QrCode from './components/QrCode.svelte'
 
   export let event: {
     name: string
@@ -14,38 +20,38 @@
     map: string
   }
   export let name: string
-  export let tickets: []
+  export let tickets: Ticket[]
+
+  const { first, middle, nick } = parseFullName(name)
+  const firstName =
+    middle && nick
+      ? `${first} ${middle} ${nick}`
+      : middle
+      ? `${first} ${middle}`
+      : nick
+      ? `${first} ${nick}`
+      : first ?? ''
 </script>
 
 <EmailWrapper title="{event.name}: Tickets" description="Your tickets for {event.name}.">
   <div slot="content">
-    <p>Hi there,</p>
+    <p>Hey {firstName}, here are your tickets for <strong>{event.name}</strong>.</p>
     <p>
-      Sometimes you just want to send a simple HTML email with a simple design and clear call to
-      action. This is it.
+      No need to print anything – just bring this email on your phone. If you'd rather print them
+      out, just make sure the QR codes below are clearly visible.
     </p>
-    <table role="presentation" border={0} cellpadding="0" cellspacing="0" class="btn btn-primary">
-      <tbody>
-        <tr>
-          <td align="left">
-            <table role="presentation" border={0} cellpadding="0" cellspacing="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <a href="http://htmlemail.io" target="_blank">Call To Action</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      This is a really simple email template. Its sole purpose is to get the recipient to click the
-      button with no distractions.
-    </p>
-    <p>Good luck! Hope it works.</p>
+    {#each tickets as ticket}
+      <QrCode
+        ticketId={ticket._id}
+        qrCodeUrl={ticket?.qrCode?.asset?._ref &&
+          imageUrlBuilder.image(ticket?.qrCode?.asset?._ref).url()}
+        seat={{
+          section: 'BALCONY',
+          row: 'A',
+          seatNumber: '1',
+        }}
+      />
+    {/each}
   </div>
   <div slot="footer">
     <Footer />
@@ -53,4 +59,7 @@
 </EmailWrapper>
 
 <style lang="scss">
+  strong {
+    font-weight: bold;
+  }
 </style>
