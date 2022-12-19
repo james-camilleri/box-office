@@ -6,6 +6,21 @@ export default defineType({
   title: 'Configure',
   fields: [
     defineField({
+      name: 'showName',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'showLocation',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'mapUrl',
+      type: 'url',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'shows',
       description: 'The dates and times of every show.',
       type: 'array',
