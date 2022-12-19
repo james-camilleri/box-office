@@ -78,6 +78,8 @@ importers:
       '@sanity/image-url': ^1.0.1
       '@sveltejs/adapter-auto': ^1.0.0
       '@sveltejs/kit': ^1.0.1
+      '@types/nodemailer': ^6.4.7
+      '@types/parse-full-name': ^1.2.2
       '@typescript-eslint/eslint-plugin': ^5.46.1
       '@typescript-eslint/parser': ^5.46.1
       env-cmd: ^10.1.0
@@ -87,6 +89,7 @@ importers:
       juice: ^8.1.0
       lorem-ipsum: ^2.0.8
       nodemailer: ^6.8.0
+      parse-full-name: ^1.2.6
       postcss: ^8.4.20
       postcss-html: ^1.5.0
       prettier: ^2.8.1
@@ -123,6 +126,8 @@ importers:
       '@sanity/image-url': 1.0.1
       '@sveltejs/adapter-auto': 1.0.0_@sveltejs+kit@1.0.1
       '@sveltejs/kit': 1.0.1_svelte@3.55.0+vite@4.0.1
+      '@types/nodemailer': 6.4.7
+      '@types/parse-full-name': 1.2.2
       '@typescript-eslint/eslint-plugin': 5.46.1_mqzxmroayievgzgel6yrqgih5i
       '@typescript-eslint/parser': 5.46.1_lzzuuodtsqwxnvqeq4g4likcqa
       env-cmd: 10.1.0
@@ -131,6 +136,7 @@ importers:
       eslint-plugin-svelte3: 4.0.0_khrjkzzv5v2x7orkj5o7sxbz3a
       juice: 8.1.0
       lorem-ipsum: 2.0.8
+      parse-full-name: 1.2.6
       postcss: 8.4.20
       postcss-html: 1.5.0
       prettier: 2.8.1
@@ -2806,8 +2812,18 @@ packages:
   /@types/node/18.11.17:
     resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
 
+  /@types/nodemailer/6.4.7:
+    resolution: {integrity: sha512-f5qCBGAn/f0qtRcd4SEn88c8Fp3Swct1731X4ryPKqS61/A3LmmzN8zaEz7hneJvpjFbUUgY7lru/B/7ODTazg==}
+    dependencies:
+      '@types/node': 18.11.17
+    dev: true
+
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+
+  /@types/parse-full-name/1.2.2:
+    resolution: {integrity: sha512-ggtHNmVmn+S20kTsgcZfKB5bLq59rY37jk/V9iPsxpFvqcZumonIgb6jK4gFwy8t/5bc+09p6GiWgw3IlS53Cg==}
+    dev: true
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -6787,6 +6803,10 @@ packages:
       is-alphanumerical: 1.0.4
       is-decimal: 1.0.4
       is-hexadecimal: 1.0.4
+
+  /parse-full-name/1.2.6:
+    resolution: {integrity: sha512-uIaENXJFmZfzulBndhHJayi7ZEifJ1bXKaWYmySa04EmMX7eIcsufiAgWTYiJqWRa/Sq7JWPGtCIXFAoUfF7gw==}
+    dev: true
 
   /parse-headers/2.0.5:
     resolution: {integrity: sha512-ft3iAoLOB/MlwbNXgzy43SWGP6sQki2jQvAyBg/zDFAgr9bfNWZIUj42Kw2eJIl8kEi4PbgE6U1Zau/HwI75HA==}
