@@ -1,14 +1,14 @@
-import { PublishIcon, SpinnerIcon } from '@sanity/icons'
+import { PublishIcon } from '@sanity/icons'
 import { useEffect, useState } from 'react'
 import {
   DocumentActionDescription,
   DocumentActionProps,
-  SanityDocument,
   useClient,
   useDocumentOperation,
   useValidationStatus,
 } from 'sanity'
 import { API_VERSION } from 'shared/constants'
+import type { Booking, Ticket } from 'shared/types'
 import { createReference, createTicketsForBooking } from 'shared/utils'
 
 export function CreateBooking({
@@ -23,6 +23,18 @@ export function CreateBooking({
   const { validation } = useValidationStatus(id, type)
   const [isPublishing, setIsPublishing] = useState(false)
   const [ticketIds, setTicketIds] = useState([])
+
+  const EMAIL_API_URL = 'http://localhost:5173/api/tickets/email'
+
+  async function emailTickets(booking: Booking, tickets: Ticket[]) {
+    await fetch(EMAIL_API_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        booking,
+        tickets,
+      }),
+    })
+  }
 
   useEffect(() => {
     // if the isPublishing state was set to true and the draft has changed
@@ -70,12 +82,11 @@ export function CreateBooking({
 
       // TODO: Fill out this functionality.
       const tickets = await createTicketsForBooking(client, bookingDetails)
+      console.log('tickets', tickets)
       setTicketIds(tickets.map((ticket) => ticket._id))
-      // await emailTickets(ticketIds)
+      await emailTickets(draft, tickets)
 
-      // Create composite pricing configuration.
       // @ts-expect-error (I think the types aren't quite right here.)
-
       patch.execute([
         {
           set: {
@@ -89,7 +100,7 @@ export function CreateBooking({
       ])
 
       publish.execute()
-      // onComplete()
+      onComplete()
     },
   }
 }
