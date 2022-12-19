@@ -39,9 +39,8 @@ export default defineType({
       readOnly: true,
     }),
     defineField({
-      name: 'scanned',
-      type: 'boolean',
-      initialValue: false,
+      name: 'scannedAt',
+      type: 'datetime',
       readOnly: true,
     }),
   ],
