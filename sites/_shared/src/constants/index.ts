@@ -1,1 +1,1 @@
-export * from './sanity'
+export * from './sanity.js'

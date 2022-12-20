@@ -1,13 +1,13 @@
 {
   "name": "shared",
   "version": "1.0.0",
+  "type": "module",
   "description": "Shared types and assorted utilities for both front and back end systems.",
   "exports": {
-    "./types/*.ts": "./src/types/*.ts",
-    "./types/*.js": "./src/types/*.js",
-    "./utils": "./src/utils/index.ts",
+    "./constants": "./src/constants/index.ts",
     "./queries": "./src/queries.ts",
-    "./constants": "./src/constants/index.ts"
+    "./types": "./src/types/index.ts",
+    "./utils": "./src/utils/index.ts"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,11 @@
     "@sanity/client": "^3.4.1",
     "@types/qrcode": "^1.5.0",
     "nanoid": "^4.0.0",
-    "qrcode": "^1.5.1"
+    "qrcode": "^1.5.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-is": "^18.2.0",
+    "sanity": "^3.0.6",
+    "styled-components": "^5.3.6"
   }
 }

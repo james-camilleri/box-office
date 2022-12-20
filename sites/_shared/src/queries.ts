@@ -17,3 +17,13 @@ export const UNBOOKED_SEATS =
  */
 export const CUSTOMER_EXISTS =
   'defined(*[_type == "customer" && !(_id in path("drafts.**")) && email == $email][0]._id)'
+
+/**
+ * Get full booking information for email.
+ * @bookingId the booking ID to dereference
+ */
+export const BOOKING_DETAILS = `*[_type == "booking" && _id == $bookingId]{
+    'name': customer -> name,
+    'email': customer -> email,
+    'date': show->date
+  }`

@@ -1,6 +1,9 @@
-import { Reference } from 'sanity'
+import type { Reference } from 'sanity'
 
 export interface Configuration {
+  showName: string
+  showLocation: string
+  mapUrl: string
   shows: Reference[]
   priceTiers: Reference[]
   defaultPrice: Reference
@@ -14,6 +17,9 @@ export interface Configuration {
 }
 
 export interface ConfigurationFull {
+  showName: string
+  showLocation: string
+  mapUrl: string
   shows: Show[]
   priceTiers: PriceTier[]
   defaultPriceTier: string

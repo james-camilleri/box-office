@@ -1,2 +1,2 @@
-export * from './booking'
-export * from './sanity'
+export * from './booking.js'
+export * from './sanity.js'
