@@ -2,11 +2,11 @@ import { visionTool } from '@sanity/vision'
 import { DocumentActionComponent, defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
-import { CreateBooking } from './desk/actions/create-booking'
-import { InvalidateTicket } from './desk/actions/invalidate-ticket'
-import { PublishConfig } from './desk/actions/publish-config'
-import { schemaTypes } from './schemas'
-import { structure } from './structure'
+import { CreateBooking } from './desk/actions/create-booking.js'
+import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
+import { PublishConfig } from './desk/actions/publish-config.js'
+import { schemaTypes } from './schemas/index.js'
+import { structure } from './structure.js'
 
 enum ACTIONS {
   PUBLISH = 'publish',
@@ -56,12 +56,6 @@ export default defineConfig({
 
       if (['ticket'].includes(context.schemaType)) {
         return [InvalidateTicket]
-      }
-
-      if (['pageConfigure'].includes(context.schemaType)) {
-        return actions.filter(({ action }) =>
-          [ACTIONS.PUBLISH, ACTIONS.DISCARD_CHANGES].includes(action as ACTIONS),
-        )
       }
 
       if (['row', 'seat', 'section'].includes(context.schemaType)) {

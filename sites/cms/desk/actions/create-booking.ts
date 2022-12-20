@@ -30,7 +30,7 @@ export function CreateBooking({
     await fetch(EMAIL_API_URL, {
       method: 'POST',
       body: JSON.stringify({
-        booking,
+        bookingId: booking._id,
         tickets,
       }),
     })
@@ -62,9 +62,10 @@ export function CreateBooking({
 
       linkToBooking()
         .then(() => setIsPublishing(false))
+        .then(() => onComplete())
         .catch(console.error)
     }
-  }, [isPublishing, draft, ticketIds, client, id, published])
+  }, [isPublishing, draft])
 
   return {
     disabled: validation.length ? true : !!publish.disabled,
@@ -80,9 +81,7 @@ export function CreateBooking({
         seats: draft.seats.map((seat) => seat._ref),
       }
 
-      // TODO: Fill out this functionality.
       const tickets = await createTicketsForBooking(client, bookingDetails)
-      console.log('tickets', tickets)
       setTicketIds(tickets.map((ticket) => ticket._id))
       await emailTickets(draft, tickets)
 
@@ -100,7 +99,6 @@ export function CreateBooking({
       ])
 
       publish.execute()
-      onComplete()
     },
   }
 }

@@ -1,9 +1,10 @@
-import sanityClient, { SanityDocument } from '@sanity/client'
+import sanityClient from '@sanity/client'
 import { API_VERSION, DATASET, PROJECT_ID } from 'shared/constants'
 
 import CONFIG from './seat-configuration.js'
 
 const { SANITY_API_KEY } = process.env
+// @ts-expect-error nodenext resolution....
 const client = sanityClient({
   projectId: PROJECT_ID,
   apiVersion: API_VERSION,
