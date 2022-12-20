@@ -72,7 +72,7 @@ export default defineType({
       return {
         title: name,
         subtitle: `${date.toLocaleDateString()} ${date.toLocaleTimeString().replace(/:00$/, '')} x${
-          seats.length
+          seats?.length ?? ''
         }`,
       }
     },
