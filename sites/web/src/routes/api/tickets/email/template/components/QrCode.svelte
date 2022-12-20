@@ -1,11 +1,7 @@
 <script lang="ts">
   export let ticketId: string
   export let qrCodeUrl: string | undefined
-  export let seat: {
-    section: string
-    row: string
-    seatNumber: string
-  }
+  export let seat: string
 
   if (!qrCodeUrl) {
     throw Error(`No QR code found for ticket ${ticketId}`)
@@ -13,34 +9,66 @@
 </script>
 
 <div class="qr-code">
-  <div class="seat-details">{seat.section}, Row {seat.row}, seat {seat.seatNumber}</div>
-  <img src={qrCodeUrl} alt={ticketId} />
-  <div class="ticket-number">TICKET NUMBER</div>
-  <div class="ticket-id">{ticketId}</div>
+  <table border={0} cellpadding="0" cellspacing="0">
+    <tr>
+      <td>
+        <div class="seat">{seat}</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src={qrCodeUrl} alt={ticketId} width="600" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="id-wrapper">
+          <div class="ticket-number">TICKET NUMBER</div>
+          <div class="ticket-id">{ticketId}</div>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <style>
   .qr-code {
-    padding: 30px 0;
     margin-bottom: 20px;
     text-align: center;
-    background: #fff !important;
-    border: solid #000 1px;
+    background: #999;
+    border-radius: 3px;
   }
 
-  .seatDetails {
+  .seat {
+    margin: 20px 0;
+    font-size: 1.8em;
+    line-height: 20px;
   }
 
   img {
-    padding: 10px 0;
+    max-width: 100%;
+  }
+
+  .id-wrapper {
+    margin: 20px 0;
   }
 
   .ticket-number {
-    font-size: 0.8em;
-    color: #646464 !important;
+    font-size: 1em;
+    color: #646464;
   }
 
   .ticket-id {
-    font-size: 1.6em;
+    font-size: 1.8em;
+  }
+
+  table {
+    width: 100%;
+    border: solid #000 3px;
+  }
+
+  td {
+    text-align: center;
+    background: #999;
   }
 </style>

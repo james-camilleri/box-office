@@ -9,7 +9,7 @@
   import { imageUrlBuilder } from '../../../sanity.js'
 
   import EmailWrapper from './components/EmailWrapper.svelte'
-  import Footer from './components/Footer.svelte'
+  // import Footer from './components/Footer.svelte'
   import QrCode from './components/QrCode.svelte'
 
   export let event: {
@@ -33,7 +33,7 @@
       : first ?? ''
 </script>
 
-<EmailWrapper title="{event.name}: Tickets" description="Your tickets for {event.name}.">
+<EmailWrapper title="{event.name}: Tickets">
   <div slot="content">
     <p>Hey {firstName}, here are your tickets for <strong>{event.name}</strong>.</p>
     <p>
@@ -45,21 +45,42 @@
         ticketId={ticket._id}
         qrCodeUrl={ticket?.qrCode?.asset?._ref &&
           imageUrlBuilder.image(ticket?.qrCode?.asset?._ref).url()}
-        seat={{
-          section: 'BALCONY',
-          row: 'A',
-          seatNumber: '1',
-        }}
+        seat={ticket.seat._ref}
       />
     {/each}
+    <table class="details">
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>Date</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text">{event.date}</td>
+      </tr>
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>Time</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text">{event.time}</td>
+      </tr>
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>Location</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text"><a href={event.map}>{event.location}</a></td>
+      </tr>
+    </table>
   </div>
-  <div slot="footer">
+  <!-- <div slot="footer">
     <Footer />
-  </div>
+  </div> -->
 </EmailWrapper>
 
 <style lang="scss">
   strong {
     font-weight: bold;
+  }
+
+  .details-heading {
+    padding-top: 15px;
+    vertical-align: bottom;
   }
 </style>

@@ -2,30 +2,34 @@ import type { RequestHandler } from '@sveltejs/kit'
 import CONFIG from '$lib/config.js'
 import juice from 'juice'
 import nodemailer from 'nodemailer'
-import type { Booking, ConfigurationFull, Ticket } from 'shared/types'
+import { BOOKING_DETAILS } from 'shared/queries'
+import type { BookingDetails, ConfigurationFull, Ticket } from 'shared/types'
 
+import { sanity } from '../../sanity.js'
 import Email from './template/Email.svelte'
 
-// import { sanity } from '../../sanity.js'
-
 interface BookingPayload {
-  booking: Booking
+  bookingId: string
   tickets: Ticket[]
 }
 
 export const POST: RequestHandler = async ({ request, fetch }) => {
-  const { booking, tickets } = (await request.json()) as BookingPayload
-  const config = (await (await fetch('/api/config')).json()) as ConfigurationFull
-  console.log(config)
+  const { bookingId, tickets } = (await request.json()) as BookingPayload
+
+  const [config, bookingDetails] = await Promise.all([
+    fetch('/api/config').then((response) => response.json()) as Promise<ConfigurationFull>,
+    ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
+  ])
 
   const { showName, showLocation, mapUrl } = config
 
+  // TODO: Time Zones. Again.
   const { html: rawHtml, css } = Email.render({
-    name: 'James Camilleri',
+    name: bookingDetails.name,
     event: {
       name: showName,
-      date: '19th January, 1992',
-      time: '07:00',
+      date: new Date(bookingDetails.date.split('T')[0]).toLocaleDateString(),
+      time: bookingDetails.date.split('T')[1],
       location: showLocation,
       map: mapUrl,
     },
@@ -56,10 +60,9 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
   })
 
   await transport.sendMail({
-    // from: `${name} <${destination}>`,
     from: 'Arthaus <tickets@arthaus.mt>',
     replyTo: 'tickets@arthaus.mt',
-    to: 'james@james.mt',
+    to: `${bookingDetails.name} <${bookingDetails.email}>`,
     subject,
     html,
   })
