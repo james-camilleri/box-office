@@ -2434,7 +2434,6 @@ packages:
       react-is: 18.2.0
       react-refractor: 2.1.7_react@18.2.0
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
-    dev: true
 
   /@sanity/ui/1.0.2_23mhwjhnzfjwvdn7ol54k26zom:
     resolution: {integrity: sha512-RvQeTfB1ETmBLSLI2yShPimDTnhoKkwyCgy81R2ziXXp4iPFyOLI++pBCDf2Z11m4EFlPJOph1DxHd6tJguzlg==}
@@ -3076,7 +3075,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.19.6_@babel+core@7.20.5
       magic-string: 0.26.7
       react-refresh: 0.14.0
-      vite: 3.2.5_@types+node@18.11.17
+      vite: 3.2.5
     transitivePeerDependencies:
       - supports-color
 
@@ -5053,7 +5052,6 @@ packages:
       tslib: 2.4.0
     optionalDependencies:
       '@emotion/is-prop-valid': 0.8.8
-    dev: true
 
   /framer-motion/7.10.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-2OAII9hjpMNz2Nbl2w09uKo7A0bD6xRtGnCZbPzuGGueucWgmSBLjAwzPhXwzCQWMpL3LU8jmXHjxAwIyjslxg==}
@@ -7539,7 +7537,7 @@ packages:
       '@sanity/schema': 3.0.6
       '@sanity/server': 3.0.6_nwepypbmpoesrbqfvyvw5zthtu
       '@sanity/types': 3.0.6
-      '@sanity/ui': 1.0.2_23mhwjhnzfjwvdn7ol54k26zom
+      '@sanity/ui': 1.0.1_23mhwjhnzfjwvdn7ol54k26zom
       '@sanity/util': 3.0.6
       '@sanity/uuid': 3.0.1
       '@sanity/validation': 3.0.6_@sanity+client@3.4.1
@@ -8706,7 +8704,6 @@ packages:
       rollup: 2.79.1
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
 
   /vite/3.2.5_@types+node@18.11.17:
     resolution: {integrity: sha512-4mVEpXpSOgrssFZAOmGIr85wPHKvaDAcXqxVxVRZhljkJOMZi1ibLibzjLHzJvcok8BMguLc7g1W6W/GqZbLdQ==}
@@ -8740,6 +8737,7 @@ packages:
       rollup: 2.79.1
     optionalDependencies:
       fsevents: 2.3.2
+    dev: false
 
   /vite/4.0.1_sass@1.57.0:
     resolution: {integrity: sha512-kZQPzbDau35iWOhy3CpkrRC7It+HIHtulAzBhMqzGHKRf/4+vmh8rPDDdv98SWQrFWo6//3ozwsRmwQIPZsK9g==}
