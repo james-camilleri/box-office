@@ -24,7 +24,9 @@ export function CreateBooking({
   const [isPublishing, setIsPublishing] = useState(false)
   const [ticketIds, setTicketIds] = useState([])
 
-  const EMAIL_API_URL = 'http://localhost:5173/api/tickets/email'
+  const EMAIL_API_URL = import.meta.env.PROD
+    ? 'https://chicago-tickets.netlify.app/api/tickets/email'
+    : 'http://localhost:5173/api/tickets/email'
 
   async function emailTickets(booking: Booking, tickets: Ticket[]) {
     await fetch(EMAIL_API_URL, {
