@@ -35,7 +35,7 @@ export const POST: RequestHandler = async (...args) => {
     console.log('response.status', response.status)
     console.log('response.statusText', response.statusText)
     const body = await response.text()
-    console.log('response.text', response.text)
+    console.log('body', body)
     const bookingDetails = (
       (await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[]
     )[0]
