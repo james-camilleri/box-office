@@ -16,22 +16,19 @@ interface BookingPayload {
   tickets: Ticket[]
 }
 
-export const POST: RequestHandler = async (...args) => {
-  const { request, fetch: svelteFetch } = args[0]
-
+export const POST: RequestHandler = async (event) => {
+  const { request, fetch } = event
+  console.log('event', event)
   try {
     const { bookingId, tickets } = (await request.json()) as BookingPayload
 
-    console.log('arguments?', args)
-    console.log('fetch?', svelteFetch)
-    console.log('global fetch?', fetch)
-    console.log('fetch === svelteFetch?', fetch === svelteFetch)
+    // console.log('arguments?', args)
     // const [config, bookingDetails] = await Promise.all([
     //   (await (await svelteFetch('/api/config')).json()) as Promise<ConfigurationFull>,
     //   ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
     // ])
 
-    const response = await svelteFetch('/api/config')
+    const response = await fetch('/api/config')
     console.log('response.status', response.status)
     console.log('response.statusText', response.statusText)
     const body = await response.text()
