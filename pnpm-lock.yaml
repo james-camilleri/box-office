@@ -102,6 +102,7 @@ importers:
       postcss-html: ^1.5.0
       prettier: ^2.8.3
       prettier-plugin-svelte: ^2.9.0
+      qrcode: ^1.5.1
       sanitize.css: ^13.0.0
       sass: ^1.57.1
       shared: workspace:^1.0.0
@@ -149,6 +150,7 @@ importers:
       postcss-html: 1.5.0
       prettier: 2.8.3
       prettier-plugin-svelte: 2.9.0_kdmmghgdi3ngrsq6otxkjilbry
+      qrcode: 1.5.1
       sanitize.css: 13.0.0
       sass: 1.57.1
       shared: link:../_shared
@@ -4647,7 +4649,7 @@ packages:
       create-error-class: 3.0.2
       debug: 2.6.9
       decompress-response: 6.0.0
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2_debug@2.6.9
       form-urlencoded: 2.0.9
       into-stream: 3.1.0
       is-plain-object: 2.0.4

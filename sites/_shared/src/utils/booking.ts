@@ -1,7 +1,7 @@
 import type { SanityClient } from '@sanity/client'
 
 import { customAlphabet } from 'nanoid'
-import qrCode from 'qrcode/build/qrcode.js'
+import qrCode from 'qrcode'
 
 import type { PriceConfiguration, PriceTier } from '../types/configuration.js'
 import { createReference } from './sanity.js'

@@ -44,6 +44,7 @@
     "postcss-html": "^1.5.0",
     "prettier": "^2.8.3",
     "prettier-plugin-svelte": "^2.9.0",
+    "qrcode": "^1.5.1",
     "sanitize.css": "^13.0.0",
     "sass": "^1.57.1",
     "shared": "workspace:^1.0.0",
