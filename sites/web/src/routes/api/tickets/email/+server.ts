@@ -26,13 +26,23 @@ export const POST: RequestHandler = async (...args) => {
     console.log('fetch?', svelteFetch)
     console.log('global fetch?', fetch)
     console.log('fetch === svelteFetch?', fetch === svelteFetch)
-    const [config, bookingDetails] = await Promise.all([
-      (await (await svelteFetch('/api/config')).json()) as Promise<ConfigurationFull>,
-      ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
-    ])
+    // const [config, bookingDetails] = await Promise.all([
+    //   (await (await svelteFetch('/api/config')).json()) as Promise<ConfigurationFull>,
+    //   ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
+    // ])
+
+    const response = await svelteFetch('/api/config')
+    console.log('response.status', response.status)
+    console.log('response.statusText', response.statusText)
+    const body = await response.text()
+    console.log('response.text', response.text)
+    const bookingDetails = (
+      (await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[]
+    )[0]
 
     const { name, email, date, show, discount } = bookingDetails
-    const { showName, showLocation, mapUrl, priceTiers, priceConfiguration } = config
+    // const { showName, showLocation, mapUrl, priceTiers, priceConfiguration } = config
+    const { showName, showLocation, mapUrl, priceTiers, priceConfiguration } = JSON.parse(body)
 
     const { first, middle, nick } = parseFullName(name)
     const firstName =
@@ -101,8 +111,6 @@ export const POST: RequestHandler = async (...args) => {
       ),
     ])
   } catch (e) {
-    console.log("it's all gone to hell", e)
-    console.log('headers', getCrossOriginHeader(request.headers))
     return new Response(e as string, {
       status: 500,
       headers: getCrossOriginHeader(request.headers),
