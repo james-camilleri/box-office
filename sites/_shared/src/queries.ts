@@ -25,7 +25,8 @@ export const CUSTOMER_EXISTS =
 export const BOOKING_DETAILS = `*[_type == "booking" && _id == $bookingId]{
     'name': customer -> name,
     'email': customer -> email,
-    'date': show->date,
+    'show': show -> _id,
+    'date': show -> date,
     'discount': {
       'name': discount -> name,
       'type': discount -> type,

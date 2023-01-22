@@ -24,13 +24,20 @@ export interface TicketFull extends SanityDocument {
 
 export interface Booking extends SanityDocument {}
 
+export enum DISCOUNT_TYPE {
+  PERCENTAGE = 'percentage',
+}
+
+export interface Discount {
+  name: string
+  type: DISCOUNT_TYPE
+  percentage?: number
+}
+
 export interface BookingDetails {
   name: string
   email: string
+  show: string
   date: string
-  discount: {
-    name: string
-    type: 'percentage'
-    percentage?: number
-  }
+  discount: Discount
 }
