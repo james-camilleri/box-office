@@ -5,11 +5,9 @@
 <script lang="ts">
   import type { Ticket } from 'shared/types'
 
-  import { parseFullName } from 'parse-full-name'
   import { imageUrlBuilder } from '../../../sanity.js'
 
   import EmailWrapper from './components/EmailWrapper.svelte'
-  // import Footer from './components/Footer.svelte'
   import QrCode from './components/QrCode.svelte'
 
   export let event: {
@@ -21,21 +19,11 @@
   }
   export let name: string
   export let tickets: Ticket[]
-
-  const { first, middle, nick } = parseFullName(name)
-  const firstName =
-    middle && nick
-      ? `${first} ${middle} ${nick}`
-      : middle
-      ? `${first} ${middle}`
-      : nick
-      ? `${first} ${nick}`
-      : first ?? ''
 </script>
 
 <EmailWrapper title="{event.name}: Tickets">
   <div slot="content">
-    <p>Hey {firstName}, here are your tickets for <strong>{event.name}</strong>.</p>
+    <p>Hey {name}, here are your tickets for <strong>{event.name}</strong>.</p>
     <p>
       No need to print anything – just bring this email on your phone. If you'd rather print them
       out, just make sure the QR codes below are clearly visible.
