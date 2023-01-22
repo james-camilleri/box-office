@@ -1,4 +1,3 @@
-import { error, type RequestHandler } from '@sveltejs/kit'
 import CONFIG from '$lib/config.js'
 import juice from 'juice'
 import nodemailer from 'nodemailer'
@@ -8,20 +7,27 @@ import type { BookingDetails, ConfigurationFull, Ticket } from 'shared/types'
 
 import { getCrossOriginHeader } from '../../cors.js'
 import { sanity } from '../../sanity.js'
-import TicketEmail from './templates/Tickets.svelte'
+import type { RequestHandler } from './$types.js'
 import InvoiceEmail from './templates/Invoice.svelte'
+import TicketEmail from './templates/Tickets.svelte'
 
 interface BookingPayload {
   bookingId: string
   tickets: Ticket[]
 }
 
-export const POST: RequestHandler = async ({ request, fetch }) => {
+export const POST: RequestHandler = async (...args) => {
+  const { request, fetch: svelteFetch } = args[0]
+
   try {
     const { bookingId, tickets } = (await request.json()) as BookingPayload
 
+    console.log('arguments?', args)
+    console.log('fetch?', svelteFetch)
+    console.log('global fetch?', fetch)
+    console.log('fetch === svelteFetch?', fetch === svelteFetch)
     const [config, bookingDetails] = await Promise.all([
-      fetch('/api/config').then((response) => response.json()) as Promise<ConfigurationFull>,
+      svelteFetch('/api/config').then((response) => response.json()) as Promise<ConfigurationFull>,
       ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
     ])
 
@@ -95,11 +101,11 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
       ),
     ])
   } catch (e) {
-    throw error(500, e)
+    return new Response(e as string, {
+      status: 500,
+      headers: getCrossOriginHeader(request.headers),
+    })
   }
-
-  console.log('request.headers', request.headers)
-  console.log('getCrossOriginHeader(request.headers)', getCrossOriginHeader(request.headers))
 
   return new Response(null, {
     headers: getCrossOriginHeader(request.headers),
