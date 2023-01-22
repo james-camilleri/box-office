@@ -29,7 +29,7 @@
 <EmailWrapper title="{event.name}: Invoice">
   <div slot="content">
     <p>Hey {name}, here is your invoice for <strong>{event.name}</strong>.</p>
-    <table class="invoice" border="0">
+    <table class="invoice" border={0}>
       <colgroup>
         <col span="1" style="width: 85%;" />
         <col span="1" style="width: 5%;" />
@@ -40,10 +40,10 @@
         <tr class="line-item">
           <td>{description}</td>
           <td>€</td>
-          <td>{price.toFixed(2)}</td>
+          <td>{price?.toFixed(2)}</td>
         </tr>
       {/each}
-      {#if reduction}
+      {#if discount && reduction}
         <tr class="line-item subtotal">
           <td>Subtotal</td>
           <td>€</td>
@@ -73,10 +73,6 @@
   .discount,
   .total {
     font-weight: bold;
-  }
-
-  em {
-    font-style: italic;
   }
 
   .invoice {

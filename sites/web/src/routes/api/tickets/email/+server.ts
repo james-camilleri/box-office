@@ -113,6 +113,6 @@ function generateEmail(name: string, email: string, subject: string, html: strin
   }
 }
 
-function generateEmailHtml({ rawHtml, css }: { rawHtml: string; css: { code: string } }) {
-  return juice(`<style>${css.code}</style>${rawHtml}`)
+function generateEmailHtml({ html, css }: { html: string; css: { code: string } }) {
+  return juice(`<style>${css.code}</style>${html}`)
 }
