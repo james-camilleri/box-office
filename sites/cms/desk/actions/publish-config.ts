@@ -7,7 +7,7 @@ import {
   useDocumentOperation,
   useValidationStatus,
 } from 'sanity'
-import { Configuration } from 'shared/types/configuration'
+import { Configuration } from 'shared/types'
 
 interface ConfigurationPage extends SanityDocument, Partial<Configuration> {}
 
@@ -34,6 +34,11 @@ function generateCompositePricingConfiguration(draft: ConfigurationPage | null) 
       }
     })
   })
+
+  const defaultTier = draft.defaultPrice && draft.defaultPrice._ref
+  if (defaultTier) {
+    composite['default']['default'] = defaultTier
+  }
 
   return JSON.stringify(composite)
 }
