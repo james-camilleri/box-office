@@ -101,6 +101,8 @@ export const POST: RequestHandler = async (...args) => {
       ),
     ])
   } catch (e) {
+    console.log("it's all gone to hell", e)
+    console.log('headers', getCrossOriginHeader(request.headers))
     return new Response(e as string, {
       status: 500,
       headers: getCrossOriginHeader(request.headers),
