@@ -27,7 +27,7 @@ export const POST: RequestHandler = async (...args) => {
     console.log('global fetch?', fetch)
     console.log('fetch === svelteFetch?', fetch === svelteFetch)
     const [config, bookingDetails] = await Promise.all([
-      svelteFetch('/api/config').then((response) => response.json()) as Promise<ConfigurationFull>,
+      (await (await svelteFetch('/api/config')).json()) as Promise<ConfigurationFull>,
       ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
     ])
 
