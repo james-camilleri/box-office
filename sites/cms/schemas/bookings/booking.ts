@@ -48,6 +48,14 @@ export default defineType({
       hidden: ({ document }) => !document?.show,
     }),
     defineField({
+      name: 'discount',
+      type: 'reference',
+      to: [{ type: 'discount' }],
+      options: {
+        disableNew: true,
+      },
+    }),
+    defineField({
       name: 'tickets',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'ticket' }] }],

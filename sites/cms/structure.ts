@@ -1,5 +1,6 @@
 import {
   FaExclamationTriangle,
+  FaPercentage,
   FaTheaterMasks,
   FaTicketAlt,
   FaUserFriends,
@@ -32,6 +33,12 @@ export const structure = (S: StructureBuilder, context: ConfigContext) =>
         .title('Configure')
         .icon(FaWrench)
         .child(S.document().title('Configure').schemaType('pageConfigure').documentId('configure')),
+      S.listItem()
+        .title('Discounts')
+        .icon(FaPercentage)
+        .child(
+          S.documentList().title('Discounts').filter('_type == "discount"').schemaType('discount'),
+        ),
       S.divider(),
       S.listItem()
         .title('Internal')
