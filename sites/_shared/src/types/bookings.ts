@@ -28,4 +28,9 @@ export interface BookingDetails {
   name: string
   email: string
   date: string
+  discount: {
+    name: string
+    type: 'percentage'
+    percentage?: number
+  }
 }
