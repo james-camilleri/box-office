@@ -98,6 +98,9 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
     throw error(500, e)
   }
 
+  console.log('request.headers', request.headers)
+  console.log('getCrossOriginHeader(request.headers)', getCrossOriginHeader(request.headers))
+
   return new Response(null, {
     headers: getCrossOriginHeader(request.headers),
   })
