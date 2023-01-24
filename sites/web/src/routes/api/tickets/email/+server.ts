@@ -22,6 +22,7 @@ export const POST: RequestHandler = async (event) => {
   try {
     const { bookingId, tickets } = (await request.json()) as BookingPayload
 
+    console.log(`fetching from ${event.url.origin + '/api/config'}`)
     const [config, bookingDetails] = await Promise.all([
       // TODO: FIGURE OUT WHY THE HELL RELATIV FETCH IS FAILING ON THE SERVER
       (await (await fetch(event.url.origin + '/api/config')).json()) as Promise<ConfigurationFull>,
