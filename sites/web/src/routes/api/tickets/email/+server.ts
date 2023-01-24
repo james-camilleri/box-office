@@ -22,24 +22,15 @@ export const POST: RequestHandler = async (event) => {
   try {
     const { bookingId, tickets } = (await request.json()) as BookingPayload
 
-    // console.log('arguments?', args)
-    // const [config, bookingDetails] = await Promise.all([
-    //   (await (await svelteFetch('/api/config')).json()) as Promise<ConfigurationFull>,
-    //   ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
-    // ])
-
-    const response = await fetch('/api/config')
-    console.log('response.status', response.status)
-    console.log('response.statusText', response.statusText)
-    const body = await response.text()
-    console.log('body', body)
-    const bookingDetails = (
-      (await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[]
-    )[0]
+    const [config, bookingDetails] = await Promise.all([
+      // TODO: FIGURE OUT WHY THE HELL RELATIV FETCH IS FAILING ON THE SERVER
+      (await (await fetch(event.url.origin + '/api/config')).json()) as Promise<ConfigurationFull>,
+      // (await (await fetch('/api/config')).json()) as Promise<ConfigurationFull>,
+      ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
+    ])
 
     const { name, email, date, show, discount } = bookingDetails
-    // const { showName, showLocation, mapUrl, priceTiers, priceConfiguration } = config
-    const { showName, showLocation, mapUrl, priceTiers, priceConfiguration } = JSON.parse(body)
+    const { showName, showLocation, mapUrl, priceTiers, priceConfiguration } = config
 
     const { first, middle, nick } = parseFullName(name)
     const firstName =
