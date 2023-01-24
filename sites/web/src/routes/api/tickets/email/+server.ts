@@ -17,8 +17,8 @@ interface BookingPayload {
 }
 
 export const POST: RequestHandler = async (event) => {
-  const { request, fetch } = event
-  console.log('event', event)
+  const { request } = event
+
   try {
     const { bookingId, tickets } = (await request.json()) as BookingPayload
 
