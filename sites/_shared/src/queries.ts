@@ -33,3 +33,5 @@ export const BOOKING_DETAILS = `*[_type == "booking" && _id == $bookingId]{
       'percentage': discount -> percentage
     }
   }`
+
+export const EMAIL_TEXT = `*[_id == "email"][0].emailText`
