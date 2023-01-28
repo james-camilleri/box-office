@@ -1,4 +1,4 @@
-import type { Reference } from 'sanity'
+import type { Reference } from '@sanity/types'
 
 export interface Configuration {
   showName: string
@@ -43,3 +43,5 @@ export interface PriceConfiguration {
   default: Record<string, string>
   [key: string]: Record<string, string>
 }
+
+export type PriceMap = Map<string, string>

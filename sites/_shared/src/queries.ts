@@ -34,4 +34,17 @@ export const BOOKING_DETAILS = `*[_type == "booking" && _id == $bookingId]{
     }
   }`
 
+/**
+ * Get the email text configuration.
+ */
 export const EMAIL_TEXT = `*[_id == "email"][0].emailText`
+
+/**
+ * Gets the rows and sections of an array of seats.
+ * @seats an array of seat IDs
+ */
+export const SEAT_DETAILS = `*[_id in $seats]{
+  _id,
+  'row': row -> _id,
+  'section': row -> section -> _id
+}`

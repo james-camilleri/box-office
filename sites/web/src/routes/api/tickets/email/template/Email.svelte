@@ -6,7 +6,7 @@
   import type { PortableTextBlock } from '@portabletext/types'
   import { PortableText } from '@portabletext/svelte'
 
-  import type { Ticket, PriceConfiguration, Discount, PriceTier } from 'shared/types'
+  import type { Ticket, PriceConfiguration, Discount, PriceTier, Seat } from 'shared/types'
   import { getLineItem, getTotals } from 'shared/utils'
 
   import { imageUrlBuilder } from '../../../sanity.js'
@@ -18,16 +18,14 @@
   export let name: string
   export let show: string
   export let tickets: Ticket[]
+  export let seats: Seat[]
   export let priceTiers: PriceTier[]
   export let priceConfiguration: PriceConfiguration
   export let discount: Discount | undefined
   export let emailText: PortableTextBlock[]
 
-  const lineItems = tickets.map(({ seat }) =>
-    getLineItem(seat._ref, show, priceTiers, priceConfiguration),
-  )
-
-  const { subtotal, reduction, total } = getTotals(
+  const lineItems = seats.map((seat) => getLineItem(seat, show, priceTiers, priceConfiguration))
+  const { subtotal, reduction, total, vat } = getTotals(
     lineItems.map(({ price }) => price ?? 0),
     discount,
   )
@@ -103,6 +101,11 @@
         <td>€</td>
         <td>{total.toFixed(2)}</td>
       </tr>
+      {#if vat > 0}
+        <tr class="vat">
+          <td colspan="3">includes €{vat.toFixed(2)} VAT</td>
+        </tr>
+      {/if}
     </table>
   </div>
   <!-- <div slot="footer">
@@ -149,6 +152,13 @@
 
     .line-item:not(.discount) + .line-item.total td {
       border-top: solid 3px #000;
+    }
+
+    .vat {
+      padding-top: 3px;
+      font-size: 0.8em;
+      font-style: italic;
+      text-align: right;
     }
   }
 </style>

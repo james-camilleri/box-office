@@ -2,8 +2,8 @@ import CONFIG from '$lib/config.js'
 import juice from 'juice'
 import nodemailer from 'nodemailer'
 import { parseFullName } from 'parse-full-name'
-import { BOOKING_DETAILS, EMAIL_TEXT } from 'shared/queries'
-import type { BookingDetails, ConfigurationFull, Ticket } from 'shared/types'
+import { BOOKING_DETAILS, EMAIL_TEXT, SEAT_DETAILS } from 'shared/queries'
+import type { BookingDetails, ConfigurationFull, Seat, Ticket, TicketFull } from 'shared/types'
 
 import { getCrossOriginHeader } from '../../cors.js'
 import { sanity } from '../../sanity.js'
@@ -20,14 +20,18 @@ export const POST: RequestHandler = async (event) => {
 
   try {
     const { bookingId, tickets } = (await request.json()) as BookingPayload
+    const seatIds = tickets.map(({ seat }) => seat._ref)
 
-    const [config, bookingDetails, emailText] = await Promise.all([
+    const [config, bookingDetails, seats, emailText] = await Promise.all([
       // TODO: FIGURE OUT WHY THE HELL RELATIVE FETCH IS FAILING ON THE SERVER
       (await (await fetch(event.url.origin + '/api/config')).json()) as Promise<ConfigurationFull>,
       // (await (await fetch('/api/config')).json()) as Promise<ConfigurationFull>,
       ((await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails[])[0],
+      (await sanity.fetch(SEAT_DETAILS, { seats: seatIds })) as Seat[],
       await sanity.fetch(EMAIL_TEXT),
     ])
+
+    console.log('seats', seats)
 
     const { name, email, date, show, discount } = bookingDetails
     const { showName, showLocation, mapUrl, priceTiers, priceConfiguration } = config
@@ -75,6 +79,7 @@ export const POST: RequestHandler = async (event) => {
             },
             show,
             tickets,
+            seats,
             priceTiers,
             priceConfiguration,
             discount,
@@ -84,6 +89,7 @@ export const POST: RequestHandler = async (event) => {
       ),
     )
   } catch (e) {
+    console.error(e)
     return new Response(e as string, {
       status: 500,
       headers: getCrossOriginHeader(request.headers),
