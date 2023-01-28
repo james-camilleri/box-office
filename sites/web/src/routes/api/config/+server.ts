@@ -17,6 +17,7 @@ const CONFIG_QUERY = `*[_id == '${PAGE_ID}']{
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
   const configuration = await sanity.fetch(CONFIG_QUERY)
+  console.log('CONFIGURATION', configuration)
 
   return json({
     showName: configuration.showName,
