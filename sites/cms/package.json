@@ -21,14 +21,13 @@
   "dependencies": {
     "@james-camilleri/replace-sanity-favicon": "^1.0.1",
     "@james-camilleri/sanity-web-image": "^2.0.3",
-    "@james-camilleri/slack-logger": "^1.2.8",
-    "@sanity/client": "^3.4.1",
-    "@sanity/vision": "^3.2.4",
+    "@sanity/client": "^4.0.0",
+    "@sanity/vision": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-is": "^18.2.0",
-    "sanity": "^3.2.4",
+    "sanity": "^3.2.5",
     "styled-components": "^5.3.6",
     "url": "^0.11.0"
   },
