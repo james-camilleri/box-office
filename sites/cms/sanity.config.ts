@@ -30,7 +30,8 @@ export default defineConfig({
     types: schemaTypes,
     templates: (previous) =>
       previous.filter(
-        ({ id }) => !['ticket', 'pageConfigure', 'row', 'seat', 'section'].includes(id),
+        ({ id }) =>
+          !['ticket', 'pageConfigure', 'pageEmail', 'row', 'seat', 'section'].includes(id),
       ),
   },
 
@@ -48,6 +49,14 @@ export default defineConfig({
               : null,
           )
           .filter(Boolean) as DocumentActionComponent[] // TS's silly filter thing again.
+      }
+
+      if (context.schemaType === 'pageEmail') {
+        return actions.filter(
+          (previousAction) =>
+            previousAction.action === ACTIONS.PUBLISH ||
+            previousAction.action === ACTIONS.DISCARD_CHANGES,
+        )
       }
 
       if (['booking'].includes(context.schemaType)) {

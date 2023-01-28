@@ -3,6 +3,7 @@ import customer from './bookings/customer.js'
 import ticket from './bookings/ticket.js'
 import pageConfigure from './configuration/configure.js'
 import discount from './configuration/discount.js'
+import pageEmail from './configuration/email.js'
 import priceTier from './configuration/price-tier.js'
 import show from './configuration/show.js'
 import row from './seatmap/row.js'
@@ -16,6 +17,7 @@ export const schemaTypes = [
 
   discount,
   pageConfigure,
+  pageEmail,
   priceTier,
   show,
 
