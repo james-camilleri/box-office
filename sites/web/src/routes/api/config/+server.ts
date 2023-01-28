@@ -6,6 +6,7 @@ const PAGE_ID = 'configure'
 const CONFIG_QUERY = `*[_id == '${PAGE_ID}']{
   showName,
   showLocation,
+  vatPermitNumber,
   mapUrl,
   shows[] -> { _id, date },
   priceTiers[] -> { _id, name, colour, price },
@@ -20,6 +21,7 @@ export async function GET() {
   return json({
     showName: configuration.showName,
     showLocation: configuration.showLocation,
+    vatPermitNumber: configuration.vatPermitNumber,
     mapUrl: configuration.mapUrl,
     shows: configuration.shows,
     priceTiers: configuration.priceTiers,

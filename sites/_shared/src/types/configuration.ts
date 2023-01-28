@@ -19,6 +19,7 @@ export interface Configuration {
 export interface ConfigurationFull {
   showName: string
   showLocation: string
+  vatPermitNumber: string
   mapUrl: string
   shows: Show[]
   priceTiers: PriceTier[]
