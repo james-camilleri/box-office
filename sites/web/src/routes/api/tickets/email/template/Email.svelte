@@ -3,9 +3,15 @@
   https://github.com/leemunroe/responsive-html-email-template
 -->
 <script lang="ts">
+  import type { PortableTextBlock } from '@portabletext/types'
+  import { PortableText } from '@portabletext/svelte'
+
   import type { Ticket, PriceConfiguration, Discount, PriceTier } from 'shared/types'
   import { getLineItem, getTotals } from 'shared/utils'
 
+  import { imageUrlBuilder } from '../../../sanity.js'
+
+  import QrCode from './components/QrCode.svelte'
   import EmailWrapper from './components/EmailWrapper.svelte'
 
   export let event: { name: string }
@@ -15,6 +21,7 @@
   export let priceTiers: PriceTier[]
   export let priceConfiguration: PriceConfiguration
   export let discount: Discount | undefined
+  export let emailText: PortableTextBlock[]
 
   const lineItems = tickets.map(({ seat }) =>
     getLineItem(seat._ref, show, priceTiers, priceConfiguration),
@@ -26,9 +33,45 @@
   )
 </script>
 
-<EmailWrapper title="{event.name}: Invoice">
+<EmailWrapper title="Your tickets for {event.name}">
   <div slot="content">
-    <p>Hey {name}, here is your invoice for <strong>{event.name}</strong>.</p>
+    <p>Hey {name}, here are your tickets for <strong>{event.name}</strong>.</p>
+    <p>
+      No need to print anything – just bring this email on your phone. If you'd rather print them
+      out, just make sure the QR codes below are clearly visible.
+    </p>
+    <PortableText value={emailText} />
+    {#each tickets as ticket}
+      <QrCode
+        ticketId={ticket._id}
+        qrCodeUrl={ticket?.qrCode?.asset?._ref &&
+          imageUrlBuilder.image(ticket?.qrCode?.asset?._ref).url()}
+        seat={ticket.seat._ref}
+      />
+    {/each}
+    <table class="details">
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>Date</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text">{event.date}</td>
+      </tr>
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>Time</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text">{event.time}</td>
+      </tr>
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>Location</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text"><a href={event.map}>{event.location}</a></td>
+      </tr>
+    </table>
+
+    <p>Your invoice:</p>
+
     <table class="invoice" border={0}>
       <colgroup>
         <col span="1" style="width: 85%;" />
@@ -75,32 +118,37 @@
     font-weight: bold;
   }
 
+  .details-heading {
+    padding-top: 15px;
+    vertical-align: bottom;
+  }
+
   .invoice {
     border-spacing: 0;
-  }
 
-  .line-item td {
-    padding: 5px 2px;
-    border-top: solid 1px #ccc;
-  }
+    .line-item td {
+      padding: 5px 2px;
+      border-top: solid 1px #ccc;
+    }
 
-  tr > td:last-child {
-    text-align: right;
-  }
+    tr > td:last-child {
+      text-align: right;
+    }
 
-  .line-item:first-of-type td {
-    border-top: 0;
-  }
+    .line-item:first-of-type td {
+      border-top: 0;
+    }
 
-  .line-item.subtotal td {
-    border-top: solid 3px #000;
-  }
+    .line-item.subtotal td {
+      border-top: solid 3px #000;
+    }
 
-  .line-item.total td {
-    border-bottom: solid 3px #000;
-  }
+    .line-item.total td {
+      border-bottom: solid 3px #000;
+    }
 
-  .line-item:not(.discount) + .line-item.total td {
-    border-top: solid 3px #000;
+    .line-item:not(.discount) + .line-item.total td {
+      border-top: solid 3px #000;
+    }
   }
 </style>
