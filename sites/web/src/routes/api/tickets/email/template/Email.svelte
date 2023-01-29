@@ -14,7 +14,15 @@
   import QrCode from './components/QrCode.svelte'
   import EmailWrapper from './components/EmailWrapper.svelte'
 
-  export let event: { name: string }
+  export let event: {
+    name: string
+    date: string
+    time: string
+    location: string
+    map: string
+    vatNumber: string
+    vatPermitNumber: string
+  }
   export let name: string
   export let show: string
   export let tickets: Ticket[]
@@ -106,6 +114,21 @@
           <td colspan="3">includes €{vat.toFixed(2)} VAT</td>
         </tr>
       {/if}
+    </table>
+
+    <table class="details">
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>VAT Number</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text">{event.vatNumber}</td>
+      </tr>
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>VAT Permit Number</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text">{event.vatPermitNumber}</td>
+      </tr>
     </table>
   </div>
   <!-- <div slot="footer">

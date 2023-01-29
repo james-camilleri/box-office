@@ -31,10 +31,16 @@ export const POST: RequestHandler = async (event) => {
       await sanity.fetch(EMAIL_TEXT),
     ])
 
-    console.log('seats', seats)
-
     const { name, email, date, show, discount } = bookingDetails
-    const { showName, showLocation, mapUrl, priceTiers, priceConfiguration } = config
+    const {
+      showName,
+      showLocation,
+      vatNumber,
+      vatPermitNumber,
+      mapUrl,
+      priceTiers,
+      priceConfiguration,
+    } = config
 
     const { first, middle, nick } = parseFullName(name)
     const firstName =
@@ -76,6 +82,8 @@ export const POST: RequestHandler = async (event) => {
               time: new Date(date).toLocaleTimeString(),
               location: showLocation,
               map: mapUrl,
+              vatNumber,
+              vatPermitNumber,
             },
             show,
             tickets,
