@@ -10,6 +10,7 @@ const CONFIG_QUERY = `*[_id == '${PAGE_ID}']{
   vatPermitNumber,
   mapUrl,
   shows[] -> { _id, date },
+  timeZone,
   priceTiers[] -> { _id, name, colour, price },
   'defaultPrice': defaultPrice->._id,
   'priceConfiguration': compositePriceConfiguration,
@@ -20,14 +21,7 @@ export async function GET() {
   const configuration = await sanity.fetch(CONFIG_QUERY)
 
   return json({
-    showName: configuration.showName,
-    showLocation: configuration.showLocation,
-    vatNumber: configuration.vatNumber,
-    vatPermitNumber: configuration.vatPermitNumber,
-    mapUrl: configuration.mapUrl,
-    shows: configuration.shows,
-    priceTiers: configuration.priceTiers,
-    defaultPriceTier: configuration.defaultPrice,
+    ...configuration,
     priceConfiguration: JSON.parse(configuration.priceConfiguration),
   })
 }

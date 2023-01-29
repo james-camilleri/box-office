@@ -38,6 +38,7 @@ export const POST: RequestHandler = async (event) => {
       showLocation,
       vatNumber,
       vatPermitNumber,
+      timeZone,
       mapUrl,
       priceTiers,
       priceConfiguration,
@@ -78,9 +79,8 @@ export const POST: RequestHandler = async (event) => {
             name: firstName,
             event: {
               name: showName,
-              // TODO: Time Zones. Again.
-              date: new Date(date).toLocaleDateString(),
-              time: new Date(date).toLocaleTimeString(),
+              date,
+              timeZone,
               location: showLocation,
               map: mapUrl,
               vatNumber,

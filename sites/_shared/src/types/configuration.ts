@@ -30,6 +30,7 @@ export interface ConfigurationFull {
   vatNumber: string
   mapUrl: string
   shows: Show[]
+  timeZone: string
   priceTiers: PriceTier[]
   defaultPriceTier: string
   priceConfiguration: PriceConfiguration

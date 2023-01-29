@@ -42,6 +42,8 @@ export default defineType({
     }),
     defineField({
       name: 'timeZone',
+      description:
+        'The time zone the show will be held in – important to get the dates and times to show correctly in emails and on the front-end.',
       type: 'string',
       initialValue: getUserTimeZone(),
       options: {

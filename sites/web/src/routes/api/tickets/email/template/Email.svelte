@@ -7,7 +7,7 @@
   import { PortableText } from '@portabletext/svelte'
 
   import type { Ticket, PriceConfiguration, Discount, PriceTier, Seat } from 'shared/types'
-  import { getLineItem, getTotals } from 'shared/utils'
+  import { getLineItem, getTotals, getZonedDate, getZonedTime } from 'shared/utils'
 
   import { imageUrlBuilder } from '../../../sanity.js'
 
@@ -17,7 +17,7 @@
   export let event: {
     name: string
     date: string
-    time: string
+    timeZone: string
     location: string
     map: string
     vatNumber: string
@@ -61,13 +61,13 @@
         <td class="details-heading" valign="bottom"><strong>Date</strong></td>
       </tr>
       <tr>
-        <td class="details-text">{event.date}</td>
+        <td class="details-text">{getZonedDate(event.date, event.timeZone)}</td>
       </tr>
       <tr>
         <td class="details-heading" valign="bottom"><strong>Time</strong></td>
       </tr>
       <tr>
-        <td class="details-text">{event.time}</td>
+        <td class="details-text">{getZonedTime(event.date, event.timeZone)}</td>
       </tr>
       <tr>
         <td class="details-heading" valign="bottom"><strong>Location</strong></td>
