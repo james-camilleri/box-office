@@ -9,7 +9,7 @@ import {
 } from 'sanity'
 import { API_VERSION } from 'shared/constants'
 import type { Booking, Ticket } from 'shared/types'
-import { createReference, createTicketsForBooking } from 'shared/utils'
+import { createReference, createTicketsForBooking, generateOrderConfirmationId } from 'shared/utils'
 
 export function CreateBooking({
   id,
@@ -25,7 +25,7 @@ export function CreateBooking({
   const [ticketIds, setTicketIds] = useState([])
 
   const EMAIL_API_URL = import.meta.env.PROD
-    ? 'https://chicago-tickets.netlify.app/api/tickets/email'
+    ? 'https://tickets.arthaus.mt/api/tickets/email'
     : 'http://localhost:5173/api/tickets/email'
 
   async function emailTickets(booking: Booking, tickets: Ticket[]) {
@@ -77,10 +77,13 @@ export function CreateBooking({
     onHandle: async () => {
       setIsPublishing(true)
 
+      const orderConfirmation = generateOrderConfirmationId()
+
       const bookingDetails = {
         bookingId: id,
         showId: draft.show._ref,
         seats: draft.seats.map((seat) => seat._ref),
+        orderConfirmation,
       }
 
       const tickets = await createTicketsForBooking(client, bookingDetails)
@@ -96,6 +99,7 @@ export function CreateBooking({
               _ref: ticket._id,
               _key: ticket._id,
             })),
+            orderConfirmation,
           },
         },
       ])

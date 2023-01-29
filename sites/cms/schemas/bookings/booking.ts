@@ -62,8 +62,14 @@ export default defineType({
       readOnly: true,
     }),
     defineField({
+      name: 'orderConfirmation',
+      description: 'A unique order reference',
+      type: 'string',
+      readOnly: true,
+    }),
+    defineField({
       name: 'transactionId',
-      description: 'The Stripe transaction ID, for cross-referencing.',
+      description: 'The Stripe transaction ID, for cross-referencing',
       type: 'string',
       readOnly: true,
     }),
