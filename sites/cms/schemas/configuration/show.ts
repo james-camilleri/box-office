@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { formatShowDateTime } from 'shared/utils'
 
 export default defineType({
   name: 'show',
@@ -12,17 +13,10 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'date',
+      dateString: 'date',
     },
-    prepare({ title }) {
-      const date = new Date(title)
-      return {
-        title: `${date.toLocaleDateString()} ${date
-          .toLocaleTimeString()
-          .split(':')
-          .slice(0, 2)
-          .join(':')}`,
-      }
+    prepare({ dateString }) {
+      return { title: formatShowDateTime(dateString) }
     },
   },
 })

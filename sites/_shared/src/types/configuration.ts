@@ -14,6 +14,11 @@ export interface Configuration {
     shows: Reference[]
   }>
   compositePriceConfiguration: string
+  reservedSeats: Array<{
+    seats: Reference[]
+    applyToAllShows: boolean
+    shows: Reference[]
+  }>
 }
 
 export interface ConfigurationFull {

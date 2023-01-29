@@ -7,9 +7,9 @@ import {
   FaUserFriends,
   FaWrench,
 } from 'react-icons/fa'
-import { ConfigContext, StructureBuilder } from 'sanity/desk'
+import { StructureBuilder } from 'sanity/desk'
 
-export const structure = (S: StructureBuilder, context: ConfigContext) =>
+export const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
     .items([

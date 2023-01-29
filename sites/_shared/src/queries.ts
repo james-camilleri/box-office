@@ -12,6 +12,11 @@ export const UNBOOKED_SEATS =
   '*[_type == "seat" && !(_id in *[_type == "ticket" && valid && show._ref == $show][].seat._ref)][]._id'
 
 /**
+ * The composite configuration for reserved seats.
+ */
+export const RESERVED_SEATS = `*[_id == 'configure'].compositeReservedSeats`
+
+/**
  * Check if a customer for the given email already exists.
  * @email the email to test for
  */

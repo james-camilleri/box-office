@@ -4,15 +4,15 @@
   import { page } from '$app/stores'
 
   export let data: PageData
-  const { priceTiers, priceConfiguration, defaultPriceTier, shows } = data.configuration
+  const { priceTiers, priceConfiguration, shows } = data.configuration
 
-  let show = shows[0]._id
+  let showId = shows[0]._id
   let unavailableSeats: string[] | undefined
 
   $: {
     unavailableSeats = undefined
 
-    fetch(`${$page.url.origin}/api/seats/${show}`)
+    fetch(`${$page.url.origin}/api/seats/${showId}`)
       .then((response) => response.json())
       .then(({ unavailable }) => {
         unavailableSeats = unavailable
@@ -20,7 +20,7 @@
   }
 </script>
 
-<select bind:value={show}>
+<select bind:value={showId}>
   {#each shows as show}
     {@const date = new Date(show.date)}
     <option value={show._id}>
@@ -30,4 +30,4 @@
   {/each}
 </select>
 
-<SeatMap {show} {priceTiers} {priceConfiguration} {defaultPriceTier} {unavailableSeats} />
+<SeatMap {showId} {priceTiers} {priceConfiguration} {unavailableSeats} />

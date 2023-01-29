@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import type { PriceConfiguration, PriceTier, Show } from 'shared/types/configuration.js'
+  import type { PriceConfiguration, PriceTier } from 'shared/types'
 
   import Section from './Section.svelte'
   import Row from './Row.svelte'
@@ -12,16 +12,14 @@
   import { pricing, selection, unavailable } from './stores.js'
 
   export let priceTiers: PriceTier[]
-  export let defaultPriceTier: string
   export let priceConfiguration: PriceConfiguration
-  export let show: Show
+  export let showId: string
   export let unavailableSeats: string[] | undefined
 
   $: $pricing = new Map(
     Object.entries({
-      default: defaultPriceTier,
       ...priceConfiguration.default,
-      ...priceConfiguration[show._id],
+      ...priceConfiguration[showId],
     }),
   )
 

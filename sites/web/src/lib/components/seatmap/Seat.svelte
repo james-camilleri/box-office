@@ -17,8 +17,12 @@
   const row = getContext(ROW_ID) ?? ''
   const id = [section, row, number].filter(Boolean).join('-')
 
-  $: disabled = !$unavailable || $unavailable.has(id)
   $: selected = $selection.has(id)
+  $: disabled =
+    !$unavailable ||
+    $unavailable.has(id) ||
+    $unavailable.has(`${section}-${row}`) ||
+    $unavailable.has(`${section}`)
   $: priceTier =
     $pricing.get(id) ??
     $pricing.get(`${section}-${row}`) ??

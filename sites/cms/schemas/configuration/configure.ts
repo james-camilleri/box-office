@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { formatShowDateTime } from 'shared/utils'
 
 export default defineType({
   name: 'pageConfigure',
@@ -119,7 +120,90 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'reservedSeats',
+      description:
+        'Seats to reserve and hide from public view. These seats can only be booked from the back-end.',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'seats',
+              type: 'array',
+              of: [
+                { type: 'reference', to: [{ type: 'section' }, { type: 'row' }, { type: 'seat' }] },
+              ],
+              validation: (Rule) => Rule.required().min(1),
+              options: {
+                disableNew: true,
+              },
+            }),
+            defineField({
+              name: 'applyToAllShows',
+              type: 'boolean',
+              initialValue: true,
+            }),
+            defineField({
+              name: 'shows',
+              type: 'array',
+              of: [{ type: 'reference', to: [{ type: 'show' }] }],
+              options: {
+                disableNew: true,
+              },
+              hidden: ({ parent }) => parent?.applyToAllShows,
+            }),
+          ],
+          options: {
+            collapsible: false,
+          },
+          preview: {
+            select: {
+              seats0: 'seats.0.name',
+              seats1: 'seats.1.name',
+              seats2: 'seats.2.name',
+              seats3: 'seats.3.name',
+              seats4: 'seats.4.name',
+              applyToAllShows: 'applyToAllShows',
+              shows0: 'shows.0.date',
+              shows1: 'shows.1.date',
+              shows2: 'shows.2.date',
+              shows3: 'shows.3.date',
+            },
+            prepare({
+              seats0,
+              seats1,
+              seats2,
+              seats3,
+              seats4,
+              applyToAllShows,
+              shows0,
+              shows1,
+              shows2,
+              shows3,
+            }) {
+              return {
+                title:
+                  [seats0, seats1, seats2, seats3].filter(Boolean).join(', ') +
+                  (seats4 ? '...' : ''),
+                subtitle: applyToAllShows
+                  ? 'All shows'
+                  : [shows0, shows1, shows2].filter(Boolean).map(formatShowDateTime).join(', ') +
+                    (shows3 ? '...' : ''),
+              }
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'compositePriceConfiguration',
+      // Store this as a JSON string, since we can't do freeform objects.
+      type: 'string',
+      hidden: true,
+    }),
+    defineField({
+      name: 'compositeReservedSeats',
       // Store this as a JSON string, since we can't do freeform objects.
       type: 'string',
       hidden: true,
