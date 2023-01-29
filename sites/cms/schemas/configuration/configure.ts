@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { formatShowDateTime } from 'shared/utils'
+import { formatShowDateTime, getAllTimeZones, getUserTimeZone } from 'shared/utils'
 
 export default defineType({
   name: 'pageConfigure',
@@ -39,6 +39,20 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'show' }] }],
       validation: (Rule) => Rule.required().min(1),
+    }),
+    defineField({
+      name: 'timeZone',
+      type: 'string',
+      initialValue: getUserTimeZone(),
+      options: {
+        list: getAllTimeZones()
+          .sort((timeZoneA, timeZoneB) =>
+            // Put local time zone first
+            timeZoneA === getUserTimeZone() ? -1 : timeZoneB === getUserTimeZone() ? 1 : 0,
+          )
+          .map((timeZone) => ({ title: timeZone, value: timeZone })),
+      },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'priceTiers',
