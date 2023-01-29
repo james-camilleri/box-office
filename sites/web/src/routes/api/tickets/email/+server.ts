@@ -12,6 +12,7 @@ import Email from './template/Email.svelte'
 
 interface BookingPayload {
   bookingId: string
+  orderConfirmation: string
   tickets: Ticket[]
 }
 
@@ -19,7 +20,7 @@ export const POST: RequestHandler = async (event) => {
   const { request } = event
 
   try {
-    const { bookingId, tickets } = (await request.json()) as BookingPayload
+    const { bookingId, orderConfirmation, tickets } = (await request.json()) as BookingPayload
     const seatIds = tickets.map(({ seat }) => seat._ref)
 
     const [config, bookingDetails, seats, emailText] = await Promise.all([
@@ -87,6 +88,7 @@ export const POST: RequestHandler = async (event) => {
             },
             show,
             tickets,
+            orderConfirmation,
             seats,
             priceTiers,
             priceConfiguration,

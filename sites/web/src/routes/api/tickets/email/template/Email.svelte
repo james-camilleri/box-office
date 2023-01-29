@@ -27,6 +27,7 @@
   export let show: string
   export let tickets: Ticket[]
   export let seats: Seat[]
+  export let orderConfirmation: string
   export let priceTiers: PriceTier[]
   export let priceConfiguration: PriceConfiguration
   export let discount: Discount | undefined
@@ -74,6 +75,12 @@
       <tr>
         <td class="details-text"><a href={event.map}>{event.location}</a></td>
       </tr>
+      <tr>
+        <td class="details-heading" valign="bottom"><strong>Order confirmation</strong></td>
+      </tr>
+      <tr>
+        <td class="details-text">{orderConfirmation}</td>
+      </tr>
     </table>
 
     <p>Your invoice:</p>
@@ -118,13 +125,13 @@
 
     <table class="details">
       <tr>
-        <td class="details-heading" valign="bottom"><strong>VAT Number</strong></td>
+        <td class="details-heading" valign="bottom"><strong>VAT number</strong></td>
       </tr>
       <tr>
         <td class="details-text">{event.vatNumber}</td>
       </tr>
       <tr>
-        <td class="details-heading" valign="bottom"><strong>VAT Permit Number</strong></td>
+        <td class="details-heading" valign="bottom"><strong>VAT permit number</strong></td>
       </tr>
       <tr>
         <td class="details-text">{event.vatPermitNumber}</td>
