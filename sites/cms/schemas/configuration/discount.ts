@@ -28,7 +28,7 @@ export default defineType({
     defineField({
       name: 'code',
       description: 'The discount code that should be entered on checkout to activate the discount',
-      type: 'string',
+      type: 'slug',
     }),
     defineField({
       name: 'enabled',
