@@ -110,6 +110,7 @@ importers:
       sanitize.css: ^13.0.0
       sass: ^1.57.1
       shared: workspace:^1.0.0
+      stripe: ^11.8.0
       stylelint: ^14.16.1
       stylelint-config-html: ^1.1.0
       stylelint-config-prettier-scss: ^0.0.1
@@ -122,6 +123,7 @@ importers:
       svelte-inline-svg: ^1.2.0
       svelte-loading-spinners: ^0.3.4
       svelte-preprocess: ^4.10.7
+      svelte-stripe: ^0.0.21
       tslib: ^2.5.0
       typescript: ^4.9.4
       vite: ^4.0.4
@@ -158,6 +160,7 @@ importers:
       sanitize.css: 13.0.0
       sass: 1.57.1
       shared: link:../_shared
+      stripe: 11.8.0
       stylelint: 14.16.1
       stylelint-config-html: 1.1.0_kbto3rg3njmczth2rrsgfnlsqa
       stylelint-config-prettier-scss: 0.0.1_stylelint@14.16.1
@@ -170,6 +173,7 @@ importers:
       svelte-inline-svg: 1.2.0
       svelte-loading-spinners: 0.3.4
       svelte-preprocess: 4.10.7_hla7ckld5kzlszkva2q63noh2e
+      svelte-stripe: 0.0.21
       tslib: 2.5.0
       typescript: 4.9.4
       vite: 4.0.4_sass@1.57.1
@@ -2498,6 +2502,10 @@ packages:
   /@sindresorhus/is/4.6.0:
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
+
+  /@stripe/stripe-js/1.46.0:
+    resolution: {integrity: sha512-dkm0zCEoRLu5rTnsIgwDf/QG2DKcalOT2dk1IVgMySOHWTChLyOvQwMYhEduGgLvyYWTwNhAUV4WOLPQvjwLwA==}
+    dev: true
 
   /@sveltejs/adapter-auto/1.0.2_@sveltejs+kit@1.3.3:
     resolution: {integrity: sha512-UXpEO/gutERZnD+Z5Vi4J/ifD3WSRuCI7xwtLJTcKNQvJ6t5Xsj1X3Mw2F8Vv/XTUuxf7xPLYUgThU331r0Y9w==}
@@ -6837,6 +6845,13 @@ packages:
       yargs: 15.4.1
     dev: true
 
+  /qs/6.11.0:
+    resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      side-channel: 1.0.4
+    dev: true
+
   /querystring/0.2.0:
     resolution: {integrity: sha512-X/xY82scca2tau62i9mDyU9K+I+djTMUsvwf7xnUX5GLvVzgJybOJf4Y6o9Zx3oJK/LSXg5tTZBjwzqVPaPO2g==}
     engines: {node: '>=0.4.x'}
@@ -7718,6 +7733,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /stripe/11.8.0:
+    resolution: {integrity: sha512-aGwrJDqYzpjQj0ejt7oN7BE7kUjZFxhUz/gDeyDCS7CBpZhDb26Eb6z9sS8KdbsbmuS8rkkn2lBY4koK7L1ZCw==}
+    engines: {node: '>=12.*'}
+    dependencies:
+      '@types/node': 18.11.18
+      qs: 6.11.0
+    dev: true
+
   /style-mod/4.0.0:
     resolution: {integrity: sha512-OPhtyEjyyN9x3nhPsu76f52yUGXiZcgvsrFVtvTkyGRQJ0XK+GPc6ov1z+lRpbeabka+MYEQxOYRnt5nF30aMw==}
     dev: false
@@ -8048,6 +8071,12 @@ packages:
       strip-indent: 3.0.0
       svelte: 3.55.1
       typescript: 4.9.4
+    dev: true
+
+  /svelte-stripe/0.0.21:
+    resolution: {integrity: sha512-zqyhOfxia//+jOAUAwkGfEOzejw3EDPvZ6LZ6hPUgSs1o68Vy71PmqkVlnqCW6rnkzJoIUng2iFhSq8txuvfsg==}
+    dependencies:
+      '@stripe/stripe-js': 1.46.0
     dev: true
 
   /svelte/3.55.1:
