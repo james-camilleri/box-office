@@ -12,6 +12,12 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'vatNumber',
+      title: 'VAT Number',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'vatPermitNumber',
       title: 'VAT Permit Number',
       type: 'string',

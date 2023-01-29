@@ -3,6 +3,8 @@ import type { Reference } from '@sanity/types'
 export interface Configuration {
   showName: string
   showLocation: string
+  vatPermitNumber: string
+  vatNumber: string
   mapUrl: string
   shows: Reference[]
   priceTiers: Reference[]
@@ -25,6 +27,7 @@ export interface ConfigurationFull {
   showName: string
   showLocation: string
   vatPermitNumber: string
+  vatNumber: string
   mapUrl: string
   shows: Show[]
   priceTiers: PriceTier[]
