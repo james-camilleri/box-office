@@ -166,15 +166,15 @@
     }
 
     .line-item.subtotal td {
-      border-top: solid 3px #000;
+      border-top: solid 1px #000;
     }
 
     .line-item.total td {
-      border-bottom: solid 3px #000;
+      border-bottom: solid 1px #000;
     }
 
     .line-item:not(.discount) + .line-item.total td {
-      border-top: solid 3px #000;
+      border-top: solid 1px #000;
     }
 
     .vat {
