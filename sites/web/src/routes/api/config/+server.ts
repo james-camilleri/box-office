@@ -17,7 +17,6 @@ const CONFIG_QUERY = `*[_id == '${PAGE_ID}']{
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
-  console.log('process.env', process.env)
   const configuration = await sanity.fetch(CONFIG_QUERY)
 
   return json({
