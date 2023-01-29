@@ -34,7 +34,7 @@
     {selection}<br />
   {/each}
 </div>
-<div class="seatmap" style={colours}>
+<div class="seatplan" style={colours}>
   <svg
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
@@ -1301,7 +1301,7 @@
 </div>
 
 <style lang="scss">
-  .seatmap {
+  .seatplan {
     height: 95vh;
   }
 

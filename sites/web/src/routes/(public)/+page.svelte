@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types.js'
-  import SeatMap from '$lib/components/seatmap/SeatMap.svelte'
+  import SeatPlan from '$lib/components/seatplan/SeatPlan.svelte'
   import { page } from '$app/stores'
 
   export let data: PageData
@@ -30,4 +30,4 @@
   {/each}
 </select>
 
-<SeatMap {showId} {priceTiers} {priceConfiguration} {unavailableSeats} />
+<SeatPlan {showId} {priceTiers} {priceConfiguration} {unavailableSeats} />
