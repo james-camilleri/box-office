@@ -28,12 +28,21 @@ export function CreateBooking({
     ? 'https://tickets.arthaus.mt/api/tickets/email'
     : 'http://localhost:5173/api/tickets/email'
 
-  async function emailTickets(booking: Booking, tickets: Ticket[]) {
+  async function emailTickets(
+    bookingId: string | undefined,
+    orderConfirmation: string,
+    tickets: Ticket[],
+  ) {
+    if (!bookingId) {
+      console.error('No booking ID for email')
+      return
+    }
+
     await fetch(EMAIL_API_URL, {
       method: 'POST',
       body: JSON.stringify({
-        bookingId: booking._id,
-        orderConfirmation: booking.orderConfirmation,
+        bookingId,
+        orderConfirmation,
         tickets,
       }),
     })
@@ -88,7 +97,7 @@ export function CreateBooking({
 
       const tickets = await createTicketsForBooking(client, bookingDetails)
       setTicketIds(tickets.map((ticket) => ticket._id))
-      await emailTickets(draft, tickets)
+      await emailTickets(draft?._id, orderConfirmation, tickets)
 
       // @ts-expect-error (I think the types aren't quite right here.)
       patch.execute([
