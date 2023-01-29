@@ -55,6 +55,7 @@
   g {
     color: var(--seat-colour);
     cursor: pointer;
+    transition: color var(--transition-medium) ease-in-out;
 
     &.disabled {
       color: var(--disabled);
@@ -63,6 +64,11 @@
 
     &.selected {
       color: var(--selected);
+    }
+
+    &:hover {
+      color: var(--selected);
+      transition: color var(--transition-fast) ease-in-out;
     }
   }
 </style>

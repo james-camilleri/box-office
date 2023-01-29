@@ -28,12 +28,6 @@
   $: colours = priceTiers.map(({ _id, colour }) => `--pricing-${_id}: ${colour}`).join(';')
 </script>
 
-<div class="selection">
-  <strong>SELECTION:</strong><br />
-  {#each Array.from($selection) as selection}
-    {selection}<br />
-  {/each}
-</div>
 <div class="seatplan" style={colours}>
   <svg
     version="1.1"
@@ -1301,19 +1295,6 @@
 </div>
 
 <style lang="scss">
-  .seatplan {
-    height: 95vh;
-  }
-
-  .selection {
-    position: fixed;
-    top: 2em;
-    left: 2em;
-    width: 200px;
-    padding: 1em;
-    border: 5px solid black;
-  }
-
   text {
     font: normal 30px sans-serif;
     color: var(--foreground);
