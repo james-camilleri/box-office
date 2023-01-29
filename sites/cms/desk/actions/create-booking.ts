@@ -33,6 +33,7 @@ export function CreateBooking({
       method: 'POST',
       body: JSON.stringify({
         bookingId: booking._id,
+        orderConfirmation: booking.orderConfirmation,
         tickets,
       }),
     })
@@ -83,7 +84,6 @@ export function CreateBooking({
         bookingId: id,
         showId: draft.show._ref,
         seats: draft.seats.map((seat) => seat._ref),
-        orderConfirmation,
       }
 
       const tickets = await createTicketsForBooking(client, bookingDetails)

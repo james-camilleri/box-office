@@ -14,7 +14,9 @@ export interface Ticket extends SanityDocument {
   scannedAt?: string
 }
 
-export interface Booking extends SanityDocument {}
+export interface Booking extends SanityDocument {
+  orderConfirmation: string
+}
 
 export enum DISCOUNT_TYPE {
   PERCENTAGE = 'percentage',
