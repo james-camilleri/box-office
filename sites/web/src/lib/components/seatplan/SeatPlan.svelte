@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import type { PriceConfiguration, PriceTier } from 'shared/types'
+  import type { PriceConfiguration, PriceTier, Seat as SeatType } from 'shared/types'
 
   import Section from './Section.svelte'
   import Row from './Row.svelte'
@@ -23,7 +23,10 @@
     }),
   )
 
-  $: $unavailable = !unavailableSeats ? unavailableSeats : new Set(unavailableSeats)
+  $: {
+    $unavailable = !unavailableSeats ? unavailableSeats : new Set(unavailableSeats)
+    $selection = new Map<string, SeatType>()
+  }
 
   $: colours = priceTiers.map(({ _id, colour }) => `--pricing-${_id}: ${colour}`).join(';')
 </script>

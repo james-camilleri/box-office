@@ -13,8 +13,8 @@
     throw Error('Position must be defined if seat SVG elements not passed as props.')
   }
 
-  const section = getContext(SECTION_ID) ?? ''
-  const row = getContext(ROW_ID) ?? ''
+  const section: string = getContext(SECTION_ID) ?? ''
+  const row: string = getContext(ROW_ID) ?? ''
   const id = [section, row, number].filter(Boolean).join('-')
 
   $: selected = $selection.has(id)
@@ -34,7 +34,9 @@
       return
     }
 
-    selected ? $selection.delete(id) : $selection.add(id)
+    selected
+      ? $selection.delete(id)
+      : $selection.set(id, { _id: id, row: `${section}-${row}`, section })
     $selection = $selection
   }
 </script>
@@ -66,7 +68,7 @@
       color: var(--selected);
     }
 
-    &:hover {
+    &:hover:not(.disabled) {
       color: var(--selected);
       transition: color var(--transition-fast) ease-in-out;
     }

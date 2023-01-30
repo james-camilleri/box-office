@@ -3,6 +3,9 @@
   import SeatPlan from '$lib/components/seatplan/SeatPlan.svelte'
   import { page } from '$app/stores'
   import ShowSelection from './components/ShowSelection.svelte'
+  import Cart from './components/Cart.svelte'
+  import Grid from '$lib/components/layout/Grid.svelte'
+  import { selection } from '$lib/components/seatplan/stores.js'
 
   export let data: PageData
   const { priceTiers, priceConfiguration, shows, timeZone } = data.configuration
@@ -31,16 +34,19 @@
 </script>
 
 <ShowSelection bind:selected={selectedShowId} {shows} {timeZone} />
-<div class="seatplan-wrapper" class:waiting={!selectedShowId || loading}>
-  {#if !selectedShowId || loading}
-    <div class="status">
-      <span>{loading ? 'Loading' : 'Select a show to begin'}</span>
+<Grid columns={[4, 2]} gap="0">
+  <div class="seatplan-wrapper" class:waiting={!selectedShowId || loading}>
+    {#if !selectedShowId || loading}
+      <div class="status">
+        <span>{loading ? 'Loading' : 'Select a show to begin'}</span>
+      </div>
+    {/if}
+    <div class="seatplan">
+      <SeatPlan showId={selectedShowId} {priceTiers} {priceConfiguration} {unavailableSeats} />
     </div>
-  {/if}
-  <div class="seatplan">
-    <SeatPlan showId={selectedShowId} {priceTiers} {priceConfiguration} {unavailableSeats} />
   </div>
-</div>
+  <Cart show={selectedShowId} {priceTiers} {priceConfiguration} />
+</Grid>
 
 <style lang="scss">
   .seatplan-wrapper {
@@ -51,7 +57,7 @@
 
   .seatplan {
     width: 100%;
-    padding: var(--md);
+    padding: var(--lg);
   }
 
   .status {
