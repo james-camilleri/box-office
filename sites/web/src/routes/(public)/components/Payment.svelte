@@ -20,7 +20,6 @@
 
   onMount(async () => {
     stripe = await loadStripe(API_KEY)
-    // create payment intent server side
     clientSecret = await createPaymentIntent()
   })
 
