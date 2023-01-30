@@ -53,3 +53,14 @@ export const SEAT_DETAILS = `*[_id in $seats]{
   'row': row -> _id,
   'section': row -> section -> _id
 }`
+
+/**
+ * Gets the discount for a corresponding discount code.
+ * @code the discount code to search for
+ */
+export const DISCOUNT = `*[_type == 'discount' && enabled && code.current == $code]{
+  name,
+  percentage,
+  type,
+  'code': code.current
+}[0]`

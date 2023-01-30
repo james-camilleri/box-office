@@ -26,6 +26,7 @@ export interface Discount {
   name: string
   type: DISCOUNT_TYPE
   percentage?: number
+  code: string
 }
 
 export interface BookingDetails {
