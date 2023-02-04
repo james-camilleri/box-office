@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit'
+import { error, json } from '@sveltejs/kit'
 import { DISCOUNT } from 'shared/queries'
 
 import { sanity } from '../../../sanity.js'
@@ -7,5 +7,9 @@ import { sanity } from '../../../sanity.js'
 export async function GET({ params }) {
   const discount = await sanity.fetch(DISCOUNT, { code: params.code })
 
-  return json(discount ?? undefined)
+  if (!discount) {
+    throw error(404)
+  }
+
+  return json(discount)
 }
