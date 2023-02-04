@@ -8,8 +8,32 @@ import {
   useValidationStatus,
 } from 'sanity'
 import { API_VERSION } from 'shared/constants'
-import type { Booking, Ticket } from 'shared/types'
+import type { Ticket } from 'shared/types'
 import { createReference, createTicketsForBooking, generateOrderConfirmationId } from 'shared/utils'
+
+const EMAIL_API_URL = import.meta.env.PROD
+  ? 'https://tickets.arthaus.mt/api/tickets/email'
+  : 'http://localhost:5173/api/tickets/email'
+
+async function emailTickets(
+  bookingId: string | undefined,
+  orderConfirmation: string,
+  tickets: Ticket[],
+) {
+  if (!bookingId) {
+    console.error('No booking ID for email')
+    return
+  }
+
+  await fetch(EMAIL_API_URL, {
+    method: 'POST',
+    body: JSON.stringify({
+      bookingId,
+      orderConfirmation,
+      tickets,
+    }),
+  })
+}
 
 export function CreateBooking({
   id,
@@ -23,30 +47,6 @@ export function CreateBooking({
   const { validation } = useValidationStatus(id, type)
   const [isPublishing, setIsPublishing] = useState(false)
   const [ticketIds, setTicketIds] = useState([])
-
-  const EMAIL_API_URL = import.meta.env.PROD
-    ? 'https://tickets.arthaus.mt/api/tickets/email'
-    : 'http://localhost:5173/api/tickets/email'
-
-  async function emailTickets(
-    bookingId: string | undefined,
-    orderConfirmation: string,
-    tickets: Ticket[],
-  ) {
-    if (!bookingId) {
-      console.error('No booking ID for email')
-      return
-    }
-
-    await fetch(EMAIL_API_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        bookingId,
-        orderConfirmation,
-        tickets,
-      }),
-    })
-  }
 
   useEffect(() => {
     // if the isPublishing state was set to true and the draft has changed
