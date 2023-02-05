@@ -12,8 +12,8 @@ import type { Ticket } from 'shared/types'
 import { createReference, createTicketsForBooking, generateOrderConfirmationId } from 'shared/utils'
 
 const EMAIL_API_URL = import.meta.env.PROD
-  ? 'https://tickets.arthaus.mt/api/tickets/email'
-  : 'http://localhost:5173/api/tickets/email'
+  ? 'https://tickets.arthaus.mt/api/booking/email'
+  : 'http://localhost:5173/api/booking/email'
 
 async function emailTickets(
   bookingId: string | undefined,
