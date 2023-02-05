@@ -1,5 +1,5 @@
 import { Reference, defineField, defineType } from 'sanity'
-import { BOOKED_SEATS } from 'shared/queries'
+import { BOOKED_AND_LOCKED_SEATS } from 'shared/queries'
 
 export default defineType({
   name: 'booking',
@@ -35,7 +35,7 @@ export default defineType({
               }
 
               return {
-                filter: `!(_id in ${BOOKED_SEATS})`,
+                filter: `!(_id in ${BOOKED_AND_LOCKED_SEATS})`,
                 params: {
                   show: (document.show as Reference)._ref,
                 },
