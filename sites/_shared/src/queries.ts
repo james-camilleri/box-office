@@ -5,6 +5,16 @@
 export const BOOKED_SEATS = '*[_type == "ticket" && valid && show._ref == $show][].seat._ref'
 
 /**
+ * Locked seats for a particular show.
+ * @show the `_id` of the show
+ */
+export const LOCKED_SEATS = `*[
+  _type == "seat"
+  && $show in locks[].show
+  && count(locks[dateTime(now()) - dateTime(lockTime) < 60*5]) > 0
+]._id`
+
+/**
  * Unbooked seats for a particular show.
  * @show the `_id` of the show
  */
@@ -22,6 +32,12 @@ export const RESERVED_SEATS = `*[_id == 'configure'].compositeReservedSeats`
  */
 export const CUSTOMER_EXISTS =
   'defined(*[_type == "customer" && !(_id in path("drafts.**")) && email == $email][0]._id)'
+
+/**
+ * Get customer ID.
+ * @email the email to retrieve the ID for
+ */
+export const CUSTOMER_ID = '*[_type == "customer" && email == $email][0]._id'
 
 /**
  * Get full booking information for email.
@@ -59,6 +75,7 @@ export const SEAT_DETAILS = `*[_id in $seats]{
  * @code the discount code to search for
  */
 export const DISCOUNT = `*[_type == 'discount' && enabled && code.current == $code]{
+  _id,
   name,
   percentage,
   type,
