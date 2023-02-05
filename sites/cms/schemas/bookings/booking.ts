@@ -73,6 +73,14 @@ export default defineType({
       type: 'string',
       readOnly: true,
     }),
+    defineField({
+      name: 'source',
+      description: 'Where the booking was made from (mostly used for filtering)',
+      type: 'string',
+      options: {
+        list: ['pre-booking', 'box-office', 'website'],
+      },
+    }),
   ],
   preview: {
     select: {
