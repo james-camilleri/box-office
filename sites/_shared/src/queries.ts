@@ -53,7 +53,7 @@ export const BOOKING_DETAILS = `*[_type == "booking" && _id == $bookingId]{
       'type': discount -> type,
       'percentage': discount -> percentage
     }
-  }`
+  }[0]`
 
 /**
  * Get the email text configuration.
@@ -71,6 +71,12 @@ export const SEAT_DETAILS = `*[_id in $seats]{
 }`
 
 /**
+ * Gets the full details for a particular show.
+ * @show the ID of the show to find
+ */
+export const SHOW_DETAILS = `*[_id == $show][0]`
+
+/**
  * Gets the discount for a corresponding discount code.
  * @code the discount code to search for
  */
@@ -80,4 +86,20 @@ export const DISCOUNT = `*[_type == 'discount' && enabled && code.current == $co
   percentage,
   type,
   'code': code.current
+}[0]`
+
+/**
+ * Gets the full ticketing configuration.
+ */
+export const CONFIG_QUERY = `*[_id == 'configure']{
+  showName,
+  showLocation,
+  vatNumber,
+  vatPermitNumber,
+  mapUrl,
+  shows[] -> { _id, date },
+  timeZone,
+  priceTiers[] -> { _id, name, colour, price },
+  'defaultPrice': defaultPrice->._id,
+  'priceConfiguration': compositePriceConfiguration,
 }[0]`
