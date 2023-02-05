@@ -36,18 +36,15 @@ export const POST: RequestHandler = async ({ request }) => {
 
   try {
     const lockTime = new Date()
-    const lockResponse = await Promise.all(
+    await Promise.all(
       lockData.map((seat) =>
         sanity.noCdn
           .patch(seat._id)
-          .ifRevisionId(seat._rev)
           .setIfMissing({ locks: [] })
           .append('locks', [{ show, lockTime }])
           .commit({ autoGenerateArrayKeys: true }),
       ),
     )
-
-    console.log(lockResponse)
 
     return new Response()
   } catch (e) {
