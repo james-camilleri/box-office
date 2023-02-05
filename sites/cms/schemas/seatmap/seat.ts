@@ -27,5 +27,20 @@ export default defineType({
       type: 'string',
       readOnly: true,
     }),
+    defineField({
+      name: 'locks',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'lock',
+          fields: [
+            { name: 'show', type: 'string' },
+            { name: 'lockTime', type: 'datetime' },
+          ],
+        },
+      ],
+      readOnly: true,
+    }),
   ],
 })

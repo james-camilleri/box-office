@@ -5,14 +5,28 @@
 export const BOOKED_SEATS = '*[_type == "ticket" && valid && show._ref == $show][].seat._ref'
 
 /**
- * Locked seats for a particular show.
+ * All the currently locked seats for a particular show.
  * @show the `_id` of the show
  */
-export const LOCKED_SEATS = `*[
+export const ALL_LOCKED_SEATS = `*[
   _type == "seat"
   && $show in locks[].show
   && count(locks[dateTime(now()) - dateTime(lockTime) < 60*5]) > 0
 ]._id`
+
+/**
+ * Seats and their locked status for a particular show.
+ * @show the `_id` of the show
+ * @show the IDs of the seats to check for locks
+ */
+export const LOCKED_SEATS = `*[
+  _type == "seat"
+  && _id in $seats
+]{
+  _id,
+  _rev,
+  'locked': $show in locks[].show && count(locks[dateTime(now()) - dateTime(lockTime) < 60*5]) > 0
+}`
 
 /**
  * Unbooked seats for a particular show.

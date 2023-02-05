@@ -40,19 +40,36 @@
   const dispatch = createEventDispatcher()
 
   async function createPaymentIntent() {
-    const response = await fetch('/', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        show,
-        seats,
-        discountCode,
+    const [stripeResponse, lockedSeatsResponse] = await Promise.all([
+      await fetch('/', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          show,
+          seats,
+          discountCode,
+        }),
       }),
-    })
+      fetch('/api/seats/lock', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          show,
+          seats: seats.map((seat) => seat._id),
+        }),
+      }),
+    ])
 
-    const { clientSecret } = await response.json()
+    if (!lockedSeatsResponse.ok) {
+      const payload = await lockedSeatsResponse.json()
+      console.error(payload)
+    }
+
+    const { clientSecret } = await stripeResponse.json()
     return clientSecret
   }
 
