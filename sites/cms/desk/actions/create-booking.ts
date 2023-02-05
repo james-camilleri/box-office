@@ -109,6 +109,7 @@ export function CreateBooking({
               _key: ticket._id,
             })),
             orderConfirmation,
+            source: draft.source ?? 'box-office',
           },
         },
       ])

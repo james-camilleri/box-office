@@ -46,6 +46,8 @@ export const POST: RequestHandler = async ({ request }) => {
       ),
     )
 
+    log.success('Seats locked successfully')
+
     return new Response()
   } catch (e) {
     log.error(`Failed to lock seat(s) ${seats.join(', ')}`)

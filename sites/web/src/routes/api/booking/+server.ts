@@ -131,6 +131,7 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
   // Create booking.
   log.info('Creating booking document on Sanity.io')
   await sanity.create({
+    _id: crypto.randomUUID(),
     _type: 'booking',
     customer: createReference(customerId),
     show: createReference(show),
@@ -139,6 +140,7 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
     tickets: tickets.map(({ _id }) => ({ ...createReference(_id), _key: generateArrayKey() })),
     orderConfirmation,
     transactionId: stripeId,
+    source: 'website',
   })
 
   log.success('Booking created')
