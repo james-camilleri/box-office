@@ -5,8 +5,8 @@ import {
   STRIPE_WEBHOOK_SECRET,
 } from '$env/static/private'
 import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
-import { CUSTOMER_ID } from 'shared/queries'
-import type { Discount, Seat, Ticket } from 'shared/types'
+import { CUSTOMER_ID, EMAIL_TEXT, SHOW_DETAILS } from 'shared/queries'
+import type { ConfigurationFull, Discount, Seat, Show } from 'shared/types'
 import {
   createReference,
   createTicketsForBooking,
@@ -18,6 +18,7 @@ import Stripe from 'stripe'
 
 import { sanity } from '../sanity.js'
 import type { RequestHandler } from './$types.js'
+import { sendEmail } from './email/email.js'
 
 const API_KEY =
   import.meta.env.PROD && !PUBLIC_USE_STRIPE_TEST ? STRIPE_LIVE_SECRET_KEY : STRIPE_TEST_SECRET_KEY
@@ -99,24 +100,33 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
   const orderConfirmation = generateOrderConfirmationId()
   log.debug('Created order confirmation', orderConfirmation)
 
-  const [tickets, customerId] = await Promise.all([
+  const [tickets, customerId, emailText, showDetails, config] = await Promise.all([
     await createTicketsForBooking(sanity, {
       bookingId,
       showId: show,
       seats: seats.map(({ _id }) => _id),
     }),
     await getCustomerId(name, email),
+    await sanity.fetch(EMAIL_TEXT),
+    (await sanity.fetch(SHOW_DETAILS, { show })) as Show,
+    (await (await svelteFetch('/api/config')).json()) as ConfigurationFull,
   ])
 
-  // TODO: Email.
-  // await svelteFetch('/api/tickets/email', {
-  //   method: 'POST',
-  //   body: JSON.stringify({
-  //     bookingId,
-  //     orderConfirmation,
-  //     tickets,
-  //   }),
-  // })
+  log.info('Sending ticket email')
+  await sendEmail({
+    orderConfirmation,
+    tickets,
+    bookingDetails: {
+      name,
+      email,
+      show,
+      date: showDetails.date,
+      discount,
+    },
+    config,
+    seats,
+    emailText,
+  })
 
   // Create booking.
   log.info('Creating booking document on Sanity.io')
