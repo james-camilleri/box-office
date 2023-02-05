@@ -5,7 +5,6 @@
   import ShowSelection from './components/ShowSelection.svelte'
   import Cart from './components/Cart.svelte'
   import Grid from '$lib/components/layout/Grid.svelte'
-  import { selection } from '$lib/components/seatplan/stores.js'
 
   export let data: PageData
   const { priceTiers, priceConfiguration, shows, timeZone } = data.configuration
@@ -34,7 +33,7 @@
 </script>
 
 <ShowSelection bind:selected={selectedShowId} {shows} {timeZone} />
-<Grid columns={[4, 2]} gap="0">
+<Grid columns={['3fr', 'minmax(auto, 1fr)']} gap="0">
   <div class="seatplan-wrapper" class:waiting={!selectedShowId || loading}>
     {#if !selectedShowId || loading}
       <div class="status">
@@ -53,10 +52,15 @@
     position: relative;
     display: flex;
     align-items: center;
+    overflow: hidden;
+    background: var(--light-2);
+    border-bottom: var(--border);
+    box-shadow: var(--shadow-inset);
   }
 
   .seatplan {
     width: 100%;
+    max-height: 90vh;
     padding: var(--lg);
   }
 
@@ -68,15 +72,15 @@
     width: 100%;
     height: 100%;
     padding: var(--md);
-    color: var(--light);
-
+    color: var(--background);
     background: rgb(0 0 0 / 70%);
 
     span {
       padding: var(--sm) var(--lg);
       font-size: var(--xl);
       text-transform: uppercase;
-      background: var(--dark);
+      background: var(--foreground);
+      border-radius: var(--border-radius-sm);
     }
   }
 </style>

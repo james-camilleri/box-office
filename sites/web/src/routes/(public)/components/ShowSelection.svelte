@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { Show } from 'shared/types'
-  import Select from 'svelte-select'
+
+  import { NativeSelect } from '@svelteuidev/core'
+
   import { getZonedDate, getZonedTime } from 'shared/utils'
 
   export let selected: string | undefined = undefined
@@ -14,13 +16,13 @@
 </script>
 
 <header>
-  <h1 class="title">CHICAGO</h1>
+  <h1 class="title" />
   <div class="select-wrapper">
-    <Select
-      bind:justValue={selected}
+    <NativeSelect
+      bind:value={selected}
       showChevron
-      items={selectItems}
-      clearable={false}
+      data={selectItems}
+      variant="filled"
       placeholder="Select a show to begin"
     />
   </div>
@@ -28,12 +30,13 @@
 
 <style lang="scss">
   header {
+    // z-index: 1;
     display: flex;
     flex-wrap: wrap;
     gap: var(--sm);
     padding: var(--md);
-    background: var(--light);
-    box-shadow: 0 var(--xs) var(--lg) var(--dark);
+    background: var(--secondary);
+    // box-shadow: (var(--shadow-bottom));
   }
 
   .title {
@@ -42,7 +45,9 @@
 
   .select-wrapper {
     flex: 1 0 auto;
+    align-self: center;
     width: 300px;
     max-width: 500px;
+    cursor: pointer;
   }
 </style>

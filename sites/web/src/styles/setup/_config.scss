@@ -19,13 +19,23 @@ $ratio: "fourth";
 
 :root {
   // Colours
-  --light: rgb(255 255 255);
-  --dark: rgb(0 0 0);
-  --foreground: var(--dark);
-  --background: var(--light);
+  --hue: 7;
+  --light-1: rgb(253 250 250);
+  --light-2: rgb(243 240 240);
+  --light-3: hsl(0 95% 95%);
 
-  --primary: rgb(127 127 127);
-  --secondary: rgb(200 200 200);
+  --dark-1: rgb(180 170 170);
+  --dark-2: rgb(60 50 50);
+  --dark-3: rgb(30 20 20);
+  --dark-shadow: rgb(180 170 170 / 90%);
+
+  --foreground: var(--dark-3);
+
+  --background: var(--light-1);
+  --background-card: var(--light-1);
+
+  --primary: rgb(215, 25, 10);
+  --secondary: rgb(253, 67, 67);
   --neutral: rgb(80 80 80);
 
   --info: rgb(0 0 255);
@@ -45,16 +55,19 @@ $ratio: "fourth";
   --gutter: var(--xl);
 
   // Borders
-  --border-width: 5px;
-  --border-colour: var(--foreground);
-  --border-radius: 1px;
+  --border-width: 2px;
+  --border-colour: var(--dark-1);
+  --border-radius: 5px;
+  --border-radius-sm: 1px;
   --border: solid var(--border-colour) var(--border-width);
 
   // Animation
   --transition-fast: 0.15s;
   --transition-medium: 0.3s;
 
-  // Forms
-  --form-control-padding: var(--xs) var(--sm);
-  --form-control-background: var(--secondary);
+  // --shadow:
+  --box-shadow: 0 0 var(--md) var(--dark-shadow);
+  --shadow-top: 0 calc(var(--md) * -1) var(--md) calc(var(--md) * -1) var(--dark-shadow);
+  --shadow-bottom: 0 var(--md) var(--md) calc(var(--md) * -1) var(--dark-shadow);
+  --shadow-inset: inset 0 0 var(--md) var(--dark-shadow);
 }
