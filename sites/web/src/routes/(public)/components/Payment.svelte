@@ -1,27 +1,43 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
+  import type { Stripe, StripeElements, BillingDetails } from '@stripe/stripe-js'
+  import type { Seat } from 'shared/types'
+
   import { loadStripe } from '@stripe/stripe-js'
-  import { Elements, PaymentElement, LinkAuthenticationElement, Address } from 'svelte-stripe'
-  import { PUBLIC_STRIPE_LIVE_API_KEY, PUBLIC_STRIPE_TEST_API_KEY } from '$env/static/public'
+  import { createEventDispatcher, onMount } from 'svelte'
+  import { Elements, PaymentElement } from 'svelte-stripe'
+  import { Alert, Button, TextInput } from '@svelteuidev/core'
 
-  import Button from '$lib/components/form/Button.svelte'
+  import {
+    PUBLIC_STRIPE_LIVE_API_KEY,
+    PUBLIC_STRIPE_TEST_API_KEY,
+    PUBLIC_USE_STRIPE_TEST,
+  } from '$env/static/public'
+  import Grid from '$lib/components/layout/Grid.svelte'
 
-  const API_KEY = import.meta.env.PROD ? PUBLIC_STRIPE_LIVE_API_KEY : PUBLIC_STRIPE_TEST_API_KEY
+  const API_KEY =
+    import.meta.env.PROD && !PUBLIC_USE_STRIPE_TEST
+      ? PUBLIC_STRIPE_LIVE_API_KEY
+      : PUBLIC_STRIPE_TEST_API_KEY
 
   export let show: string
   export let seats: Seat[]
   export let discountCode: string | undefined
 
-  let stripe = null
-  let clientSecret = null
+  let stripe: Stripe | null = null
+  let clientSecret: string | undefined = undefined
   let error = null
-  let elements
+  let elements: StripeElements | undefined
   let processing = false
+  let name: string
+  let email: string
+  let submitted = false
 
   onMount(async () => {
     stripe = await loadStripe(API_KEY)
     clientSecret = await createPaymentIntent()
   })
+
+  const dispatch = createEventDispatcher()
 
   async function createPaymentIntent() {
     const response = await fetch('/', {
@@ -35,84 +51,79 @@
         discountCode,
       }),
     })
+
     const { clientSecret } = await response.json()
     return clientSecret
   }
 
   async function submit() {
-    // avoid processing duplicates
-    if (processing) return
+    if (!stripe || !elements || processing) {
+      return
+    }
+
+    submitted = true
+
+    if (!name || !email) {
+      return
+    }
+
     processing = true
-    // confirm payment with stripe
+
     const result = await stripe.confirmPayment({
       elements,
       redirect: 'if_required',
+      confirmParams: {
+        payment_method_data: {
+          billing_details: {
+            name,
+            email,
+          },
+        },
+      },
     })
-    // log results, for debugging
-    console.log({ result })
+
     if (result.error) {
-      // payment failed, notify user
       error = result.error
       processing = false
     } else {
-      // payment succeeded, redirect to "thank you" page
-      goto('/examples/payment-element/thanks')
+      dispatch('payment-success')
     }
   }
 </script>
 
 {#if error}
-  <p class="error">{error.message} Please try again.</p>
+  <Alert title="Problem submitting payment!" color="yellow">
+    {error.message}
+  </Alert>
 {/if}
 
 {#if stripe && clientSecret}
-  <Elements
-    {stripe}
-    {clientSecret}
-    theme="flat"
-    labels="floating"
-    variables={{ colorPrimary: '#7c4dff' }}
-    rules={{ '.Input': { border: 'solid 1px #0002' } }}
-    bind:elements
-  >
-    <form on:submit|preventDefault={submit}>
-      <LinkAuthenticationElement />
-      <PaymentElement />
-      <Address mode="billing" />
-
-      <button disabled={processing}>
-        {#if processing}
-          Processing...
-        {:else}
-          Pay
-        {/if}
-      </button>
-    </form>
-  </Elements>
+  <form on:submit|preventDefault={submit}>
+    <Grid>
+      <Elements
+        {stripe}
+        {clientSecret}
+        variables={{ colorPrimary: '#7c4dff' }}
+        rules={{ '.Input': { border: 'solid 1px #0002' } }}
+        bind:elements
+      >
+        <TextInput
+          bind:value={name}
+          name="name"
+          label="Name"
+          error={!name && submitted && 'Name is required'}
+        />
+        <TextInput
+          bind:value={email}
+          name="email"
+          label="Email address"
+          error={!name && submitted && 'Email is required'}
+        />
+        <PaymentElement />
+        <Button disabled={processing}>Pay</Button>
+      </Elements>
+    </Grid>
+  </form>
 {:else}
   Loading...
 {/if}
-
-<style>
-  .error {
-    margin: 2rem 0 0;
-    color: tomato;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 2rem 0;
-  }
-
-  button {
-    padding: 1rem;
-    margin: 1rem 0;
-    font-size: 1.2rem;
-    color: white;
-    background: var(--link-color);
-    border: solid 1px #ccc;
-    border-radius: 5px;
-  }
-</style>

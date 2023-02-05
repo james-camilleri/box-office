@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit'
 import { STRIPE_LIVE_SECRET_KEY, STRIPE_TEST_SECRET_KEY } from '$env/static/private'
+import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
 import type { ConfigurationFull, Discount, PriceConfiguration, PriceTier, Seat } from 'shared/types'
 import { getSeatPrice, getTotals } from 'shared/utils'
 import Stripe from 'stripe'
@@ -12,7 +13,8 @@ interface Payload {
   discountCode?: string
 }
 
-const API_KEY = import.meta.env.PROD ? STRIPE_LIVE_SECRET_KEY : STRIPE_TEST_SECRET_KEY
+const API_KEY =
+  import.meta.env.PROD && !PUBLIC_USE_STRIPE_TEST ? STRIPE_LIVE_SECRET_KEY : STRIPE_TEST_SECRET_KEY
 const stripe = new Stripe(API_KEY)
 
 function calculateTotal(
@@ -38,16 +40,22 @@ export const POST: RequestHandler = async (event) => {
   ]
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateTotal(
-      seats,
-      show,
-      configuration.priceTiers,
-      configuration.priceConfiguration,
-      discount,
-    ),
+    amount:
+      calculateTotal(
+        seats,
+        show,
+        configuration.priceTiers,
+        configuration.priceConfiguration,
+        discount,
+      ) * 100,
     currency: 'eur',
     automatic_payment_methods: {
       enabled: true,
+    },
+    metadata: {
+      show,
+      seats: JSON.stringify(seats),
+      discount: JSON.stringify(discount),
     },
   })
 
