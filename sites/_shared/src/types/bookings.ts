@@ -23,6 +23,7 @@ export enum DISCOUNT_TYPE {
 }
 
 export interface Discount {
+  _id: string
   name: string
   type: DISCOUNT_TYPE
   percentage?: number
