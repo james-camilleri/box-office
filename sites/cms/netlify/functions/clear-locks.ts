@@ -4,8 +4,8 @@ import sanityClient from '@sanity/client'
 const { SANITY_API_KEY } = process.env
 
 const client = sanityClient({
-  projectId: 'weer8f3q',
-  apiVersion: '2022-02-01',
+  projectId: '8biawkr2',
+  apiVersion: '2023-01-01',
   dataset: 'production',
   token: SANITY_API_KEY,
   useCdn: false,
