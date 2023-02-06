@@ -65,7 +65,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
         `name: ${name}`,
         `email: ${email}`,
         `show: ${metadata.show}`,
-        `seats: ${seats.map(({ _id }) => _id).join(', ')}`,
+        `seats: ${seatIds.join(', ')}`,
         `discount: ${discount?.code}`,
         `stripeId: ${id}`,
       ].join('\n'),
@@ -87,7 +87,7 @@ interface BookingData {
   name: string
   email: string
   show: string
-  seatIds: Seat[]
+  seatIds: string[]
   discount?: Discount
   stripeId: string
 }
@@ -104,7 +104,7 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
     await createTicketsForBooking(sanity, {
       bookingId,
       showId: show,
-      seats: seats.map(({ _id }) => _id),
+      seats: seatIds,
     }),
     await getCustomerId(name, email),
     await sanity.fetch(EMAIL_TEXT),
