@@ -25,10 +25,12 @@ interface LockedSeat {
 }
 
 const scheduledFunction: Handler = async function (event, context) {
-  console.log('RUNNING SCHEDULED FUNCTION?')
+  console.log('Clearing stale locks.')
 
   try {
     client.fetch(query).then(async (lockedSeats: LockedSeat[]) => {
+      console.log('Locked seats:', lockedSeats)
+
       if (!lockedSeats.length) {
         console.log('No data to delete.')
         return
@@ -40,7 +42,7 @@ const scheduledFunction: Handler = async function (event, context) {
             .patch(_id)
             .unset(locks.map((lock) => `locks[_key=="${lock}"]`))
             .commit()
-            .then(() => console.log(`Deleted ${locks.length} lock(s) for ${_id}`))
+            .then(() => console.log(`Deleted ${locks.length} lock(s) for ${_id}.`))
             .catch(console.error)
         }),
       )
@@ -53,7 +55,7 @@ const scheduledFunction: Handler = async function (event, context) {
     }
   }
 
-  console.log('RAN SCHEDULED FUNCTION, APPARENTLY')
+  console.log('Successfully cleared stale locks.')
 
   return {
     statusCode: 200,
