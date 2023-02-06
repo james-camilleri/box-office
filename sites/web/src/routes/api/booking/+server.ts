@@ -110,7 +110,7 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
     await sanity.fetch(EMAIL_TEXT),
     (await sanity.fetch(SHOW_DETAILS, { show })) as Show,
     (await (await svelteFetch('/api/config')).json()) as ConfigurationFull,
-    (await sanity.fetch(SEAT_DETAILS, { seats: seatIds })) as Seat[]],
+    (await sanity.fetch(SEAT_DETAILS, { seats: seatIds })) as Seat[],
   ])
 
   log.info('Sending ticket email')
