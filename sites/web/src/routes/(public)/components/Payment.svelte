@@ -74,7 +74,7 @@
         },
         body: JSON.stringify({
           show,
-          seats,
+          seatIds: seats.map((seat) => seat._id),
           discountCode,
         }),
       }),

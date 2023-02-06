@@ -5,7 +5,7 @@ import {
   STRIPE_WEBHOOK_SECRET,
 } from '$env/static/private'
 import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
-import { CUSTOMER_ID, EMAIL_TEXT, SHOW_DETAILS } from 'shared/queries'
+import { CUSTOMER_ID, EMAIL_TEXT, SEAT_DETAILS, SHOW_DETAILS } from 'shared/queries'
 import type { ConfigurationFull, Discount, Seat, Show } from 'shared/types'
 import {
   createReference,
@@ -48,13 +48,13 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
       metadata,
     } = charge
 
-    const seats = JSON.parse(metadata.seats) as Seat[]
+    const seatIds = JSON.parse(metadata.seatIds) as string[]
     const discount = (metadata.discount && JSON.parse(metadata.discount)) as Discount | undefined
     const bookingData = {
       name,
       email,
       show: metadata.show,
-      seats,
+      seatIds,
       discount,
       stripeId: id,
     }
@@ -87,20 +87,20 @@ interface BookingData {
   name: string
   email: string
   show: string
-  seats: Seat[]
+  seatIds: Seat[]
   discount?: Discount
   stripeId: string
 }
 
 async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fetch) {
-  const { name, email, show, seats, discount, stripeId } = bookingData
+  const { name, email, show, seatIds, discount, stripeId } = bookingData
 
   const bookingId = crypto.randomUUID()
   log.debug('Created booking ID', bookingId)
   const orderConfirmation = generateOrderConfirmationId()
   log.debug('Created order confirmation', orderConfirmation)
 
-  const [tickets, customerId, emailText, showDetails, config] = await Promise.all([
+  const [tickets, customerId, emailText, showDetails, config, seats] = await Promise.all([
     await createTicketsForBooking(sanity, {
       bookingId,
       showId: show,
@@ -110,6 +110,7 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
     await sanity.fetch(EMAIL_TEXT),
     (await sanity.fetch(SHOW_DETAILS, { show })) as Show,
     (await (await svelteFetch('/api/config')).json()) as ConfigurationFull,
+    (await sanity.fetch(SEAT_DETAILS, { seats: seatIds })) as Seat[]],
   ])
 
   log.info('Sending ticket email')
