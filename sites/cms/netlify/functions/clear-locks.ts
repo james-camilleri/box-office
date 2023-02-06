@@ -25,6 +25,8 @@ interface LockedSeat {
 }
 
 const scheduledFunction: Handler = async function (event, context) {
+  console.log('RUNNING SCHEDULED FUNCTION?')
+
   try {
     client.fetch(query).then((lockedSeats: LockedSeat[]) => {
       if (!lockedSeats.length) {
@@ -50,6 +52,8 @@ const scheduledFunction: Handler = async function (event, context) {
       statusCode: 500,
     }
   }
+
+  console.log('RAN SCHEDULED FUNCTION, APPARENTLY')
 
   return {
     statusCode: 200,
