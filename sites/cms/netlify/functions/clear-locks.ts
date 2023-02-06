@@ -28,7 +28,7 @@ const scheduledFunction: Handler = async function (event, context) {
   console.log('Clearing stale locks.')
 
   try {
-    client.fetch(query).then(async (lockedSeats: LockedSeat[]) => {
+    await client.fetch(query).then(async (lockedSeats: LockedSeat[]) => {
       console.log('Locked seats:', lockedSeats)
 
       if (!lockedSeats.length) {
