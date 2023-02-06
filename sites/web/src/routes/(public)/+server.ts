@@ -54,7 +54,7 @@ export const POST: RequestHandler = async (event) => {
     },
     metadata: {
       show,
-      seats: JSON.stringify(seats.map((seat) => seat._id)),
+      seatIds: JSON.stringify(seats.map((seat) => seat._id)),
       discount: JSON.stringify(discount),
     },
   })
