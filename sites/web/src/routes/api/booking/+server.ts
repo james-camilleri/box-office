@@ -136,7 +136,7 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
     _type: 'booking',
     customer: createReference(customerId),
     show: createReference(show),
-    seats: seats.map(({ _id }) => ({ ...createReference(_id), _key: generateArrayKey() })),
+    seats: seatIds.map((id) => ({ ...createReference(id), _key: generateArrayKey() })),
     discount: discount?._id && createReference(discount?._id),
     tickets: tickets.map(({ _id }) => ({ ...createReference(_id), _key: generateArrayKey() })),
     orderConfirmation,
