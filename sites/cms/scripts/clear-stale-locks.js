@@ -12,8 +12,10 @@ const client = sanityClient({
 const query = `*[
   _type == "seat"
   && count(locks[dateTime(now()) - dateTime(lockTime) > 60*5]) > 0
-]{ _id, 'locks': locks[]._key }
-`
+]{
+  _id,
+  'locks': locks[dateTime(now()) - dateTime(lockTime) > 60*5]._key
+}`
 
 client
   .fetch(query)

@@ -1,0 +1,59 @@
+import { Handler, schedule } from '@netlify/functions'
+import sanityClient from '@sanity/client'
+
+const { SANITY_API_KEY } = process.env
+
+const client = sanityClient({
+  projectId: 'weer8f3q',
+  apiVersion: '2022-02-01',
+  dataset: 'production',
+  token: SANITY_API_KEY,
+  useCdn: false,
+})
+
+const query = `*[
+  _type == "seat"
+  && count(locks[dateTime(now()) - dateTime(lockTime) > 60*5]) > 0
+]{
+  _id,
+  'locks': locks[dateTime(now()) - dateTime(lockTime) > 60*5]._key
+}`
+
+interface LockedSeat {
+  _id: string
+  locks: string[]
+}
+
+const scheduledFunction: Handler = async function (event, context) {
+  try {
+    client.fetch(query).then((lockedSeats: LockedSeat[]) => {
+      if (!lockedSeats.length) {
+        console.log('No data to delete.')
+        return
+      }
+
+      return Promise.all(
+        lockedSeats.map(({ _id, locks }) => {
+          client
+            .patch(_id)
+            .unset(locks.map((lock) => `locks[_key=="${lock}"]`))
+            .commit()
+            .then(() => console.log(`Deleted ${locks.length} lock(s) for ${_id}`))
+            .catch(console.error)
+        }),
+      )
+    })
+  } catch (e) {
+    console.error(e)
+
+    return {
+      statusCode: 500,
+    }
+  }
+
+  return {
+    statusCode: 200,
+  }
+}
+
+export const handler = schedule('0,15,30,45 * * * *', scheduledFunction)
