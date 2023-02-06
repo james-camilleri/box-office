@@ -13,6 +13,7 @@
     "data:clean-assets": "env-cmd node ./scripts/clean-assets.js",
     "data:generate-breakpoints": "env-cmd node ./scripts/generate-breakpoints.js",
     "data:delete-all-booking-data": "env-cmd node ./scripts/delete-all-booking-data.js",
+    "data:clear-stale-locks": "env-cmd node ./scripts/clear-stale-locks.js",
     "data:upload-document": "env-cmd node ./scripts/upload-document.js",
     "generate-seatplan": "env-cmd ts-node --esm ./setup/setup.ts"
   },
