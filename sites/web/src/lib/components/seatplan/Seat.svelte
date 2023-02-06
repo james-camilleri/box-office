@@ -1,7 +1,9 @@
 <script lang="ts">
   import { getContext } from 'svelte'
+  import type { Writable } from 'svelte/store'
 
   import { pricing, selection, unavailable } from './stores.js'
+  import { ALLOW_SELECTION } from './SeatPlan.svelte'
   import { SECTION_ID } from './Section.svelte'
   import { ROW_ID } from './Row.svelte'
 
@@ -17,6 +19,8 @@
   const row: string = getContext(ROW_ID) ?? ''
   const id = [section, row, number].filter(Boolean).join('-')
 
+  const allowSelection = getContext(ALLOW_SELECTION) as Writable<boolean>
+
   $: selected = $selection.has(id)
   $: disabled =
     !$unavailable ||
@@ -30,7 +34,7 @@
     $pricing.get('default')
 
   function toggleSelection() {
-    if (disabled) {
+    if (disabled || !$allowSelection) {
       return
     }
 
@@ -66,6 +70,8 @@
 
     &.selected {
       color: var(--selected);
+      stroke: var(--dark-3);
+      stroke-width: 7px;
     }
 
     &:hover:not(.disabled) {

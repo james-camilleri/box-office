@@ -12,6 +12,11 @@
   let selectedShowId: string | undefined = undefined
   let unavailableSeats: string[] | undefined = undefined
   let loading = false
+  let allowSelection = true
+
+  function onCheckoutStart() {
+    allowSelection = false
+  }
 
   $: {
     unavailableSeats = undefined
@@ -41,10 +46,21 @@
       </div>
     {/if}
     <div class="seatplan">
-      <SeatPlan showId={selectedShowId} {priceTiers} {priceConfiguration} {unavailableSeats} />
+      <SeatPlan
+        showId={selectedShowId}
+        {priceTiers}
+        {priceConfiguration}
+        {unavailableSeats}
+        {allowSelection}
+      />
     </div>
   </div>
-  <Cart show={selectedShowId} {priceTiers} {priceConfiguration} />
+  <Cart
+    show={selectedShowId}
+    {priceTiers}
+    {priceConfiguration}
+    on:checkout-start={onCheckoutStart}
+  />
 </Grid>
 
 <style lang="scss">
@@ -52,7 +68,6 @@
     position: relative;
     display: flex;
     align-items: center;
-    overflow: hidden;
     background: var(--light-2);
     border-bottom: var(--border);
     box-shadow: var(--shadow-inset);
@@ -60,7 +75,6 @@
 
   .seatplan {
     width: 100%;
-    max-height: 90vh;
     padding: var(--lg);
   }
 

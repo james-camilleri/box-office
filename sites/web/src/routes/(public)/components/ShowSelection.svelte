@@ -16,7 +16,7 @@
 </script>
 
 <header>
-  <h1 class="title" />
+  <h1 class="title">CHICAGO</h1>
   <div class="select-wrapper">
     <NativeSelect
       bind:value={selected}
@@ -30,13 +30,11 @@
 
 <style lang="scss">
   header {
-    // z-index: 1;
     display: flex;
     flex-wrap: wrap;
     gap: var(--sm);
     padding: var(--md);
     background: var(--secondary);
-    // box-shadow: (var(--shadow-bottom));
   }
 
   .title {

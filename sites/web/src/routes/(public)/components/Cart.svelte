@@ -1,14 +1,17 @@
 <script lang="ts">
-  import { Button, Loader, TextInput } from '@svelteuidev/core'
+  import { Alert, Button, Loader, TextInput } from '@svelteuidev/core'
   import { pricing, selection } from '$lib/components/seatplan/stores.js'
-  import type { Discount, PriceConfiguration, PriceTier, Show } from 'shared/types'
+  import type { Discount, PriceConfiguration, PriceTier } from 'shared/types'
   import { getLineItem, getTotals } from 'shared/utils'
   import Payment from './Payment.svelte'
   import Grid from '$lib/components/layout/Grid.svelte'
+  import { createEventDispatcher } from 'svelte'
 
   export let show: string
   export let priceTiers: PriceTier[]
   export let priceConfiguration: PriceConfiguration
+
+  const dispatch = createEventDispatcher()
 
   enum CART_STATE {
     SELECTION = 'selection',
@@ -56,6 +59,8 @@
     }
 
     cartState = CART_STATE.CHECK_OUT
+
+    dispatch('checkout-start')
   }
 
   function onPaymentSuccess() {
@@ -65,6 +70,9 @@
 
 <div class="cart">
   {#if cartState === CART_STATE.SELECTION}
+    {#if !lineItems.length}
+      <Alert title="Select a seat" color="orange" />
+    {/if}
     <div class="selection">
       {#each lineItems as { description, price }}
         <span class="line-item">
@@ -96,27 +104,39 @@
         </span>
       {/if}
     </div>
-    {#if lineItems.length}
-      <div class="controls">
-        <Grid>
-          <form on:submit|preventDefault={applyDiscount} class="discount-code">
-            <TextInput
-              label="Discount code"
-              error={!discountCode && discountError}
-              bind:value={discountCode}
-            >
-              <svelte:fragment slot="rightSection">
-                {#if checkingDiscount}
-                  <Loader color="blue" size="xs" />
-                {/if}
-              </svelte:fragment>
-            </TextInput>
-            <Button disabled={!discountCode || checkingDiscount}>Apply discount</Button>
-          </form>
-          <Button fullSize disabled={!lineItems.length} on:click={startCheckout}>Checkout</Button>
-        </Grid>
-      </div>
-    {/if}
+    <div class="controls">
+      <Grid>
+        <form on:submit|preventDefault={applyDiscount} class="discount-code">
+          <TextInput
+            aria-label="Discount code"
+            placeholder="Discount code"
+            error={!discountCode && discountError}
+            bind:value={discountCode}
+          >
+            <svelte:fragment slot="rightSection">
+              {#if checkingDiscount}
+                <Loader color="red" size="xs" />
+              {/if}
+            </svelte:fragment>
+          </TextInput>
+          <Button disabled={!discountCode || checkingDiscount} color="red" variant="outline"
+            >Apply discount</Button
+          >
+        </form>
+        <div>
+          <Button
+            fullSize
+            disabled={!lineItems.length}
+            on:click={startCheckout}
+            color="red"
+            size="lg">Checkout</Button
+          >
+          <div class="checkout-small-print">
+            Seats will be held for 5 minutes once the checkout process is started
+          </div>
+        </div>
+      </Grid>
+    </div>
   {/if}
 
   {#if cartState === CART_STATE.CHECK_OUT}
@@ -144,16 +164,26 @@
   .line-item {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 2px;
-    border-bottom: 1px var(--neutral) solid;
+    padding: var(--xxs) var(--xxs) 0;
+
+    &:not(:first-child) {
+      border-top: 1px var(--dark-1) solid;
+    }
 
     &:last-child {
       text-align: right;
     }
   }
 
+  .subtotal {
+    border-top: 3px var(--dark-1) solid !important;
+  }
+
   .total {
+    padding-bottom: var(--xxs);
     font-weight: bold;
+    border-top: 3px var(--dark-1) solid !important;
+    border-bottom: 3px var(--dark-1) solid;
   }
 
   .vat {
@@ -174,6 +204,16 @@
   .discount-code {
     display: flex;
     gap: var(--xs);
-    align-items: end;
+    align-items: start;
+  }
+
+  :global(.discount-code > :first-child) {
+    flex-grow: 1;
+  }
+
+  .checkout-small-print {
+    margin-top: var(--xxs);
+    font-size: 0.8em;
+    font-style: italic;
   }
 </style>

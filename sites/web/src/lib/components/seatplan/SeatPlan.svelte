@@ -1,8 +1,11 @@
 <script lang="ts" context="module">
-  export const PRICING = Symbol()
+  export const ALLOW_SELECTION = Symbol()
 </script>
 
 <script lang="ts">
+  import { setContext } from 'svelte'
+  import { writable } from 'svelte/store'
+
   import type { PriceConfiguration, PriceTier, Seat as SeatType } from 'shared/types'
 
   import Section from './Section.svelte'
@@ -15,6 +18,11 @@
   export let priceConfiguration: PriceConfiguration
   export let showId: string
   export let unavailableSeats: string[] | undefined
+  export let allowSelection = true
+
+  const _allowSelection = writable(allowSelection)
+  $: $_allowSelection = allowSelection
+  setContext(ALLOW_SELECTION, _allowSelection)
 
   $: $pricing = new Map(
     Object.entries({
@@ -1298,6 +1306,10 @@
 </div>
 
 <style lang="scss">
+  .seatplan svg {
+    max-height: 85vh;
+  }
+
   text {
     font: normal 30px sans-serif;
     color: var(--foreground);
