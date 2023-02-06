@@ -28,13 +28,13 @@ const scheduledFunction: Handler = async function (event, context) {
   console.log('RUNNING SCHEDULED FUNCTION?')
 
   try {
-    client.fetch(query).then((lockedSeats: LockedSeat[]) => {
+    client.fetch(query).then(async (lockedSeats: LockedSeat[]) => {
       if (!lockedSeats.length) {
         console.log('No data to delete.')
         return
       }
 
-      return Promise.all(
+      await Promise.all(
         lockedSeats.map(({ _id, locks }) => {
           client
             .patch(_id)
