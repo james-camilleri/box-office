@@ -29,22 +29,20 @@ const scheduledFunction: Handler = async function (event, context) {
 
   try {
     await client.fetch(query).then(async (lockedSeats: LockedSeat[]) => {
-      console.log('Locked seats:', lockedSeats)
-
       if (!lockedSeats.length) {
         console.log('No data to delete.')
         return
       }
 
       await Promise.all(
-        lockedSeats.map(({ _id, locks }) => {
+        lockedSeats.map(({ _id, locks }) =>
           client
             .patch(_id)
             .unset(locks.map((lock) => `locks[_key=="${lock}"]`))
             .commit()
             .then(() => console.log(`Deleted ${locks.length} lock(s) for ${_id}.`))
-            .catch(console.error)
-        }),
+            .catch(console.error),
+        ),
       )
     })
   } catch (e) {
