@@ -33,12 +33,15 @@
 
   let stripe: Stripe | null = null
   let clientSecret: string | undefined = undefined
-  let error: { message: string } | undefined = undefined
+  let error: { type?: string; message: string } | undefined = undefined
   let elements: StripeElements | undefined
   let processing = false
   let name: string
   let email: string
   let submitted = false
+
+  let time = 60 * 5
+  let interval: number
 
   onMount(async () => {
     stripe = await loadStripe(API_KEY)
@@ -46,6 +49,21 @@
   })
 
   const dispatch = createEventDispatcher()
+
+  function startTimer() {
+    interval = setInterval(() => {
+      time--
+      if (time === 0) {
+        clearInterval(interval)
+        dispatch('timeout')
+      }
+    }, 1000)
+  }
+
+  function pad(number: number) {
+    const string = number.toString()
+    return string.length === 1 ? `0${string}` : string
+  }
 
   async function createPaymentIntent() {
     const [stripeResponse, lockedSeatsResponse] = await Promise.all([
@@ -74,9 +92,11 @@
 
     if (!lockedSeatsResponse.ok) {
       const payload = (await lockedSeatsResponse.json()) as { message: string }
-      error = { message: ERROR_STRINGS[payload.message] ?? '' }
+      error = { type: payload.message, message: ERROR_STRINGS[payload.message] ?? '' }
       console.log(payload.message)
     }
+
+    startTimer()
 
     const { clientSecret } = await stripeResponse.json()
     return clientSecret
@@ -94,6 +114,7 @@
     }
 
     processing = true
+    error = undefined
 
     const result = await stripe.confirmPayment({
       elements,
@@ -118,18 +139,27 @@
 </script>
 
 {#if error}
-  <Alert title="Problem submitting payment!" color="yellow">
-    {error.message}
-  </Alert>
+  <div class="alert-wrapper">
+    <Alert title="Problem submitting payment!" color="yellow">
+      {error.message}
+    </Alert>
+  </div>
 {/if}
 
 {#if stripe && clientSecret}
+  {#if error?.type !== 'already-locked'}
+    <div class="alert-wrapper">
+      <Alert
+        title="Your tickets will be held for {pad(Math.floor(time / 60))}:{pad(time % 60)}"
+        color="dark"
+      />
+    </div>
+  {/if}
   <form on:submit|preventDefault={submit}>
     <Grid gap="var(--xxs)">
       <Elements
         {stripe}
         {clientSecret}
-        variables={{ colorPrimary: 'var(--primary)' }}
         rules={{ '.Input': { border: 'solid 1px #0002' } }}
         bind:elements
       >
@@ -144,12 +174,12 @@
             bind:value={email}
             name="email"
             label="Email address"
-            error={!name && submitted && 'Email is required'}
+            error={!email && submitted && 'Email is required'}
           />
         </div>
         <PaymentElement />
         <div class="pay-button">
-          <Button fullSize disabled={processing || error} color="red" size="lg">Pay</Button>
+          <Button fullSize disabled={processing} color="red" size="lg">Pay</Button>
         </div>
       </Elements>
     </Grid>
@@ -165,6 +195,10 @@
     width: 4rem;
     height: 4rem;
     margin: var(--md) auto;
+  }
+
+  .alert-wrapper {
+    margin-bottom: var(--md);
   }
 
   .additional-fields {

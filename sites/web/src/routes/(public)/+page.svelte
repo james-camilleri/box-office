@@ -18,21 +18,31 @@
     allowSelection = false
   }
 
+  function onRefresh() {
+    fetchSeatData()
+    unavailableSeats = undefined
+    allowSelection = true
+  }
+
+  function fetchSeatData() {
+    const timeout = setTimeout(() => {
+      loading = true
+    }, 500)
+
+    fetch(`${$page.url.origin}/api/seats/${selectedShowId}`)
+      .then((response) => response.json())
+      .then(({ unavailable }) => {
+        unavailableSeats = unavailable
+        loading = false
+        clearTimeout(timeout)
+      })
+  }
+
   $: {
     unavailableSeats = undefined
 
     if (selectedShowId) {
-      const timeout = setTimeout(() => {
-        loading = true
-      }, 500)
-
-      fetch(`${$page.url.origin}/api/seats/${selectedShowId}`)
-        .then((response) => response.json())
-        .then(({ unavailable }) => {
-          unavailableSeats = unavailable
-          loading = false
-          clearTimeout(timeout)
-        })
+      fetchSeatData()
     }
   }
 </script>
@@ -60,6 +70,7 @@
     {priceTiers}
     {priceConfiguration}
     on:checkout-start={onCheckoutStart}
+    on:refresh={onRefresh}
   />
 </Grid>
 

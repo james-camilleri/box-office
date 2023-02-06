@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Alert, Button, Loader, TextInput } from '@svelteuidev/core'
   import { pricing, selection } from '$lib/components/seatplan/stores.js'
-  import type { Discount, PriceConfiguration, PriceTier } from 'shared/types'
+  import type { Discount, PriceConfiguration, PriceTier, Seat } from 'shared/types'
   import { getLineItem, getTotals } from 'shared/utils'
   import Payment from './Payment.svelte'
   import Grid from '$lib/components/layout/Grid.svelte'
@@ -16,7 +16,6 @@
   enum CART_STATE {
     SELECTION = 'selection',
     CHECK_OUT = 'check-out',
-    PAYMENT_IN_PROGRESS = 'payment-in-progress',
     PAYMENT_SUCCESS = 'payment-success',
   }
   $: cartState = CART_STATE.SELECTION
@@ -65,11 +64,24 @@
 
   function onPaymentSuccess() {
     cartState = CART_STATE.PAYMENT_SUCCESS
+    dispatch('refresh')
+  }
+
+  function timeout() {
+    $selection = new Map<string, Seat>()
+    cartState = CART_STATE.SELECTION
+    dispatch('refresh')
   }
 </script>
 
 <div class="cart">
-  {#if cartState === CART_STATE.SELECTION}
+  {#if cartState === CART_STATE.SELECTION || cartState === CART_STATE.PAYMENT_SUCCESS}
+    {#if cartState === CART_STATE.PAYMENT_SUCCESS && $selection.size === 0}
+      <div class="success-notice">
+        <Alert title="Checkout successful" color="green">Check your inbox for your tickets</Alert>
+      </div>
+    {/if}
+
     {#if !lineItems.length}
       <Alert title="Select a seat" color="orange" />
     {/if}
@@ -145,6 +157,7 @@
       discountCode={discount?.code}
       seats={[...$selection.values()]}
       on:payment-success={onPaymentSuccess}
+      on:timeout={timeout}
     />
   {/if}
 </div>
@@ -153,6 +166,10 @@
   .cart {
     padding: var(--md);
     background: var(--light);
+  }
+
+  .success-notice {
+    margin-bottom: var(--md);
   }
 
   .selection {
