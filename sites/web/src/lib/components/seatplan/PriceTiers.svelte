@@ -16,6 +16,7 @@
 <style>
   .price-tiers {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--xl);
     padding: var(--md);
     margin: 0 auto;
