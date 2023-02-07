@@ -1,8 +1,9 @@
 import { error } from '@sveltejs/kit'
 import {
   STRIPE_LIVE_SECRET_KEY,
+  STRIPE_LIVE_WEBHOOK_SECRET,
   STRIPE_TEST_SECRET_KEY,
-  STRIPE_WEBHOOK_SECRET,
+  STRIPE_TEST_WEBHOOK_SECRET,
 } from '$env/static/private'
 import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
 import { CUSTOMER_ID, EMAIL_TEXT, SEAT_DETAILS, SHOW_DETAILS } from 'shared/queries'
@@ -25,6 +26,11 @@ const API_KEY =
     ? STRIPE_LIVE_SECRET_KEY
     : STRIPE_TEST_SECRET_KEY
 
+const WEBHOOK_SECRET =
+  import.meta.env.PROD && PUBLIC_USE_STRIPE_TEST !== 'true'
+    ? STRIPE_LIVE_WEBHOOK_SECRET
+    : STRIPE_TEST_WEBHOOK_SECRET
+
 const stripe = new Stripe(API_KEY)
 
 export const POST: RequestHandler = async ({ request, fetch }) => {
@@ -34,7 +40,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
   let event
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, STRIPE_WEBHOOK_SECRET)
+    event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET)
   } catch (err: any) {
     log.warn('Webhook signature verification failed:')
     log.warn(err.message)
