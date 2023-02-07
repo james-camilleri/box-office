@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { PortableTextBlock } from '@portabletext/types'
+
   import { Alert, Button, Loader, TextInput } from '@svelteuidev/core'
   import { pricing, selection } from '$lib/components/seatplan/stores.js'
   import type { Discount, PriceConfiguration, PriceTier, Seat } from 'shared/types'
@@ -6,10 +8,12 @@
   import Payment from './Payment.svelte'
   import Grid from '$lib/components/layout/Grid.svelte'
   import { createEventDispatcher } from 'svelte'
+  import { PortableText } from '@portabletext/svelte'
 
   export let show: string
   export let priceTiers: PriceTier[]
   export let priceConfiguration: PriceConfiguration
+  export let text: PortableTextBlock[]
 
   const dispatch = createEventDispatcher()
 
@@ -150,6 +154,10 @@
           <div class="checkout-small-print">
             Seats will be held for 5 minutes once the checkout process is started
           </div>
+
+          <div class="text">
+            <PortableText value={text} />
+          </div>
         </div>
       </Grid>
     </div>
@@ -236,5 +244,9 @@
     margin-top: var(--xxs);
     font-size: 0.8em;
     font-style: italic;
+  }
+
+  .text {
+    margin-top: var(--lg);
   }
 </style>

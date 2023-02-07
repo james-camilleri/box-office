@@ -5,6 +5,7 @@ import type { ConfigurationFull, Discount, PriceConfiguration, PriceTier, Seat }
 import { getSeatPrice, getTotals } from 'shared/utils'
 import Stripe from 'stripe'
 
+import { sanity } from '../api/sanity.js'
 import type { RequestHandler } from './$types.js'
 
 interface Payload {
@@ -65,4 +66,9 @@ export const POST: RequestHandler = async (event) => {
   return json({
     clientSecret: paymentIntent.client_secret,
   })
+}
+
+export const GET: RequestHandler = async () => {
+  const websiteText = await sanity.fetch('*[_id == "website"][0].text')
+  return json(websiteText)
 }
