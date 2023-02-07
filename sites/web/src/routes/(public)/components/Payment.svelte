@@ -15,7 +15,7 @@
   import Grid from '$lib/components/layout/Grid.svelte'
 
   const API_KEY =
-    import.meta.env.PROD && !PUBLIC_USE_STRIPE_TEST
+    import.meta.env.PROD && PUBLIC_USE_STRIPE_TEST !== 'true'
       ? PUBLIC_STRIPE_LIVE_API_KEY
       : PUBLIC_STRIPE_TEST_API_KEY
 

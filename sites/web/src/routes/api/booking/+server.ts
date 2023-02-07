@@ -21,7 +21,9 @@ import type { RequestHandler } from './$types.js'
 import { sendEmail } from './email/email.js'
 
 const API_KEY =
-  import.meta.env.PROD && !PUBLIC_USE_STRIPE_TEST ? STRIPE_LIVE_SECRET_KEY : STRIPE_TEST_SECRET_KEY
+  import.meta.env.PROD && PUBLIC_USE_STRIPE_TEST !== 'true'
+    ? STRIPE_LIVE_SECRET_KEY
+    : STRIPE_TEST_SECRET_KEY
 
 const stripe = new Stripe(API_KEY)
 
