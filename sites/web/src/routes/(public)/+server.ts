@@ -40,7 +40,7 @@ export const POST: RequestHandler = async (event) => {
   ]
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount:
+    amount: Math.floor(
       calculateTotal(
         seats,
         show,
@@ -48,6 +48,7 @@ export const POST: RequestHandler = async (event) => {
         configuration.priceConfiguration,
         discount,
       ) * 100,
+    ),
     currency: 'eur',
     automatic_payment_methods: {
       enabled: true,
