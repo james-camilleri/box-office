@@ -10,13 +10,15 @@ interface BookingPayload {
   bookingId: string
   orderConfirmation: string
   tickets: Ticket[]
+  calculateBookingFee: boolean
 }
 
 export const POST: RequestHandler = async (event) => {
   const { request } = event
 
   try {
-    const { bookingId, orderConfirmation, tickets } = (await request.json()) as BookingPayload
+    const { bookingId, orderConfirmation, tickets, calculateBookingFee } =
+      (await request.json()) as BookingPayload
     const seatIds = tickets.map(({ seat }) => seat._ref)
 
     const [config, bookingDetails, seats, emailText] = await Promise.all([
@@ -35,6 +37,7 @@ export const POST: RequestHandler = async (event) => {
       emailText,
       orderConfirmation,
       tickets,
+      calculateBookingFee,
     })
   } catch (e) {
     console.error(e)

@@ -32,11 +32,13 @@
   export let priceConfiguration: PriceConfiguration
   export let discount: Discount | undefined
   export let emailText: PortableTextBlock[]
+  export let calculateBookingFee: boolean
 
   const lineItems = seats.map((seat) => getLineItem(seat, show, priceTiers, priceConfiguration))
   const { subtotal, bookingFee, reduction, total, vat } = getTotals(
     lineItems.map(({ price }) => price ?? 0),
     discount,
+    calculateBookingFee,
   )
 </script>
 
@@ -99,11 +101,13 @@
           <td>{price?.toFixed(2)}</td>
         </tr>
       {/each}
-      <tr class="line-item subtotal">
-        <td>Subtotal</td>
-        <td>€</td>
-        <td>{subtotal.toFixed(2)}</td>
-      </tr>
+      {#if (discount && reduction) || bookingFee}
+        <tr class="line-item subtotal">
+          <td>Subtotal</td>
+          <td>€</td>
+          <td>{subtotal.toFixed(2)}</td>
+        </tr>
+      {/if}
       {#if discount && reduction}
         <tr class="line-item discount">
           <td>Discount ({discount.name})</td>
@@ -111,11 +115,13 @@
           <td>-{reduction.toFixed(2)}</td>
         </tr>
       {/if}
-      <tr class="line-item booking-fee">
-        <td>Booking fee</td>
-        <td>€</td>
-        <td>{bookingFee.toFixed(2)}</td>
-      </tr>
+      {#if bookingFee}
+        <tr class="line-item booking-fee">
+          <td>Booking fee</td>
+          <td>€</td>
+          <td>{bookingFee.toFixed(2)}</td>
+        </tr>
+      {/if}
       <tr class="line-item total">
         <td>Total</td>
         <td>€</td>

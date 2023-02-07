@@ -28,6 +28,7 @@ async function emailTickets(
   await fetch(EMAIL_API_URL, {
     method: 'POST',
     body: JSON.stringify({
+      calculateBookingFee: false,
       bookingId,
       orderConfirmation,
       tickets,

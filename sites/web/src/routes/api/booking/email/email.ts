@@ -19,6 +19,7 @@ interface SendEmailParams {
   config: ConfigurationFull
   seats: Seat[]
   emailText: unknown
+  calculateBookingFee: boolean
 }
 
 export async function sendEmail({
@@ -28,6 +29,7 @@ export async function sendEmail({
   emailText,
   tickets,
   orderConfirmation,
+  calculateBookingFee = true,
 }: SendEmailParams) {
   const { name, email, date, show, discount } = bookingDetails
   const {
@@ -91,6 +93,7 @@ export async function sendEmail({
           priceConfiguration,
           discount,
           emailText,
+          calculateBookingFee,
         }),
       ),
     ),
