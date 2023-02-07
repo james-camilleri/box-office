@@ -1,5 +1,6 @@
 import {
   FaExclamationTriangle,
+  FaGlobe,
   FaPercentage,
   FaRegEnvelope,
   FaTheaterMasks,
@@ -34,6 +35,10 @@ export const structure = (S: StructureBuilder) =>
         .title('Configure')
         .icon(FaWrench)
         .child(S.document().title('Configure').schemaType('pageConfigure').documentId('configure')),
+      S.listItem()
+        .title('Website')
+        .icon(FaGlobe)
+        .child(S.document().title('Website').schemaType('pageWebsite').documentId('website')),
       S.listItem()
         .title('Email')
         .icon(FaRegEnvelope)

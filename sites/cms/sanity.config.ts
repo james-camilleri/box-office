@@ -51,7 +51,7 @@ export default defineConfig({
           .filter(Boolean) as DocumentActionComponent[] // TS's silly filter thing again.
       }
 
-      if (context.schemaType === 'pageEmail') {
+      if (['pageEmail', 'pageWebsite'].includes(context.schemaType)) {
         return actions.filter(
           (previousAction) =>
             previousAction.action === ACTIONS.PUBLISH ||
