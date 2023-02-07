@@ -92,17 +92,21 @@
           <span>€{price}</span>
         </span>
       {/each}
-      {#if discount && totals.reduction}
+      {#if lineItems.length}
         <span class="line-item subtotal">
           <span>Subtotal</span>
           <span>€{totals.subtotal.toFixed(2)}</span>
         </span>
-        <span class="line-item discount">
-          <span>Discount ({discount.name})</span>
-          <span>-€{totals.reduction.toFixed(2)}</span>
+        {#if discount && totals.reduction}
+          <span class="line-item discount">
+            <span>Discount ({discount.name})</span>
+            <span>-€{totals.reduction.toFixed(2)}</span>
+          </span>
+        {/if}
+        <span class="line-item booking-fee">
+          <span>Booking fee</span>
+          <span>€{totals.bookingFee.toFixed(2)}</span>
         </span>
-      {/if}
-      {#if lineItems.length}
         <span class="line-item total">
           <span>Total</span>
           <span>

@@ -1,6 +1,9 @@
 import type { PriceConfiguration, PriceMap, PriceTier } from '../types/configuration.js'
 import { DISCOUNT_TYPE, type Discount, type Seat } from '../types/bookings.js'
 
+const BOOKING_FEE = 0.045
+const MAX_BOOKING_FEE = 5
+
 export function getSeatPriceTier(
   seat: Seat,
   show: string,
@@ -35,6 +38,11 @@ export function getLineItem(
 
 export function getTotals(prices: number[], discount?: Discount) {
   const subtotal = prices.reduce((total, price) => total + price, 0)
+  const bookingFee = prices.reduce(
+    (bookingFee, price) => bookingFee + Math.min(price * BOOKING_FEE, MAX_BOOKING_FEE),
+    0,
+  )
+
   let total = subtotal
   let reduction = 0
 
@@ -43,10 +51,13 @@ export function getTotals(prices: number[], discount?: Discount) {
     reduction = subtotal - total
   }
 
+  total += bookingFee
+
   const vat = total * 0.05 // 5% VAT.
 
   return {
     subtotal,
+    bookingFee,
     reduction,
     total,
     vat,
