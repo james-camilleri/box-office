@@ -5,12 +5,10 @@
   import ShowSelection from './components/ShowSelection.svelte'
   import Cart from './components/Cart.svelte'
   import Grid from '$lib/components/layout/Grid.svelte'
-  import { PortableText } from '@portabletext/svelte'
 
   export let data: PageData
   const { configuration, text } = data
   const { priceTiers, priceConfiguration, shows, timeZone } = configuration
-  console.log(text)
 
   let selectedShowId: string | undefined = undefined
   let unavailableSeats: string[] | undefined = undefined
