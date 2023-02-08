@@ -42,8 +42,9 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
   try {
     event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET)
   } catch (err: any) {
-    log.warn('Webhook signature verification failed:')
-    log.warn(err.message)
+    log.error('Webhook signature verification failed:')
+    log.error(err.message)
+    await log.flushAll()
 
     throw error(400)
   }
@@ -67,6 +68,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
       stripeId: id,
     }
 
+    log.setHeader(`New booking: ${name} <${email}>`)
     log.info(
       [
         'Retrieved booking details from Stripe:',
@@ -84,10 +86,12 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
     } catch (e) {
       console.error(e)
       log.error(e)
+      await log.flushAll()
       throw error(500)
     }
   }
 
+  await log.flush()
   return new Response()
 }
 

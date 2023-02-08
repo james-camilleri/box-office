@@ -17,7 +17,7 @@
   "license": "ISC",
   "private": true,
   "devDependencies": {
-    "@james-camilleri/logger": "^1.0.7",
+    "@james-camilleri/logger": "^1.0.8",
     "@sanity/client": "^4.0.1",
     "@sanity/types": "^3.2.6",
     "@types/qrcode": "^1.5.0",

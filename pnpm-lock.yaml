@@ -10,7 +10,7 @@ importers:
 
   sites/_shared:
     specifiers:
-      '@james-camilleri/logger': ^1.0.7
+      '@james-camilleri/logger': ^1.0.8
       '@sanity/client': ^4.0.1
       '@sanity/types': ^3.2.6
       '@types/qrcode': ^1.5.0
@@ -21,7 +21,7 @@ importers:
       react-is: ^18.2.0
       styled-components: ^5.3.6
     devDependencies:
-      '@james-camilleri/logger': 1.0.7
+      '@james-camilleri/logger': 1.0.8
       '@sanity/client': 4.0.1
       '@sanity/types': 3.2.6
       '@types/qrcode': 1.5.0
@@ -1871,6 +1871,12 @@ packages:
 
   /@james-camilleri/logger/1.0.7:
     resolution: {integrity: sha512-SxK8TVJleNbdp4B4BwLKuhY3pgRNGEn7r5mojCx9vrhEDIe8v+ZS1wAi6CEgbSNNPETxzS6lD14fwELYTttQWA==}
+    dependencies:
+      nodemailer: 6.9.1
+    dev: true
+
+  /@james-camilleri/logger/1.0.8:
+    resolution: {integrity: sha512-k8epZ0YZeT8D8vJayOGSAEf2xEVl99c0t08C1Yv5yKj9Nx8a7gvJ1CBqODx6CFTbUDdlnl45DfoLxQErryWt5w==}
     dependencies:
       nodemailer: 6.9.1
     dev: true
