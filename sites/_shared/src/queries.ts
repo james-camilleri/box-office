@@ -120,7 +120,7 @@ export const DISCOUNT = `*[_type == 'discount' && enabled && code.current == $co
 /**
  * Gets the full ticketing configuration.
  */
-export const CONFIG_QUERY = `*[_id == 'configure']{
+export const CONFIG = `*[_id == 'configure']{
   showName,
   showLocation,
   vatNumber,
@@ -132,3 +132,27 @@ export const CONFIG_QUERY = `*[_id == 'configure']{
   'defaultPrice': defaultPrice->._id,
   'priceConfiguration': compositePriceConfiguration,
 }[0]`
+
+export const BOOKING_REPORT = `*[_type == "booking" && dateTime(_createdAt) > dateTime(now()) - 60*60*24] {
+  _id,
+  _createdAt,
+  orderConfirmation,
+  'name': customer->name,
+  'email': customer->email,
+  show->{ _id, date},
+  'seats': seats[]->{
+    _id,
+    'row': row -> _id,
+    'section': row -> section -> _id
+  },
+  'tickets': tickets[]._ref,
+  'discount': discount->{
+    _id,
+    name,
+    percentage,
+    type,
+    'code': code.current
+  },
+  source
+} | order(_createdAt asc)
+`

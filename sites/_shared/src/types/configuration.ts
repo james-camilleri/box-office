@@ -36,6 +36,19 @@ export interface ConfigurationFull {
   priceConfiguration: PriceConfiguration
 }
 
+export interface ReportConfiguration {
+  showName: string
+  showLocation: string
+  vatPermitNumber: string
+  vatNumber: string
+  mapUrl: string
+  shows: Show[]
+  timeZone: string
+  priceTiers: PriceTier[]
+  defaultPriceTier: string
+  priceConfiguration: string
+}
+
 export interface Show {
   _id: string
   date: string

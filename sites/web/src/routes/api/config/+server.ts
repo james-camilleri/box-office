@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit'
-import { CONFIG_QUERY } from 'shared/queries'
+import { CONFIG } from 'shared/queries'
 
 import { sanity } from '../sanity.js'
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
-  const configuration = await sanity.fetch(CONFIG_QUERY)
+  const configuration = await sanity.fetch(CONFIG)
 
   return json({
     ...configuration,
