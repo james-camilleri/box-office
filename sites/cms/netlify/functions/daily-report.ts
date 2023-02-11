@@ -2,14 +2,7 @@ import { Handler, schedule } from '@netlify/functions'
 import sanityClient from '@sanity/client'
 import nodemailer from 'nodemailer'
 import { BOOKING_REPORT, CONFIG } from 'shared/queries'
-import {
-  Configuration,
-  DISCOUNT_TYPE,
-  Discount,
-  ReportConfiguration,
-  Seat,
-  Show,
-} from 'shared/types'
+import { DISCOUNT_TYPE, Discount, ReportConfiguration, Seat, Show } from 'shared/types'
 import { getSeatPrice, getTotals, getZonedDate, getZonedTime } from 'shared/utils'
 
 const { SANITY_API_KEY, MAILJET_API_KEY, MAILJET_SECRET_KEY, REPORT_EMAILS } = process.env
