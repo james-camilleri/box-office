@@ -40,6 +40,7 @@ importers:
       '@sanity/client': ^4.0.1
       '@sanity/eslint-config-studio': ^2.0.1
       '@sanity/icons': ^2.2.2
+      '@sanity/ui': ^1.2.2
       '@sanity/vision': ^3.3.1
       '@types/node': ^18.13.0
       env-cmd: ^10.1.0
@@ -60,6 +61,7 @@ importers:
       '@james-camilleri/replace-sanity-favicon': 1.0.1
       '@james-camilleri/sanity-web-image': 2.0.3
       '@sanity/client': 4.0.1
+      '@sanity/ui': 1.2.2_23mhwjhnzfjwvdn7ol54k26zom
       '@sanity/vision': 3.3.1_23mhwjhnzfjwvdn7ol54k26zom
       nodemailer: 6.9.1
       react: 18.2.0

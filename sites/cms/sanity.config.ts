@@ -5,6 +5,7 @@ import { deskTool } from 'sanity/desk'
 import { CreateBooking } from './desk/actions/create-booking.js'
 import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
 import { PublishConfig } from './desk/actions/publish-config.js'
+import { ResendEmail } from './desk/actions/resend-email.js'
 import { schemaTypes } from './schemas/index.js'
 import { structure } from './structure.js'
 
@@ -60,7 +61,7 @@ export default defineConfig({
       }
 
       if (['booking'].includes(context.schemaType)) {
-        return [CreateBooking]
+        return [CreateBooking, ResendEmail]
       }
 
       if (['ticket'].includes(context.schemaType)) {

@@ -15,7 +15,14 @@ export interface Ticket extends SanityDocument {
 }
 
 export interface Booking extends SanityDocument {
+  customer: Reference
+  show: Reference
+  seats: Reference[]
+  discount: Reference
+  tickets: Reference[]
   orderConfirmation: string
+  transactionId: string
+  source: string
 }
 
 export enum DISCOUNT_TYPE {

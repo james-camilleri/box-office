@@ -156,3 +156,9 @@ export const BOOKING_REPORT = `*[_type == "booking" && dateTime(_createdAt) > da
   source
 } | order(_createdAt asc)
 `
+
+/**
+ * Get ticket details for the given IDs.
+ * @tickets the ids to get details for
+ */
+export const TICKET_DETAILS = `*[_type == "ticket" && _id in $tickets]`
