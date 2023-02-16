@@ -59,24 +59,24 @@
 
 <style lang="scss">
   g {
-    color: var(--seat-colour);
     cursor: pointer;
-    transition: color var(--transition-medium) ease-in-out;
+    fill: var(--seat-colour);
+    transition: fill var(--transition-medium) ease-in-out;
 
     &.disabled {
-      color: var(--disabled);
       cursor: not-allowed;
+      fill: var(--disabled);
     }
 
     &.selected {
-      color: var(--selected);
+      fill: var(--selected);
       stroke: var(--dark-3);
       stroke-width: 7px;
     }
 
     &:hover:not(.disabled) {
-      color: var(--selected);
-      transition: color var(--transition-fast) ease-in-out;
+      fill: var(--selected);
+      transition: fill var(--transition-fast) ease-in-out;
     }
   }
 </style>
