@@ -6,7 +6,13 @@ import {
   STRIPE_TEST_WEBHOOK_SECRET,
 } from '$env/static/private'
 import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
-import { CUSTOMER_ID, EMAIL_TEXT, SEAT_DETAILS, SHOW_DETAILS } from 'shared/queries'
+import {
+  CUSTOMER_ID,
+  EMAIL_TEXT,
+  SEAT_DETAILS,
+  SHOW_DETAILS,
+  TRANSACTION_ID_EXISTS,
+} from 'shared/queries'
 import type { ConfigurationFull, Discount, Seat, Show } from 'shared/types'
 import {
   createReference,
@@ -57,6 +63,12 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
       metadata,
     } = charge
 
+    if (await idExists(id)) {
+      log.warn(`Transaction ID "${id}" already exists in Sanity database.`)
+      await log.flush()
+      return new Response()
+    }
+
     const seatIds = JSON.parse(metadata.seatIds) as string[]
     const discount = (metadata.discount && JSON.parse(metadata.discount)) as Discount | undefined
     const bookingData = {
@@ -102,6 +114,10 @@ interface BookingData {
   seatIds: string[]
   discount?: Discount
   stripeId: string
+}
+
+async function idExists(id: string) {
+  return sanity.fetch(TRANSACTION_ID_EXISTS, { id })
 }
 
 async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fetch) {
