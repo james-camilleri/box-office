@@ -11,6 +11,7 @@ export default defineType({
       type: 'reference',
       to: [{ type: 'customer' }],
       validation: (Rule) => Rule.required(),
+      readOnly: ({ document }) => !!document?.readOnly,
     }),
     defineField({
       name: 'show',
@@ -20,6 +21,7 @@ export default defineType({
         disableNew: true,
       },
       validation: (Rule) => Rule.required(),
+      readOnly: ({ document }) => !!document?.readOnly,
     }),
     defineField({
       name: 'seats',
@@ -46,6 +48,7 @@ export default defineType({
       ],
       validation: (Rule) => Rule.required().unique(),
       hidden: ({ document }) => !document?.show,
+      readOnly: ({ document }) => !!document?.readOnly,
     }),
     defineField({
       name: 'discount',
@@ -54,6 +57,7 @@ export default defineType({
       options: {
         disableNew: true,
       },
+      readOnly: ({ document }) => !!document?.readOnly,
     }),
     defineField({
       name: 'tickets',
@@ -80,6 +84,12 @@ export default defineType({
       options: {
         list: ['pre-booking', 'box-office', 'website'],
       },
+      readOnly: ({ document }) => !!document?.readOnly,
+    }),
+    defineField({
+      name: 'readOnly',
+      type: 'boolean',
+      hidden: true,
     }),
   ],
   preview: {

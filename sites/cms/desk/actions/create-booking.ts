@@ -1,3 +1,5 @@
+import type { Ticket } from 'shared/types'
+
 import { PublishIcon } from '@sanity/icons'
 import { useEffect, useState } from 'react'
 import {
@@ -8,7 +10,6 @@ import {
   useValidationStatus,
 } from 'sanity'
 import { API_VERSION } from 'shared/constants'
-import type { Ticket } from 'shared/types'
 import { createReference, createTicketsForBooking, generateOrderConfirmationId } from 'shared/utils'
 
 const EMAIL_API_URL = import.meta.env.PROD
@@ -111,6 +112,7 @@ export function CreateBooking({
             })),
             orderConfirmation,
             source: draft.source ?? 'box-office',
+            readOnly: true,
           },
         },
       ])
