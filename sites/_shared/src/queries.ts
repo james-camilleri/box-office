@@ -162,3 +162,9 @@ export const BOOKING_REPORT = `*[_type == "booking" && dateTime(_createdAt) > da
  * @tickets the ids to get details for
  */
 export const TICKET_DETAILS = `*[_type == "ticket" && _id in $tickets]`
+
+/**
+ * Check whether a booking for the Stripe transaction ID already exists.
+ * @id the transaction ID to check
+ */
+export const TRANSACTION_ID_EXISTS = `count(*[_type == "booking" && transactionId == $id]) > 0`
