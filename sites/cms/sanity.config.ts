@@ -6,6 +6,7 @@ import { CreateBooking } from './desk/actions/create-booking.js'
 import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
 import { PublishConfig } from './desk/actions/publish-config.js'
 import { ResendEmail } from './desk/actions/resend-email.js'
+import { reportsTool } from './reports/index.js'
 import { schemaTypes } from './schemas/index.js'
 import { structure } from './structure.js'
 
@@ -25,7 +26,7 @@ export default defineConfig({
   projectId: '8biawkr2',
   dataset: 'production',
 
-  plugins: [deskTool({ structure }), visionTool()],
+  plugins: [deskTool({ structure }), reportsTool(), visionTool()],
 
   schema: {
     types: schemaTypes,
