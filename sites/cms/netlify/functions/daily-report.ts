@@ -1,7 +1,7 @@
 import { Handler, schedule } from '@netlify/functions'
 import sanityClient from '@sanity/client'
 import nodemailer from 'nodemailer'
-import { BOOKING_REPORT, CONFIG } from 'shared/queries'
+import { DAILY_BOOKINGS, CONFIG } from 'shared/queries'
 import { DISCOUNT_TYPE, Discount, ReportConfiguration, Seat, Show } from 'shared/types'
 import { getSeatPrice, getTotals, getZonedDate, getZonedTime } from 'shared/utils'
 
@@ -30,7 +30,7 @@ interface BookingReportDetails {
 async function createReport() {
   const [config, bookings, timeZone] = await Promise.all([
     (await client.fetch(CONFIG)) as ReportConfiguration,
-    (await client.fetch(BOOKING_REPORT)) as BookingReportDetails[],
+    (await client.fetch(DAILY_BOOKINGS)) as BookingReportDetails[],
     await client.fetch('*[_id == "configure"].timeZone'),
   ])
 

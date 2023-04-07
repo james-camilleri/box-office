@@ -56,6 +56,11 @@ export const UNBOOKED_SEATS =
 export const RESERVED_SEATS = `*[_id == 'configure'].compositeReservedSeats`
 
 /**
+ * Returns the total number of available seats.
+ */
+export const NUMBER_OF_SEATS = `count(*[_type == "seat"])`
+
+/**
  * Check if a customer for the given email already exists.
  * @email the email to test for
  */
@@ -133,7 +138,31 @@ export const CONFIG = `*[_id == 'configure']{
   'priceConfiguration': compositePriceConfiguration,
 }[0]`
 
-export const BOOKING_REPORT = `*[_type == "booking" && dateTime(_createdAt) > dateTime(now()) - 60*60*24] {
+export const DAILY_BOOKINGS = `*[_type == "booking" && dateTime(_createdAt) > dateTime(now()) - 60*60*24] {
+  _id,
+  _createdAt,
+  orderConfirmation,
+  'name': customer->name,
+  'email': customer->email,
+  show->{ _id, date},
+  'seats': seats[]->{
+    _id,
+    'row': row -> _id,
+    'section': row -> section -> _id
+  },
+  'tickets': tickets[]._ref,
+  'discount': discount->{
+    _id,
+    name,
+    percentage,
+    type,
+    'code': code.current
+  },
+  source
+} | order(_createdAt asc)
+`
+
+export const ALL_BOOKINGS = `*[_type == "booking"] {
   _id,
   _createdAt,
   orderConfirmation,
