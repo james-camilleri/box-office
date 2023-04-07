@@ -1,9 +1,10 @@
+import type { Booking } from 'shared/types'
+
 import { EnvelopeIcon } from '@sanity/icons'
 import { useToast } from '@sanity/ui'
 import { DocumentActionDescription, DocumentActionProps, useClient } from 'sanity'
 import { API_VERSION } from 'shared/constants'
 import { TICKET_DETAILS } from 'shared/queries'
-import type { Booking } from 'shared/types'
 
 const EMAIL_API_URL = import.meta.env.PROD
   ? 'https://tickets.arthaus.mt/api/booking/email'

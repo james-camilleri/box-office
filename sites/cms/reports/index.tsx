@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { type Tool, useClient } from 'sanity'
 import { definePlugin } from 'sanity'
 import { API_VERSION, DATASET, PROJECT_ID } from 'shared/constants'
-import { ALL_BOOKINGS, NUMBER_OF_SEATS } from 'shared/queries'
-import { Discount, Seat, Show } from 'shared/types'
+import { ALL_BOOKINGS, CONFIG, NUMBER_OF_SEATS } from 'shared/queries'
+import { Discount, ReportConfiguration, Seat, Show } from 'shared/types'
 import { formatShowDateTime } from 'shared/utils'
 
 // TODO: Move to shared library
@@ -56,20 +56,20 @@ function ProgressBar({ amount, total }: { amount: number; total: number }) {
 function ToolComponent() {
   const [rawBookings, setRawBookings] = useState<BookingReportDetails[]>([])
   const [totalNoOfSeats, setTotalNoOfSeats] = useState<number>()
+  const [config, setConfig] = useState<ReportConfiguration>()
 
   const client = useClient({ apiVersion: API_VERSION })
 
   useEffect(() => {
-    client.fetch(ALL_BOOKINGS).then((bookings) => {
-      console.log(bookings)
-      setRawBookings(bookings as BookingReportDetails[])
-    })
+    client.fetch(ALL_BOOKINGS).then(setRawBookings)
   }, [client])
 
   useEffect(() => {
-    client.fetch(NUMBER_OF_SEATS).then((seats) => {
-      setTotalNoOfSeats(seats)
-    })
+    client.fetch(NUMBER_OF_SEATS).then(setTotalNoOfSeats)
+  }, [client])
+
+  useEffect(() => {
+    client.fetch(CONFIG).then(setConfig)
   }, [client])
 
   const bookings = rawBookings.reduce<Record<string, ShowData>>((bookings, booking) => {
@@ -131,7 +131,7 @@ function ToolComponent() {
                   key={show}
                 >
                   <Stack space={[3]}>
-                    <span>{formatShowDateTime(show)}</span>
+                    <span>{formatShowDateTime(show, config?.timeZone)}</span>
                     <Stack space={[2]}>
                       <span>
                         {bookingData.seats.total}/{totalNoOfSeats ?? ''}

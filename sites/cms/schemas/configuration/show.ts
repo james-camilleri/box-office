@@ -16,9 +16,10 @@ export default defineType({
   preview: {
     select: {
       dateString: 'date',
+      timeZone: 'timeZone',
     },
-    prepare({ dateString }) {
-      return { title: formatShowDateTime(dateString) }
+    prepare({ dateString, timeZone }) {
+      return { title: formatShowDateTime(dateString, timeZone) }
     },
   },
 })

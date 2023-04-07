@@ -191,6 +191,7 @@ export default defineType({
               shows1: 'shows.1.date',
               shows2: 'shows.2.date',
               shows3: 'shows.3.date',
+              timeZone: 'timeZone',
             },
             prepare({
               seats0,
@@ -203,6 +204,7 @@ export default defineType({
               shows1,
               shows2,
               shows3,
+              timeZone,
             }) {
               return {
                 title:
@@ -210,8 +212,10 @@ export default defineType({
                   (seats4 ? '...' : ''),
                 subtitle: applyToAllShows
                   ? 'All shows'
-                  : [shows0, shows1, shows2].filter(Boolean).map(formatShowDateTime).join(', ') +
-                    (shows3 ? '...' : ''),
+                  : [shows0, shows1, shows2]
+                      .filter(Boolean)
+                      .map((date) => formatShowDateTime(date, timeZone))
+                      .join(', ') + (shows3 ? '...' : ''),
               }
             },
           },

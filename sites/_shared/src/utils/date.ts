@@ -18,3 +18,12 @@ export function getZonedTime(dateTime: string, timeZone: string) {
     new Date(dateTime),
   )
 }
+
+export function formatShowDateTime(dateString: string, timeZone: string | undefined) {
+  const date = new Date(dateString)
+  return `${date.toLocaleDateString()} ${date
+    .toLocaleTimeString(undefined, { timeZone })
+    .split(':')
+    .slice(0, 2)
+    .join(':')}`
+}
