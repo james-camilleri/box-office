@@ -111,6 +111,13 @@ function BookingTotal(props: { booking: BookingWithPrices }) {
               <td>€</td>
               <td className="total">{total?.toFixed(2)}</td>
             </tr>
+            {expanded && (
+              <tr>
+                <td colSpan={3} className="vat-row">
+                  including €{vat?.toFixed(2)} VAT
+                </td>
+              </tr>
+            )}
           </tfoot>
         </table>
       </div>
