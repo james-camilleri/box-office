@@ -123,6 +123,17 @@ export const DISCOUNT = `*[_type == 'discount' && enabled && code.current == $co
 }[0]`
 
 /**
+ * Retrieve all discounts.
+ */
+export const ALL_DISCOUNTS = `*[_type == 'discount']{
+  _id,
+  name,
+  percentage,
+  type,
+  'code': code.current
+} | order(name asc)`
+
+/**
  * Gets the full ticketing configuration.
  */
 export const CONFIG = `*[_id == 'configure']{
