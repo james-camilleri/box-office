@@ -84,7 +84,7 @@ export function FilterBar(props: FilterBarProps) {
   }
 
   return (
-    <Card padding={[3, 3, 4]} shadow={1}>
+    <Card padding={[3, 3, 4]} style={{ borderBottom: 'solid 0.5px var(--card-border-color)' }}>
       <Stack space={[3, 4]}>
         <Flex gap={5}>
           <Flex gap={2} align="center">
