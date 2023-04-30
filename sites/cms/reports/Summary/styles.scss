@@ -1,0 +1,52 @@
+.summary {
+  border-collapse: collapse;
+
+  tbody > :not(:first-child) {
+    border-top: 0.5px solid var(--card-hairline-soft-color);
+
+    td {
+      padding: 0.1rem 0 0.2rem 0;
+    }
+  }
+
+  tbody.major {
+    > :first-child {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  }
+
+  tbody.minor {
+    > :first-child td {
+      padding: 0.5rem 0 0.2rem 0;
+    }
+  }
+
+  tbody.major + tbody.major,
+  tbody.minor + tbody.major {
+    > :first-child td {
+      padding-top: 2rem;
+    }
+  }
+
+  tr :last-child {
+    text-align: right;
+  }
+
+  .value {
+    display: flex;
+    justify-content: space-between;
+
+    span:first-child:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+
+    span:only-child {
+      margin-left: auto;
+    }
+  }
+
+  .zero {
+    color: var(--card-hairline-soft-color);
+  }
+}
