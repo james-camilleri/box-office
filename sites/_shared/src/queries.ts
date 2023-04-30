@@ -183,7 +183,7 @@ export const ALL_BOOKINGS = `*[_type == "booking"] {
     'code': code.current
   },
   source
-} | order(_createdAt asc)
+} | order(_createdAt desc)
 `
 
 /**
