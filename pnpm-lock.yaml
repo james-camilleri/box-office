@@ -58,6 +58,7 @@ importers:
       react-is: ^18.2.0
       react-select: ^5.7.2
       sanity: ^3.9.1
+      sass: ^1.58.0
       shared: workspace:^1.0.0
       styled-components: ^5.3.9
       ts-node: ^10.9.1
@@ -73,7 +74,7 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-icons: 4.8.0_react@18.2.0
       react-is: 18.2.0
-      sanity: 3.9.1_gnquzs2765zvlb7gj77xhafmpe
+      sanity: 3.9.1_3npu2wlz6hqy6oscdhjcqzm644
       styled-components: 5.3.9_7i5myeigehqah43i5u7wbekgba
     devDependencies:
       '@netlify/functions': 1.4.0
@@ -89,6 +90,7 @@ importers:
       prettier: 2.8.7
       react-calendar: 4.2.1_biqbaboplfbrettd7655fr4n2y
       react-select: 5.7.2_zn3vyfk3tbnwebg5ldvieekjaq
+      sass: 1.58.0
       shared: link:../_shared
       ts-node: 10.9.1_o6avl3oodj6mwqsx3rm2wfkgv4
       typescript: 4.9.5
@@ -3689,7 +3691,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.19.6_@babel+core@7.21.4
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 4.2.1_@types+node@18.15.11
+      vite: 4.2.1_h2pedcpy77juancceggfihgiwq
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -6327,7 +6329,6 @@ packages:
 
   /immutable/4.2.4:
     resolution: {integrity: sha512-WDxL3Hheb1JkRN3sQkyujNlL/xRjAo3rJtaU5xeufUauG66JdMr32bLj4gF+vWl84DIA3Zxw7tiAjneYzRRw+w==}
-    dev: true
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -8378,7 +8379,7 @@ packages:
       diff-match-patch: 1.0.5
     dev: false
 
-  /sanity/3.9.1_gnquzs2765zvlb7gj77xhafmpe:
+  /sanity/3.9.1_3npu2wlz6hqy6oscdhjcqzm644:
     resolution: {integrity: sha512-ZDHvpU5PPUtKurgvJ2wErR2oNsg1J1Op1UA9ZYRrheOAU8snurTyQCdf66JNLZ/5DfNIVlqlYtNpg0eBFfvUvA==}
     engines: {node: '>=14.18.0'}
     hasBin: true
@@ -8492,7 +8493,7 @@ packages:
       use-device-pixel-ratio: 1.1.2_react@18.2.0
       use-hot-module-reload: 1.0.3_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
-      vite: 4.2.1_@types+node@18.15.11
+      vite: 4.2.1_h2pedcpy77juancceggfihgiwq
       yargs: 17.7.1
     transitivePeerDependencies:
       - '@types/node'
@@ -8516,7 +8517,6 @@ packages:
       chokidar: 3.5.3
       immutable: 4.2.4
       source-map-js: 1.0.2
-    dev: true
 
   /saxes/6.0.0:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
@@ -9710,7 +9710,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/4.2.1_@types+node@18.15.11:
+  /vite/4.2.1_h2pedcpy77juancceggfihgiwq:
     resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -9740,6 +9740,7 @@ packages:
       postcss: 8.4.21
       resolve: 1.22.2
       rollup: 3.20.2
+      sass: 1.58.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: false

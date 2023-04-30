@@ -1,0 +1,124 @@
+.booking {
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin-bottom: 0.3rem;
+
+    &.right {
+      align-items: flex-end;
+    }
+  }
+
+  .name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .email,
+  .date {
+    font-family: monospace;
+    color: var(--card-code-fg-color);
+  }
+
+  .confirmation {
+    font-family: monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+
+    &:visited {
+      color: inherit;
+    }
+
+    &:hover {
+      color: var(--card-link-color);
+    }
+  }
+
+  .prices {
+    display: flex;
+    flex-direction: column;
+
+    &:not(.expanded) {
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      padding: 0.1rem 0 0 0;
+      border-top: 0.5px solid var(--card-hairline-soft-color);
+      border-collapse: collapse;
+
+      td {
+        padding: 0.1rem;
+      }
+
+      td:first-child {
+        text-align: left;
+      }
+
+      td:last-child {
+        text-align: right;
+      }
+    }
+
+    tbody,
+    tfoot {
+      :first-child td {
+        padding-top: 0.3rem;
+      }
+
+      :last-child td {
+        padding-bottom: 0.3rem;
+      }
+    }
+
+    .total-row {
+      font-size: 1.2rem;
+      border-top: 0.5px solid var(--card-hairline-soft-color);
+
+      :last-child {
+        font-weight: bold;
+      }
+    }
+
+    .subtotal-row {
+      border-top: 0.5px solid var(--card-hairline-soft-color);
+    }
+
+    .seat-tier {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: 1rem;
+      font-size: 0.8rem;
+      color: var(--card-code-fg-color);
+    }
+  }
+
+  .tier-colour {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 100%;
+  }
+
+  .show-details {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    margin: -0.5rem 0 0 auto;
+    color: var(--card-code-fg-color);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--card-link-color);
+    }
+  }
+}
