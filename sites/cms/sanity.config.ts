@@ -26,7 +26,11 @@ export default defineConfig({
   projectId: '8biawkr2',
   dataset: 'production',
 
-  plugins: [deskTool({ structure }), reportsTool(), visionTool()],
+  plugins: [
+    deskTool({ title: 'Box Office', structure }),
+    reportsTool(),
+    visionTool({ title: 'Database' }),
+  ],
 
   schema: {
     types: schemaTypes,
