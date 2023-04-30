@@ -36,7 +36,7 @@ export function Summary(props: SummaryProps) {
           summaryData.sales.total += booking.total ?? 0
           summaryData.sales.vat += booking.vat ?? 0
           summaryData.sales.profit +=
-            (booking.total ?? 0) - (booking.bookingFee ?? 0) - (booking.vat ?? 0)
+            (booking.total ?? 0) - ((booking.bookingFee ?? 0) + (booking.vat ?? 0))
 
           return summaryData
         },
@@ -143,10 +143,10 @@ export function Summary(props: SummaryProps) {
           <LabelCell value={sales.reduction}>Discounts</LabelCell>
           <ValueCell value={sales.reduction} currency negative />
         </tr>
-        <tr>
+        {/* <tr>
           <LabelCell value={sales.bookingFee}>Booking fee</LabelCell>
           <ValueCell value={sales.bookingFee} currency negative />
-        </tr>
+        </tr> */}
         <tr>
           <LabelCell value={sales.vat}>VAT</LabelCell>
           <ValueCell value={sales.vat} currency negative />
