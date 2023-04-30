@@ -1,0 +1,36 @@
+.react-daterange-picker__wrapper {
+  border: 0.5px solid var(--card-fg-color);
+  padding: 5px 8px;
+}
+
+.react-daterange-picker__button__icon {
+  stroke: hsl(0, 0%, 80%);
+}
+
+.react-daterange-picker__inputGroup {
+  min-width: 0;
+}
+
+.react-daterange-picker__range-divider {
+  padding: 0 2px;
+}
+
+.react-calendar {
+  background: var(--card-bg-color);
+  border: 0.5px solid var(--card-fg-color);
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus,
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background: var(--card-focus-ring-color);
+}
+
+.react-calendar__navigation button:disabled {
+  background: var(--card-bg-color);
+}
+
+.react-calendar__tile:disabled {
+  background: var(--card-border-color);
+}
