@@ -1,4 +1,4 @@
-import type { Booking } from 'shared/types'
+import type { BookingDocument } from 'shared/types'
 
 import { EnvelopeIcon } from '@sanity/icons'
 import { useToast } from '@sanity/ui'
@@ -22,7 +22,7 @@ export function ResendEmail({
     label: 'Resend ticket email',
     icon: EnvelopeIcon,
     onHandle: async () => {
-      const { _id, source, orderConfirmation, tickets: ticketRefs } = published as Booking
+      const { _id, source, orderConfirmation, tickets: ticketRefs } = published as BookingDocument
       const tickets = await client.fetch(TICKET_DETAILS, {
         tickets: ticketRefs.map(({ _ref }) => _ref),
       })

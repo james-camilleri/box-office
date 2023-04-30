@@ -6,7 +6,7 @@
   import type { PortableTextBlock } from '@portabletext/types'
   import { PortableText } from '@portabletext/svelte'
 
-  import type { Ticket, PriceConfiguration, Discount, PriceTier, Seat } from 'shared/types'
+  import type { TicketDocument, PriceConfiguration, Discount, PriceTier, Seat } from 'shared/types'
   import { getLineItem, getTotals, getZonedDate, getZonedTime } from 'shared/utils'
 
   import { imageUrlBuilder } from '../../../sanity.js'
@@ -25,7 +25,7 @@
   }
   export let name: string
   export let show: string
-  export let tickets: Ticket[]
+  export let tickets: TicketDocument[]
   export let seats: Seat[]
   export let orderConfirmation: string
   export let priceTiers: PriceTier[]

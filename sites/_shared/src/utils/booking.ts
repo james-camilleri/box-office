@@ -2,7 +2,7 @@ import type { SanityClient } from '@sanity/client'
 import { customAlphabet } from 'nanoid'
 import qrCode from 'qrcode'
 
-import type { Ticket } from '../types/bookings.js'
+import type { TicketDocument } from '../types/bookings.js'
 import { isBrowser } from './browser.js'
 import { log } from './log.js'
 import { createReference } from './sanity.js'
@@ -30,7 +30,7 @@ function ticketId() {
 export async function createTicketsForBooking(
   client: SanityClient,
   booking: BookingData,
-): Promise<Ticket[]> {
+): Promise<TicketDocument[]> {
   log.info(['Creating tickets for seats:', ...booking.seats].join('\n'))
 
   return Promise.all(

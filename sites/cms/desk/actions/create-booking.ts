@@ -1,4 +1,4 @@
-import type { Ticket } from 'shared/types'
+import type { TicketDocument } from 'shared/types'
 
 import { PublishIcon } from '@sanity/icons'
 import { useEffect, useState } from 'react'
@@ -19,7 +19,7 @@ const EMAIL_API_URL = import.meta.env.PROD
 async function emailTickets(
   bookingId: string | undefined,
   orderConfirmation: string,
-  tickets: Ticket[],
+  tickets: TicketDocument[],
 ) {
   if (!bookingId) {
     console.error('No booking ID for email')

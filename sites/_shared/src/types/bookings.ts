@@ -1,4 +1,5 @@
 import type { Image, Reference, SanityDocument } from '@sanity/types'
+import type { Show } from './configuration.js'
 
 export interface Seat {
   _id: string
@@ -6,7 +7,7 @@ export interface Seat {
   section: string
 }
 
-export interface Ticket extends SanityDocument {
+export interface TicketDocument extends SanityDocument {
   show: Reference
   seat: Reference
   qrCode: Image
@@ -14,7 +15,7 @@ export interface Ticket extends SanityDocument {
   scannedAt?: string
 }
 
-export interface Booking extends SanityDocument {
+export interface BookingDocument extends SanityDocument {
   customer: Reference
   show: Reference
   seats: Reference[]
@@ -43,4 +44,18 @@ export interface BookingDetails {
   show: string
   date: string
   discount: Discount
+}
+
+export interface Booking {
+  _id: string
+  _createdAt: string
+  orderConfirmation: string
+  name: string
+  email: string
+  show: Show
+  seats: Seat[]
+  tickets: string[]
+  source: string
+  discount?: Discount
+  campaign?: string
 }

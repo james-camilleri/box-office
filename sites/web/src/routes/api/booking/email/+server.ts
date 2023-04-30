@@ -1,5 +1,5 @@
 import { BOOKING_DETAILS, EMAIL_TEXT, SEAT_DETAILS } from 'shared/queries'
-import type { BookingDetails, ConfigurationFull, Seat, Ticket } from 'shared/types'
+import type { BookingDetails, ConfigurationFull, Seat, TicketDocument } from 'shared/types'
 
 import { getCrossOriginHeader } from '../../cors.js'
 import { sanity } from '../../sanity.js'
@@ -9,7 +9,7 @@ import { sendEmail } from './email.js'
 interface BookingPayload {
   bookingId: string
   orderConfirmation: string
-  tickets: Ticket[]
+  tickets: TicketDocument[]
   calculateBookingFee: boolean
 }
 
