@@ -6,11 +6,11 @@ import { useState } from 'react'
 import { ReportConfiguration } from 'shared/types'
 import { formatShowDateTime } from 'shared/utils'
 
+import { PriceTierColour } from '../TierColour/index.jsx'
 import { BookingWithPrices } from '../utils.js'
 
 export function BookingCard(props: { booking: BookingWithPrices; config?: ReportConfiguration }) {
   const { booking, config } = props
-  console.log(booking)
 
   return (
     <Card
@@ -138,8 +138,4 @@ function conditionalRow(
       <td>{value?.toFixed(2)}</td>
     </tr>
   ) : undefined
-}
-
-function PriceTierColour({ colour }: { colour?: string }) {
-  return colour ? <div className="tier-colour" style={{ background: colour }} /> : <></>
 }
