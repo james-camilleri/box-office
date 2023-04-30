@@ -56,9 +56,7 @@ export function getTotals(prices: number[], discount?: Discount, calculateBookin
   if (
     bookingFee &&
     // Only add booking fee if tickets aren't complimentary.
-    discount &&
-    discount.type === DISCOUNT_TYPE.PERCENTAGE &&
-    discount.percentage !== 100
+    reduction !== subtotal
   ) {
     total += bookingFee
   }
