@@ -192,7 +192,15 @@ function ValueCell({
   return (
     <td className={!valueOrZero ? 'value zero' : 'value'}>
       {currency && <span>€</span>}
-      <span>{currency ? valueOrZero.toFixed(2) : valueOrZero}</span>
+      <span>
+        {currency
+          ? new Intl.NumberFormat(undefined, {
+              currency: 'EUR',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(valueOrZero)
+          : valueOrZero}
+      </span>
     </td>
   )
 }
