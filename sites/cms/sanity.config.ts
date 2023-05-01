@@ -2,6 +2,7 @@ import { visionTool } from '@sanity/vision'
 import { DocumentActionComponent, defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
+import { CustomToolMenu } from './custom-tool-menu/index.jsx'
 import { CreateBooking } from './desk/actions/create-booking.js'
 import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
 import { PublishConfig } from './desk/actions/publish-config.js'
@@ -31,6 +32,12 @@ export default defineConfig({
     reportsTool(),
     visionTool({ title: 'Database' }),
   ],
+
+  studio: {
+    components: {
+      toolMenu: CustomToolMenu,
+    },
+  },
 
   schema: {
     types: schemaTypes,

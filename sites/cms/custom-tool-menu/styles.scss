@@ -1,0 +1,24 @@
+.sales-summary {
+  margin: 0 1rem 0 auto;
+  font-size: 1.2rem;
+  // font-weight: bold;
+}
+
+.show-summary {
+  font-size: 1rem;
+
+  &:not(:first-child) {
+    border-top: 0.5px solid var(--card-hairline-soft-color);
+  }
+
+  .heading {
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    font-family: monospace;
+  }
+
+  .muted {
+    color: var(--card-muted-fg-color);
+  }
+}
