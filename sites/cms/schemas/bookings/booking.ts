@@ -87,6 +87,12 @@ export default defineType({
       readOnly: ({ document }) => !!document?.readOnly,
     }),
     defineField({
+      name: 'valid',
+      type: 'boolean',
+      initialValue: false,
+      readOnly: true,
+    }),
+    defineField({
       name: 'readOnly',
       type: 'boolean',
       hidden: true,

@@ -48,7 +48,7 @@ export function CreateBooking({
   const { patch, publish } = useDocumentOperation(id, type)
   const { validation } = useValidationStatus(id, type)
   const [isPublishing, setIsPublishing] = useState(false)
-  const [ticketIds, setTicketIds] = useState([])
+  const [ticketIds, setTicketIds] = useState<string[]>([])
 
   useEffect(() => {
     // if the isPublishing state was set to true and the draft has changed
@@ -101,7 +101,6 @@ export function CreateBooking({
       setTicketIds(tickets.map((ticket) => ticket._id))
       await emailTickets(draft?._id, orderConfirmation, tickets)
 
-      // @ts-expect-error (I think the types aren't quite right here.)
       patch.execute([
         {
           set: {
@@ -113,6 +112,7 @@ export function CreateBooking({
             orderConfirmation,
             source: draft.source ?? 'box-office',
             readOnly: true,
+            valid: true,
           },
         },
       ])

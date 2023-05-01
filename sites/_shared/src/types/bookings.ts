@@ -24,6 +24,7 @@ export interface BookingDocument extends SanityDocument {
   orderConfirmation: string
   transactionId: string
   source: string
+  valid: boolean
 }
 
 export enum DISCOUNT_TYPE {

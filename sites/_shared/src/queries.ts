@@ -149,7 +149,7 @@ export const CONFIG = `*[_id == 'configure']{
   'priceConfiguration': compositePriceConfiguration,
 }[0]`
 
-export const DAILY_BOOKINGS = `*[_type == "booking" && dateTime(_createdAt) > dateTime(now()) - 60*60*24] {
+export const DAILY_BOOKINGS = `*[_type == "booking" && valid && dateTime(_createdAt) > dateTime(now()) - 60*60*24] {
   _id,
   _createdAt,
   orderConfirmation,
@@ -173,7 +173,7 @@ export const DAILY_BOOKINGS = `*[_type == "booking" && dateTime(_createdAt) > da
 } | order(_createdAt asc)
 `
 
-export const ALL_BOOKINGS = `*[_type == "booking"] {
+export const ALL_BOOKINGS = `*[_type == "booking" && valid] {
   _id,
   _createdAt,
   orderConfirmation,

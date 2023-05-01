@@ -171,6 +171,7 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
     transactionId: stripeId,
     source: 'website',
     readOnly: true,
+    valid: true,
   })
 
   log.success('Booking created')
