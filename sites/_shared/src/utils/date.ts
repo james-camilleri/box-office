@@ -27,3 +27,19 @@ export function formatShowDateTime(dateString: string, timeZone: string | undefi
     .slice(0, 2)
     .join(':')}`
 }
+
+export function formatShowDateTimeLong(dateString: string, timeZone: string | undefined) {
+  const date = new Date(dateString)
+  return new Intl.DateTimeFormat(undefined, {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZone,
+  })
+    .format(date)
+    .replaceAll(',', '')
+    .toUpperCase()
+}
