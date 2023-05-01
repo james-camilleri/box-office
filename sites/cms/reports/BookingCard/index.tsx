@@ -3,11 +3,10 @@ import './styles.scss'
 import { ChevronDownIcon, ChevronUpIcon, LaunchIcon } from '@sanity/icons'
 import { Badge, Card, Flex, Inline, Stack } from '@sanity/ui'
 import { useState } from 'react'
-import { ReportConfiguration } from 'shared/types'
+import { BookingWithPrices, ReportConfiguration } from 'shared/types'
 import { formatShowDateTime } from 'shared/utils'
 
 import { PriceTierColour } from '../TierColour/index.jsx'
-import { BookingWithPrices } from '../utils.js'
 
 export function BookingCard(props: { booking: BookingWithPrices; config?: ReportConfiguration }) {
   const { booking, config } = props
@@ -107,7 +106,11 @@ function BookingTotal(props: { booking: BookingWithPrices }) {
           )}
           <tfoot>
             <tr className="total-row">
-              <td>{expanded ? 'Total' : `${booking.seats.length} seats`}</td>
+              <td>
+                {expanded
+                  ? 'Total'
+                  : `${booking.seats.length} seat${booking.seats.length === 1 ? '' : 's'}`}
+              </td>
               <td>€</td>
               <td className="total">{total?.toFixed(2)}</td>
             </tr>
