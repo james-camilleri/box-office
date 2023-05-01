@@ -1,13 +1,21 @@
 import { CloseIcon } from '@sanity/icons'
 import { useEffect, useState } from 'react'
-import { DocumentActionDescription, DocumentActionProps, useDocumentOperation } from 'sanity'
+import {
+  DocumentActionDescription,
+  DocumentActionProps,
+  useClient,
+  useDocumentOperation,
+} from 'sanity'
+import { API_VERSION } from 'shared/constants'
+import { BookingDocument } from 'shared/types'
 
-export function InvalidateTicket({
+export function CancelBooking({
   id,
   type,
   published,
   onComplete,
 }: DocumentActionProps): DocumentActionDescription {
+  const client = useClient({ apiVersion: API_VERSION })
   const { patch, publish } = useDocumentOperation(id, type)
   const [isInvalidating, setIsInvalidating] = useState(false)
 
@@ -21,12 +29,17 @@ export function InvalidateTicket({
 
   return {
     disabled: !published?.valid,
-    label: isInvalidating ? 'Invalidating…' : 'Invalidate ticket',
+    label: isInvalidating ? 'Cancelling…' : 'Cancel booking',
     icon: CloseIcon,
     tone: 'critical',
 
-    onHandle: () => {
+    onHandle: async () => {
       setIsInvalidating(true)
+      await Promise.all(
+        (published as BookingDocument).tickets.map(({ _ref }) =>
+          client.patch(_ref).set({ valid: false }).commit(),
+        ),
+      )
 
       patch.execute([{ set: { valid: false } }])
 

@@ -3,6 +3,7 @@ import { DocumentActionComponent, defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
 import { CustomToolMenu } from './custom-tool-menu/index.jsx'
+import { CancelBooking } from './desk/actions/cancel-booking.js'
 import { CreateBooking } from './desk/actions/create-booking.js'
 import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
 import { PublishConfig } from './desk/actions/publish-config.js'
@@ -73,7 +74,7 @@ export default defineConfig({
       }
 
       if (['booking'].includes(context.schemaType)) {
-        return [CreateBooking, ResendEmail]
+        return [CreateBooking, CancelBooking, ResendEmail]
       }
 
       if (['ticket'].includes(context.schemaType)) {
