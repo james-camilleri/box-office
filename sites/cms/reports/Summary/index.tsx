@@ -1,19 +1,21 @@
 import './styles.scss'
 
+import { DownloadIcon } from '@sanity/icons'
+import { Button, Flex } from '@sanity/ui'
 import { useMemo } from 'react'
-import { Discount, PriceTier } from 'shared/types'
+import { Discount, PriceTier, ReportConfiguration } from 'shared/types'
 
 import { PriceTierColour } from '../TierColour/index.jsx'
-import { BookingWithPrices } from '../utils.js'
+import { BookingWithPrices, createCsvString } from '../utils.js'
 
 interface SummaryProps {
   bookings: BookingWithPrices[]
-  priceTiers?: PriceTier[]
   discounts?: Discount[]
+  config?: ReportConfiguration
 }
 
 export function Summary(props: SummaryProps) {
-  const { bookings: rawBookings, priceTiers, discounts } = props
+  const { bookings: rawBookings, discounts, config } = props
 
   const { bookings, seats, sales } = useMemo(
     () =>
@@ -64,95 +66,102 @@ export function Summary(props: SummaryProps) {
   )
 
   return (
-    <table style={{ width: '100%' }} className="summary">
-      <colgroup>
-        <col span={1} style={{ width: '85%' }} />
-        <col span={1} style={{ width: '15%' }} />
-      </colgroup>
+    <Flex direction="column" gap={[3, 3, 4]} height="fill">
+      <div style={{ flex: '1' }}>
+        <table style={{ width: '100%' }} className="summary">
+          <colgroup>
+            <col span={1} style={{ width: '85%' }} />
+            <col span={1} style={{ width: '15%' }} />
+          </colgroup>
 
-      <tbody className="major">
-        <tr>
-          <LabelCell value={rawBookings.length}>Bookings</LabelCell>
-          <ValueCell value={rawBookings.length} />
-        </tr>
-      </tbody>
-      {bookings.bySource.size > 0 && (
-        <tbody className="minor">
-          {Array.from(bookings.bySource)
-            .sort(([sourceA], [sourceB]) => sourceA.localeCompare(sourceB))
-            .map(([source, count]) => (
-              <tr key={source}>
-                <LabelCell value={count}>{source}</LabelCell>
-                <ValueCell value={count} />
-              </tr>
-            ))}
-        </tbody>
-      )}
-      {bookings.byDiscount.size > 0 && (
-        <tbody className="minor">
-          {discounts?.map(({ _id, name, percentage }) => (
-            <tr key={_id}>
-              <LabelCell value={bookings.byDiscount.get(_id)}>
-                {name} ({percentage}% off)
-              </LabelCell>
-              <ValueCell value={bookings.byDiscount.get(_id)} />
+          <tbody className="major">
+            <tr>
+              <LabelCell value={rawBookings.length}>Bookings</LabelCell>
+              <ValueCell value={rawBookings.length} />
             </tr>
-          ))}
-        </tbody>
-      )}
-      {bookings.byCampaign.size > 0 && (
-        <tbody className="minor">
-          {Array.from(bookings.byCampaign)
-            .sort(([sourceA], [sourceB]) => sourceA.localeCompare(sourceB))
-            .map(([source, count]) => (
-              <tr key={source}>
-                <LabelCell value={count}>{source}</LabelCell>
-                <ValueCell value={count} />
+          </tbody>
+          {bookings.bySource.size > 0 && (
+            <tbody className="minor">
+              {Array.from(bookings.bySource)
+                .sort(([sourceA], [sourceB]) => sourceA.localeCompare(sourceB))
+                .map(([source, count]) => (
+                  <tr key={source}>
+                    <LabelCell value={count}>{source}</LabelCell>
+                    <ValueCell value={count} />
+                  </tr>
+                ))}
+            </tbody>
+          )}
+          {bookings.byDiscount.size > 0 && (
+            <tbody className="minor">
+              {discounts?.map(({ _id, name, percentage }) => (
+                <tr key={_id}>
+                  <LabelCell value={bookings.byDiscount.get(_id)}>
+                    {name} ({percentage}% off)
+                  </LabelCell>
+                  <ValueCell value={bookings.byDiscount.get(_id)} />
+                </tr>
+              ))}
+            </tbody>
+          )}
+          {bookings.byCampaign.size > 0 && (
+            <tbody className="minor">
+              {Array.from(bookings.byCampaign)
+                .sort(([sourceA], [sourceB]) => sourceA.localeCompare(sourceB))
+                .map(([source, count]) => (
+                  <tr key={source}>
+                    <LabelCell value={count}>{source}</LabelCell>
+                    <ValueCell value={count} />
+                  </tr>
+                ))}
+            </tbody>
+          )}
+
+          <tbody className="major">
+            <tr>
+              <LabelCell value={seats.total}>Seats sold</LabelCell>
+              <ValueCell value={seats.total} />
+            </tr>
+            {config?.priceTiers?.map(({ _id, name, price, colour }) => (
+              <tr key={_id}>
+                <LabelCell value={seats.byTier.get(_id)}>
+                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <PriceTierColour colour={colour} /> {name} @ €{price}
+                  </div>
+                </LabelCell>
+                <ValueCell value={seats.byTier.get(_id)} />
               </tr>
             ))}
-        </tbody>
-      )}
+          </tbody>
 
-      <tbody className="major">
-        <tr>
-          <LabelCell value={seats.total}>Seats sold</LabelCell>
-          <ValueCell value={seats.total} />
-        </tr>
-        {priceTiers?.map(({ _id, name, price, colour }) => (
-          <tr key={_id}>
-            <LabelCell value={seats.byTier.get(_id)}>
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <PriceTierColour colour={colour} /> {name} @ €{price}
-              </div>
-            </LabelCell>
-            <ValueCell value={seats.byTier.get(_id)} />
-          </tr>
-        ))}
-      </tbody>
-
-      <tbody className="major">
-        <tr>
-          <LabelCell value={sales.profit}>Sales</LabelCell>
-          <ValueCell value={sales.profit} currency />
-        </tr>
-        <tr>
-          <LabelCell value={sales.subtotal}>Subtotal</LabelCell>
-          <ValueCell value={sales.subtotal} currency />
-        </tr>
-        <tr>
-          <LabelCell value={sales.reduction}>Discounts</LabelCell>
-          <ValueCell value={sales.reduction} currency negative />
-        </tr>
-        {/* <tr>
+          <tbody className="major">
+            <tr>
+              <LabelCell value={sales.profit}>Sales</LabelCell>
+              <ValueCell value={sales.profit} currency />
+            </tr>
+            <tr>
+              <LabelCell value={sales.subtotal}>Subtotal</LabelCell>
+              <ValueCell value={sales.subtotal} currency />
+            </tr>
+            <tr>
+              <LabelCell value={sales.reduction}>Discounts</LabelCell>
+              <ValueCell value={sales.reduction} currency negative />
+            </tr>
+            {/* <tr>
           <LabelCell value={sales.bookingFee}>Booking fee</LabelCell>
           <ValueCell value={sales.bookingFee} currency negative />
         </tr> */}
-        <tr>
-          <LabelCell value={sales.vat}>VAT</LabelCell>
-          <ValueCell value={sales.vat} currency negative />
-        </tr>
-      </tbody>
-    </table>
+            <tr>
+              <LabelCell value={sales.vat}>VAT</LabelCell>
+              <ValueCell value={sales.vat} currency negative />
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <Button icon={DownloadIcon} onClick={() => downloadCsv(rawBookings, config)}>
+        Download bookings CSV
+      </Button>
+    </Flex>
   )
 }
 
@@ -186,4 +195,17 @@ function ValueCell({
       <span>{currency ? valueOrZero.toFixed(2) : valueOrZero}</span>
     </td>
   )
+}
+
+function downloadCsv(bookings: BookingWithPrices[], config?: ReportConfiguration) {
+  const csvString = createCsvString(bookings, config)
+
+  const data = encodeURI('data:text/csv;charset=utf-8,' + csvString)
+  const link = document.createElement('a')
+  link.href = data
+  link.download = 'bookings.csv'
+
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
 }

@@ -18,7 +18,6 @@ const DEFAULT_FILTER = { dates: [TODAY, TODAY] }
 
 function ToolComponent() {
   const [rawBookings, setRawBookings] = useState<Booking[]>([])
-  // const [totalNoOfSeats, setTotalNoOfSeats] = useState<number>()
   const [config, setConfig] = useState<ReportConfiguration>()
   const [discounts, setDiscounts] = useState<Discount[]>()
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTER)
@@ -28,7 +27,6 @@ function ToolComponent() {
 
   useEffect(() => {
     client.fetch(ALL_BOOKINGS).then(setRawBookings)
-    // client.fetch(NUMBER_OF_SEATS).then(setTotalNoOfSeats)
     client.fetch(CONFIG).then(setConfig)
     client.fetch(ALL_DISCOUNTS).then(setDiscounts)
   }, [client])
@@ -97,13 +95,6 @@ function ToolComponent() {
     [processedBookings, filters],
   )
 
-  // const totalNoOfSeatsAllShows = (totalNoOfSeats ?? 0) * Object.keys(bookings).length
-  // const bookedSeatsAllShows = Object.values(bookings).reduce(
-  //   (total, { seats }) => (total += seats.total),
-  //   0,
-  // )
-  // const totalSales = Object.values(bookings).reduce((total, { sales }) => (total += sales.total), 0)
-
   return (
     <Grid
       style={{
@@ -122,11 +113,7 @@ function ToolComponent() {
           padding={[3, 3, 4]}
           style={{ borderRight: 'solid 0.5px var(--card-border-color)', overflowY: 'auto' }}
         >
-          <Summary
-            bookings={filteredBookings}
-            priceTiers={config?.priceTiers}
-            discounts={discounts}
-          />
+          <Summary bookings={filteredBookings} config={config} discounts={discounts} />
         </Card>
         <Card padding={[3, 3, 4]} style={{ gridColumn: 'span 2', overflowY: 'auto' }}>
           <Grid columns={[1, 1, 2]} gap={[3, 3, 4]}>
