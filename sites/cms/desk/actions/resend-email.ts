@@ -18,7 +18,7 @@ export function ResendEmail({
   const client = useClient({ apiVersion: API_VERSION })
 
   return {
-    disabled: !published,
+    disabled: !published || !published.valid,
     label: 'Resend ticket email',
     icon: EnvelopeIcon,
     onHandle: async () => {
