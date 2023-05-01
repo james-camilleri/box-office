@@ -1,5 +1,12 @@
 import type { PriceConfiguration, PriceMap, PriceTier } from '../types/configuration.js'
-import { DISCOUNT_TYPE, type Discount, type Seat } from '../types/bookings.js'
+import {
+  DISCOUNT_TYPE,
+  type Booking,
+  type Discount,
+  type Seat,
+  type BookingWithPrices,
+  type SeatWithPrice,
+} from '../types/bookings.js'
 
 const BOOKING_FEE = 0.045
 const MAX_BOOKING_FEE = 5
@@ -81,6 +88,46 @@ function getPriceMapFromConfig(priceConfiguration: PriceConfiguration, showId: s
       ...priceConfiguration[showId],
     }),
   )
+}
+
+export function addBookingPrices(
+  bookings: Booking[],
+  priceConfiguration: PriceConfiguration,
+  priceTiers: PriceTier[] | undefined,
+): BookingWithPrices[] {
+  if (!bookings || !priceConfiguration || !priceTiers) {
+    return bookings
+  }
+
+  return bookings.map((booking) => {
+    const { seats } = booking
+
+    if (!seats) {
+      return booking
+    }
+
+    const seatsWithPrices: SeatWithPrice[] = seats.map((seat) => ({
+      ...seat,
+      priceTier: getSeatPriceTier(seat, booking.show._id, priceTiers, priceConfiguration),
+    }))
+
+    const { subtotal, reduction, bookingFee, vat, total, profit } = getTotals(
+      seatsWithPrices.map(({ priceTier }) => priceTier?.price ?? 0),
+      booking.discount,
+      booking.source === 'website',
+    )
+
+    return {
+      ...booking,
+      seats: seatsWithPrices,
+      subtotal,
+      reduction,
+      vat,
+      bookingFee,
+      total,
+      profit,
+    }
+  })
 }
 
 function getSeatPriceTierId(seat: Seat, priceMap: PriceMap) {

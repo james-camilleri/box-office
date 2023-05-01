@@ -1,5 +1,5 @@
 import type { Image, Reference, SanityDocument } from '@sanity/types'
-import type { Show } from './configuration.js'
+import type { PriceTier, Show } from './configuration.js'
 
 export interface Seat {
   _id: string
@@ -58,4 +58,17 @@ export interface Booking {
   source: string
   discount?: Discount
   campaign?: string
+}
+
+export interface SeatWithPrice extends Seat {
+  priceTier?: PriceTier
+}
+export interface BookingWithPrices extends Booking {
+  seats: SeatWithPrice[]
+  subtotal?: number
+  reduction?: number
+  vat?: number
+  bookingFee?: number
+  total?: number
+  profit?: number
 }

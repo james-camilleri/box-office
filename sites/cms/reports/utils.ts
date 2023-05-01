@@ -1,62 +1,8 @@
 import { isWithinInterval } from 'date-fns'
-import { Booking, PriceConfiguration, PriceTier, ReportConfiguration, Seat } from 'shared/types'
-import { formatShowDateTime, getSeatPriceTier, getTotals } from 'shared/utils'
+import { BookingWithPrices, ReportConfiguration } from 'shared/types'
+import { formatShowDateTime } from 'shared/utils'
 
 import { Filters } from './FilterBar.jsx'
-
-export interface BookingWithPrices extends Booking {
-  seats: SeatWithPrice[]
-  subtotal?: number
-  reduction?: number
-  vat?: number
-  bookingFee?: number
-  total?: number
-  profit?: number
-}
-
-interface SeatWithPrice extends Seat {
-  priceTier?: PriceTier
-}
-
-export function addBookingPrices(
-  bookings: Booking[],
-  priceConfiguration: PriceConfiguration,
-  priceTiers: PriceTier[] | undefined,
-): BookingWithPrices[] {
-  if (!bookings || !priceConfiguration || !priceTiers) {
-    return bookings
-  }
-
-  return bookings.map((booking) => {
-    const { seats } = booking
-
-    if (!seats) {
-      return booking
-    }
-
-    const seatsWithPrices: SeatWithPrice[] = seats.map((seat) => ({
-      ...seat,
-      priceTier: getSeatPriceTier(seat, booking.show._id, priceTiers, priceConfiguration),
-    }))
-
-    const { subtotal, reduction, bookingFee, vat, total, profit } = getTotals(
-      seatsWithPrices.map(({ priceTier }) => priceTier?.price ?? 0),
-      booking.discount,
-      booking.source === 'website',
-    )
-
-    return {
-      ...booking,
-      seats: seatsWithPrices,
-      subtotal,
-      reduction,
-      vat,
-      bookingFee,
-      total,
-      profit,
-    }
-  })
-}
 
 export function filterBookings(bookings: BookingWithPrices[], filters: Filters) {
   return bookings.filter(
