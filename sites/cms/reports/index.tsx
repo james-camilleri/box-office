@@ -4,14 +4,14 @@ import { useEffect, useMemo, useState } from 'react'
 import { type Tool, useClient } from 'sanity'
 import { definePlugin } from 'sanity'
 import { API_VERSION } from 'shared/constants'
-import { ALL_BOOKINGS, ALL_DISCOUNTS, CONFIG, NUMBER_OF_SEATS } from 'shared/queries'
+import { ALL_BOOKINGS, ALL_DISCOUNTS, CONFIG } from 'shared/queries'
 import { Booking, Discount, ReportConfiguration } from 'shared/types'
-import { formatShowDateTime } from 'shared/utils'
+import { addBookingPrices, formatShowDateTime } from 'shared/utils'
 
 import { BookingCard } from './BookingCard/index.jsx'
 import { FilterBar, Filters, Option } from './FilterBar.jsx'
 import { Summary } from './Summary/index.jsx'
-import { addBookingPrices, filterBookings } from './utils.js'
+import { filterBookings } from './utils.js'
 
 const TODAY = new Date()
 const DEFAULT_FILTER = { dates: [TODAY, TODAY] }
