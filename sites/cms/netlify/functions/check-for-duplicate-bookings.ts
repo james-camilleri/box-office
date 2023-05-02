@@ -1,6 +1,7 @@
 import { Handler, schedule } from '@netlify/functions'
 import sanityClient from '@sanity/client'
 import nodemailer from 'nodemailer'
+import { BOOKED_SEATS } from 'shared/queries'
 import { log } from 'shared/utils'
 
 const { SANITY_API_KEY, MAILJET_API_KEY, MAILJET_SECRET_KEY, REPORT_EMAILS } = process.env
@@ -13,12 +14,11 @@ const client = sanityClient({
 })
 
 const SHOWS_QUERY = `*[_type == "show"]{ _id, date }`
-const BOOKED_SEATS_QUERY = `*[_type == "booking" && show._ref == $show].seats[]._ref`
 
 async function getDuplicateBookings() {
   const shows = (await client.fetch(SHOWS_QUERY)) as { _id: string; date: string }[]
   const bookedSeats = (await Promise.all(
-    shows.map((show) => client.fetch(BOOKED_SEATS_QUERY, { show: show._id })),
+    shows.map((show) => client.fetch(BOOKED_SEATS, { show: show._id })),
   )) as string[][]
   const bookedSeatsSorted = bookedSeats.map((seats) => seats.sort())
 
