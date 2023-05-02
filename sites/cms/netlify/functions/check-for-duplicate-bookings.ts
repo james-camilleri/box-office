@@ -1,8 +1,9 @@
 import { Handler, schedule } from '@netlify/functions'
 import sanityClient from '@sanity/client'
 import nodemailer from 'nodemailer'
-import { BOOKED_SEATS } from 'shared/queries'
-import { log } from 'shared/utils'
+import { BOOKED_SEATS, CONFIG } from 'shared/queries'
+import { ReportConfiguration, Show } from 'shared/types'
+import { formatShowDateTime, log } from 'shared/utils'
 
 const { SANITY_API_KEY, MAILJET_API_KEY, MAILJET_SECRET_KEY, REPORT_EMAILS } = process.env
 const client = sanityClient({
@@ -13,28 +14,22 @@ const client = sanityClient({
   useCdn: false,
 })
 
-const SHOWS_QUERY = `*[_type == "show"]{ _id, date }`
-
-async function getDuplicateBookings() {
-  const shows = (await client.fetch(SHOWS_QUERY)) as { _id: string; date: string }[]
+async function getDuplicateBookings(shows: Show[]) {
   const bookedSeats = (await Promise.all(
     shows.map((show) => client.fetch(BOOKED_SEATS, { show: show._id })),
   )) as string[][]
   const bookedSeatsSorted = bookedSeats.map((seats) => seats.sort())
 
-  const duplicates = shows.reduce(
-    (duplicates, show) => ({
-      ...duplicates,
-      [show._id]: new Set<string>(),
-    }),
-    {} as Record<string, Set<string>>,
-  )
+  const duplicates = shows.reduce((duplicates, show) => {
+    duplicates.set(show, new Set<string>())
+    return duplicates
+  }, new Map<{ _id: string; date: string }, Set<string>>())
 
   let lastSeat: string | undefined = undefined
   shows.forEach((show, i) => {
     for (const seat of bookedSeatsSorted[i]) {
       if (seat === lastSeat) {
-        duplicates[show._id].add(seat)
+        duplicates.get(show)?.add(seat)
       }
 
       lastSeat = seat
@@ -47,7 +42,10 @@ async function getDuplicateBookings() {
 async function createReport() {
   log.info('Checking for duplicate bookings')
 
-  const duplicates = await getDuplicateBookings()
+  const config: ReportConfiguration = await client.fetch(CONFIG)
+  const duplicates = await getDuplicateBookings(
+    config.shows.sort((showA, showB) => showA.date.localeCompare(showB.date)),
+  )
   const noOfDuplicates = Object.values(duplicates).reduce(
     (noOfDuplicates, duplicates) => noOfDuplicates + duplicates.size,
     0,
@@ -57,8 +55,9 @@ async function createReport() {
     return
   }
 
-  const text = `Duplicate bookings:\n\n${Object.entries(duplicates).map(
-    ([show, duplicates]) => `${show}: ${Array.from(duplicates).join(', ')}\n`,
+  const text = `Duplicate bookings:\n\n${Array.from(duplicates).map(
+    ([show, duplicates]) =>
+      `${formatShowDateTime(show.date, config.timeZone)}: ${Array.from(duplicates).join(', ')}\n`,
   )}`
 
   log.error(text)
