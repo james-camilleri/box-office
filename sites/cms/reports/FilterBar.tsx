@@ -4,7 +4,7 @@ import './date-picker.css'
 
 import { Button, Card, Flex, Stack } from '@sanity/ui'
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
-import { isSameDay, startOfMonth, startOfWeek, subDays } from 'date-fns'
+import { isSameDay, endOfDay, startOfDay, startOfMonth, startOfWeek, subDays } from 'date-fns'
 import Select from 'react-select'
 
 export interface Option {
@@ -40,24 +40,24 @@ interface FilterBarProps {
 const MAX_DATE = new Date()
 
 const DATE_RANGES = {
-  today: (today: Date) => [today, today],
-  'this-week': (today: Date) => [startOfWeek(today, { weekStartsOn: 1 }), today],
+  today: (today: Date) => [startOfDay(today), endOfDay(today)],
+  'this-week': (today: Date) => [startOfWeek(today, { weekStartsOn: 1 }), endOfDay(today)],
   'last-week': (today: Date) => {
     const endOfLastWeek = subDays(startOfWeek(today, { weekStartsOn: 1 }), 1)
     const startOfLastWeek = startOfWeek(endOfLastWeek, { weekStartsOn: 1 })
 
     return [startOfLastWeek, endOfLastWeek]
   },
-  'this-month': (today: Date) => [startOfMonth(today), today],
+  'this-month': (today: Date) => [startOfMonth(today), endOfDay(today)],
   'last-month': (today: Date) => {
     const endOfLastMonth = subDays(startOfMonth(today), 1)
     const startOfLastMonth = startOfMonth(endOfLastMonth)
 
     return [startOfLastMonth, endOfLastMonth]
   },
-  'last-7': (today: Date) => [subDays(today, 6), today],
-  'last-10': (today: Date) => [subDays(today, 9), today],
-  'last-15': (today: Date) => [subDays(today, 14), today],
+  'last-7': (today: Date) => [startOfDay(subDays(today, 6)), endOfDay(today)],
+  'last-10': (today: Date) => [startOfDay(subDays(today, 9)), endOfDay(today)],
+  'last-15': (today: Date) => [startOfDay(subDays(today, 14)), endOfDay(today)],
 }
 type Range = keyof typeof DATE_RANGES
 
