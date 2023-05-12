@@ -54,8 +54,10 @@ function ToolComponent() {
           label: `${booking.discount.name} (${booking.discount.percentage}% off)`,
           value: booking.discount._id,
         })
-      booking.campaign &&
-        campaigns.set(booking.campaign, { label: booking.campaign, value: booking.campaign })
+      booking.campaigns &&
+        booking.campaigns.forEach((campaign) => {
+          campaigns.set(campaign, { label: campaign, value: campaign })
+        })
     })
 
     return {

@@ -58,7 +58,7 @@ export interface Booking {
   tickets: string[]
   source: string
   discount?: Discount
-  campaign?: string
+  campaigns?: string[]
 }
 
 export interface SeatWithPrice extends Seat {

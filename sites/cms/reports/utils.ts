@@ -19,7 +19,8 @@ export function filterBookings(bookings: BookingWithPrices[], filters: Filters) 
       (!filters?.show || (booking.show && filters?.show.has(booking.show._id))) &&
       (!filters?.discount || (booking.discount && filters?.discount.has(booking.discount?._id))) &&
       (!filters?.source || filters?.source.has(booking.source)) &&
-      (!filters?.campaign || (booking.campaign && filters?.campaign.has(booking.campaign))),
+      (!filters?.campaign ||
+        booking?.campaigns?.some((campaign) => filters?.campaign?.has(campaign))),
   )
 }
 

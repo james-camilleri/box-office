@@ -169,6 +169,7 @@ export const DAILY_BOOKINGS = `*[_type == "booking" && valid && dateTime(_create
     type,
     'code': code.current
   },
+  campaigns,
   source
 } | order(_createdAt asc)
 `
@@ -193,6 +194,7 @@ export const ALL_BOOKINGS = `*[_type == "booking" && valid] {
     type,
     'code': code.current
   },
+  campaigns,
   source
 } | order(_createdAt desc)
 `
