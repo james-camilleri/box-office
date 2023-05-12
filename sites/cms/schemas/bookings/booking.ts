@@ -87,6 +87,12 @@ export default defineType({
       readOnly: ({ document }) => !!document?.readOnly,
     }),
     defineField({
+      name: 'campaigns',
+      type: 'array',
+      of: [{ type: 'string' }],
+      readOnly: true,
+    }),
+    defineField({
       name: 'valid',
       type: 'boolean',
       initialValue: false,
