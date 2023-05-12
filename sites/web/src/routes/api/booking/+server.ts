@@ -71,12 +71,14 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 
     const seatIds = JSON.parse(metadata.seatIds) as string[]
     const discount = (metadata.discount && JSON.parse(metadata.discount)) as Discount | undefined
+    const campaigns = (metadata.campaigns && JSON.parse(metadata.campaigns)) as string[] | undefined
     const bookingData = {
       name,
       email,
       show: metadata.show,
       seatIds,
       discount,
+      campaigns,
       stripeId: id,
     }
 
@@ -89,6 +91,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
         `show: ${metadata.show}`,
         `seats: ${seatIds.join(', ')}`,
         `discount: ${discount?.code}`,
+        `campaign: ${campaigns}`,
         `stripeId: ${id}`,
       ].join('\n'),
     )
@@ -113,6 +116,7 @@ interface BookingData {
   show: string
   seatIds: string[]
   discount?: Discount
+  campaigns?: string[]
   stripeId: string
 }
 
@@ -121,7 +125,7 @@ async function idExists(id: string) {
 }
 
 async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fetch) {
-  const { name, email, show, seatIds, discount, stripeId } = bookingData
+  const { name, email, show, seatIds, discount, campaigns, stripeId } = bookingData
 
   const bookingId = crypto.randomUUID()
   log.debug('Created booking ID', bookingId)
@@ -170,6 +174,7 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
     orderConfirmation,
     transactionId: stripeId,
     source: 'website',
+    campaigns,
     readOnly: true,
     valid: true,
   })

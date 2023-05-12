@@ -7,6 +7,7 @@
   import { Elements, PaymentElement } from 'svelte-stripe'
   import { Alert, Button, TextInput, Loader } from '@svelteuidev/core'
 
+  import { page } from '$app/stores'
   import {
     PUBLIC_STRIPE_LIVE_API_KEY,
     PUBLIC_STRIPE_TEST_API_KEY,
@@ -33,6 +34,7 @@
 
   let stripe: Stripe | null = null
   let clientSecret: string | undefined = undefined
+  let campaigns: string[] | undefined = undefined
   let error: { type?: string; message: string } | undefined = undefined
   let elements: StripeElements | undefined
   let processing = false
@@ -45,6 +47,10 @@
 
   onMount(async () => {
     stripe = await loadStripe(API_KEY)
+    campaigns =
+      $page.url.searchParams.get('campaign')?.split(',') ||
+      $page.url.searchParams.get('campaigns')?.split(',') ||
+      undefined
     clientSecret = await createPaymentIntent()
   })
 
@@ -76,6 +82,7 @@
           show,
           seats,
           discountCode,
+          campaigns,
         }),
       }),
       fetch('/api/seats/lock', {
@@ -133,6 +140,8 @@
       error = result.error
       processing = false
     } else {
+      clientSecret = undefined
+
       dispatch('payment-success')
     }
   }
