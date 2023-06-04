@@ -45,10 +45,7 @@
 <EmailWrapper title="Your tickets for {event.name}">
   <div slot="content">
     <p>Hey {name}, here are your tickets for <strong>{event.name}</strong>.</p>
-    <p>
-      No need to print anything – just bring this email on your phone. If you'd rather print them
-      out, just make sure the QR codes below are clearly visible.
-    </p>
+    <p>No need to print anything – just bring this email on your phone.</p>
     <PortableText value={emailText} />
     {#each tickets as ticket}
       <QrCode
