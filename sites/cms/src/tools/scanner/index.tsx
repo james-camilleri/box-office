@@ -8,8 +8,8 @@ import { definePlugin } from 'sanity'
 import { API_VERSION } from 'shared/constants'
 
 import { QrScanner } from './QrScanner.jsx'
-import Beep from './beep.wav'
-import Boing from './boing.wav'
+import Beep from './beep.mp3'
+import Boing from './boing.mp3'
 
 enum STATUS {
   IDLE,
