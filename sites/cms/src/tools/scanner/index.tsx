@@ -1,6 +1,6 @@
 import './style.css'
 
-import { BarChartIcon } from '@sanity/icons'
+import { ImageRemoveIcon } from '@sanity/icons'
 import { Card, Flex, Grid } from '@sanity/ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useClient } from 'sanity'
@@ -8,8 +8,8 @@ import { definePlugin } from 'sanity'
 import { API_VERSION } from 'shared/constants'
 
 import { QrScanner } from './QrScanner.jsx'
-import Beep from './beep.wav'
-import Boing from './boing.wav'
+import Beep from './beep.mp3'
+import Boing from './boing.mp3'
 
 enum STATUS {
   IDLE,
@@ -107,7 +107,7 @@ export const scannerTool = definePlugin(() => {
         name: 'scanner',
         title: 'Scan Tickets',
         component: ScannerToolComponent,
-        icon: BarChartIcon,
+        icon: ImageRemoveIcon,
       },
     ],
   }
