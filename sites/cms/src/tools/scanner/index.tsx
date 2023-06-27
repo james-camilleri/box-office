@@ -37,7 +37,7 @@ function ScannerToolComponent() {
 
   const scanTicket = useCallback(
     (id: string) => {
-      const scannedAt = new Date()
+      const scannedAt = new Date().toISOString()
 
       client
         .patch(id)

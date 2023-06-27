@@ -43,7 +43,7 @@ export function QrScanner({ onScan }: ScannerProps) {
   return (
     <div
       style={{
-        width: '100vw',
+        width: '100%',
         maxHeight: '50vh',
       }}
     >
