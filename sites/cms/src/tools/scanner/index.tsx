@@ -86,7 +86,7 @@ function ScannerToolComponent() {
         background: getBackgroundColour(status),
       }}
     >
-      <Flex gap={[3, 3, 4]} direction="column">
+      <Flex gap={[3, 3, 4]} direction="column" height="fill">
         <QrScanner onScan={scanTicket} />
         <div className="status">
           {status !== STATUS.IDLE ? STATUS[status].replace('_', ' ') : ''}
