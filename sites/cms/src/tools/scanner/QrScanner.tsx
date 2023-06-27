@@ -43,13 +43,13 @@ export function QrScanner({ onScan }: ScannerProps) {
   return (
     <div
       style={{
-        width: '100%',
         maxHeight: '50vh',
       }}
     >
       <video
         ref={videoRef}
         style={{
+          width: '100%',
           height: '100%',
           aspectRatio: 1,
           objectFit: 'cover',

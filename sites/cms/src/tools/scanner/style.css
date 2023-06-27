@@ -1,6 +1,7 @@
 .scanner {
+  box-sizing: border-box;
   padding: 1em;
-  height: 100vh;
+  height: 100%;
   transition: background-color 0.3s ease-in-out;
 }
 
