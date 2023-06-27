@@ -11,6 +11,7 @@ import { structure } from './src/desk/structure.js'
 import { schemaTypes } from './src/schemas/index.js'
 import { CustomToolMenu } from './src/tools/custom-tool-menu/index.jsx'
 import { reportsTool } from './src/tools/reports/index.js'
+import { scannerTool } from './src/tools/scanner/index.js'
 
 enum ACTIONS {
   PUBLISH = 'publish',
@@ -31,6 +32,7 @@ export default defineConfig({
   plugins: [
     deskTool({ title: 'Box Office', structure }),
     reportsTool(),
+    scannerTool(),
     visionTool({ title: 'Database' }),
   ],
 

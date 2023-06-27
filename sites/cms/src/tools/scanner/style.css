@@ -1,0 +1,18 @@
+.scanner {
+  padding: 1em;
+  height: 100vh;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.status {
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error {
+  text-align: center;
+  white-space: pre;
+}
