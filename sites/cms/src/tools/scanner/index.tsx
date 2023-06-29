@@ -1,8 +1,8 @@
 import './style.css'
 
 import { ImageRemoveIcon } from '@sanity/icons'
-import { Card, Flex, Grid } from '@sanity/ui'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Flex, Label, TextInput } from '@sanity/ui'
+import { useCallback, useRef, useState } from 'react'
 import { useClient } from 'sanity'
 import { definePlugin } from 'sanity'
 import { API_VERSION } from 'shared/constants'
@@ -31,7 +31,7 @@ function ScannerToolComponent() {
   const boingRef = useRef<HTMLAudioElement>(null)
   const client = useClient({ apiVersion: API_VERSION })
 
-  const [user, setUser] = useState<string>('James')
+  const [user, setUser] = useState<string>('')
   const [status, setStatus] = useState<STATUS>(STATUS.IDLE)
   const [error, setError] = useState<string>()
 
@@ -87,11 +87,21 @@ function ScannerToolComponent() {
       }}
     >
       <Flex gap={[3, 3, 4]} direction="column" height="fill">
-        <QrScanner onScan={scanTicket} />
+        {user && <QrScanner onScan={scanTicket} />}
         <div className="status">
           {status !== STATUS.IDLE ? STATUS[status].replace('_', ' ') : ''}
         </div>
         <div className="error">{error ? error : ''}</div>
+        <Flex gap={[2, 2, 3]} direction="column" style={{ marginTop: 'auto' }}>
+          <Label size={2}>Scanned by</Label>
+          <TextInput
+            fontSize={[2, 2, 3, 4]}
+            onChange={(event) => setUser(event.currentTarget.value)}
+            padding={[3, 3, 4]}
+            placeholder="Alfred Prufrock"
+            value={user}
+          />
+        </Flex>
       </Flex>
       <audio ref={beepRef} src={Beep} />
       <audio ref={boingRef} src={Boing} />
