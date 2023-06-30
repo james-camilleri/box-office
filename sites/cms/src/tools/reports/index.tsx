@@ -5,7 +5,7 @@ import { type Tool, useClient } from 'sanity'
 import { definePlugin } from 'sanity'
 import { API_VERSION } from 'shared/constants'
 import { ALL_BOOKINGS, ALL_DISCOUNTS, CONFIG } from 'shared/queries'
-import { Booking, Discount, ReportConfiguration } from 'shared/types'
+import { Booking, DISCOUNT_TYPE, Discount, ReportConfiguration } from 'shared/types'
 import { addBookingPrices, formatShowDateTime } from 'shared/utils'
 
 import { BookingCard } from './BookingCard/index.jsx'
@@ -51,7 +51,11 @@ function ToolComponent() {
         sources.set(booking.source, { label: booking.source, value: booking.source })
       booking.discount &&
         discounts.set(booking.discount._id, {
-          label: `${booking.discount.name} (${booking.discount.percentage}% off)`,
+          label: `${booking.discount.name} ${
+            booking.discount.type === DISCOUNT_TYPE.PERCENTAGE
+              ? `(${booking.discount.value}% off)`
+              : `(€${booking.discount.value} off)`
+          }`,
           value: booking.discount._id,
         })
       booking.campaigns &&

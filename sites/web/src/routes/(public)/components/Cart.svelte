@@ -109,7 +109,7 @@
         {/if}
         <span class="line-item booking-fee">
           <span>Booking fee</span>
-          <span>€{totals.bookingFee.toFixed(2)}</span>
+          <span>€{totals?.bookingFee?.toFixed(2) ?? '0'}</span>
         </span>
         <span class="line-item total">
           <span>Total</span>

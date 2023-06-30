@@ -29,13 +29,14 @@ export interface BookingDocument extends SanityDocument {
 
 export enum DISCOUNT_TYPE {
   PERCENTAGE = 'percentage',
+  FIXED_AMOUNT = 'fixed-amount',
 }
 
 export interface Discount {
   _id: string
   name: string
   type: DISCOUNT_TYPE
-  percentage?: number
+  value?: number
   code: string
 }
 

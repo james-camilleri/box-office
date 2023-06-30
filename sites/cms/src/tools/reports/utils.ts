@@ -1,5 +1,5 @@
 import { isWithinInterval } from 'date-fns'
-import { BookingWithPrices, ReportConfiguration } from 'shared/types'
+import { BookingWithPrices, DISCOUNT_TYPE, ReportConfiguration } from 'shared/types'
 import { formatShowDateTime } from 'shared/utils'
 
 import { Filters } from './FilterBar.jsx'
@@ -64,7 +64,11 @@ export function createCsvString(bookings: BookingWithPrices[], config?: ReportCo
         .join(', '),
       booking.subtotal,
       booking.discount?.name
-        ? `${booking.discount.name} (${booking.discount.percentage}% off)`
+        ? `${booking.discount.name} ${
+            booking.discount.type === DISCOUNT_TYPE.PERCENTAGE
+              ? `(${booking.discount.value}% off)`
+              : `(€${booking.discount.value} off)`
+          }`
         : '',
       booking.reduction,
       booking.total,

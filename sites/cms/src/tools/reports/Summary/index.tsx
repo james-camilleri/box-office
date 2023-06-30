@@ -3,7 +3,7 @@ import './styles.scss'
 import { DownloadIcon } from '@sanity/icons'
 import { Button, Flex } from '@sanity/ui'
 import { useMemo } from 'react'
-import { Discount, PriceTier, ReportConfiguration } from 'shared/types'
+import { DISCOUNT_TYPE, Discount, PriceTier, ReportConfiguration } from 'shared/types'
 
 import { PriceTierColour } from '../TierColour/index.jsx'
 import { BookingWithPrices, createCsvString } from '../utils.js'
@@ -94,10 +94,10 @@ export function Summary(props: SummaryProps) {
           )}
           {bookings.byDiscount.size > 0 && (
             <tbody className="minor">
-              {discounts?.map(({ _id, name, percentage }) => (
+              {discounts?.map(({ _id, name, type, value }) => (
                 <tr key={_id}>
                   <LabelCell value={bookings.byDiscount.get(_id)}>
-                    {name} ({percentage}% off)
+                    {name} ({type === DISCOUNT_TYPE.PERCENTAGE ? `${value}% off` : `€${value} off`})
                   </LabelCell>
                   <ValueCell value={bookings.byDiscount.get(_id)} />
                 </tr>

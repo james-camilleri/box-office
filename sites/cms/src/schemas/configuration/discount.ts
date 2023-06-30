@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { DISCOUNT_TYPE } from 'shared/types'
 
 export default defineType({
   name: 'discount',
@@ -15,15 +16,31 @@ export default defineType({
       type: 'string',
       initialValue: 'percentage',
       options: {
-        list: [{ title: 'Percentage discount on total order', value: 'percentage' }],
+        list: [
+          { title: 'Percentage discount on total order', value: DISCOUNT_TYPE.PERCENTAGE },
+          { title: 'Fixed value off total order', value: DISCOUNT_TYPE.FIXED_AMOUNT },
+        ],
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'percentage',
+      name: 'value',
       type: 'number',
-      validation: (Rule) => Rule.min(0).max(100),
-      hidden: ({ document }) => !(document?.type === 'percentage'),
+      validation: (Rule) =>
+        Rule.required().custom((value, context) => {
+          const type = context.document?.type
+          if (value == null) {
+            return true
+          }
+
+          return type === DISCOUNT_TYPE.PERCENTAGE
+            ? value >= 0 && value <= 100
+              ? true
+              : 'Percentage must be between 0-100'
+            : value > 0
+            ? true
+            : 'Value must be greater than 0'
+        }),
     }),
     defineField({
       name: 'code',
@@ -42,22 +59,29 @@ export default defineType({
       name: 'name',
       enabled: 'enabled',
       type: 'type',
-      percentage: 'percentage',
+      value: 'value',
     },
     prepare({
       name,
       enabled,
       type,
-      percentage,
+      value,
     }: {
       name: string
       enabled: boolean
       type: string
-      percentage: number
+      value: number
     }) {
+      const subtitle =
+        !type || value == null
+          ? ''
+          : type === DISCOUNT_TYPE.PERCENTAGE
+          ? `${value}% off`
+          : `€${value} off`
+
       return {
         title: `${name} ${enabled ? '🟢' : '⚫'}`,
-        subtitle: type === 'percentage' ? `${percentage}% off` : '',
+        subtitle,
       }
     },
   },

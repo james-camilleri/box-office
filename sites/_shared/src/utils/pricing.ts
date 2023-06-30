@@ -45,7 +45,7 @@ export function getLineItem(
 
 export function getTotals(prices: number[], discount?: Discount, calculateBookingFee = true) {
   const subtotal = prices.reduce((total, price) => total + price, 0)
-  const bookingFee = calculateBookingFee
+  let bookingFee = calculateBookingFee
     ? prices.reduce(
         (bookingFee, price) => bookingFee + Math.min(price * BOOKING_FEE, MAX_BOOKING_FEE),
         0,
@@ -55,16 +55,18 @@ export function getTotals(prices: number[], discount?: Discount, calculateBookin
   let total = subtotal
   let reduction = 0
 
-  if (discount && discount.type === DISCOUNT_TYPE.PERCENTAGE && discount.percentage) {
-    total = total * ((100 - discount.percentage) / 100)
-    reduction = subtotal - total
+  if (discount && discount.value) {
+    reduction =
+      discount.type === DISCOUNT_TYPE.PERCENTAGE ? total * (discount.value / 100) : discount.value
+    total = Math.max(0, total - reduction)
+
+    // Don't charge a booking fee for free checkouts.
+    if (total === 0) {
+      bookingFee = undefined
+    }
   }
 
-  if (
-    bookingFee &&
-    // Only add booking fee if tickets aren't complimentary.
-    reduction !== subtotal
-  ) {
+  if (bookingFee) {
     total += bookingFee
   }
 

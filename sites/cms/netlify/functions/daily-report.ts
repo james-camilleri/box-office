@@ -85,7 +85,9 @@ async function createReport() {
           cells.push([
             'Discount',
             `${discount.name} ${
-              discount.type === DISCOUNT_TYPE.PERCENTAGE ? `(${discount.percentage}%)` : ''
+              discount.type === DISCOUNT_TYPE.PERCENTAGE
+                ? `(${discount.value}%)`
+                : `(€${discount.value})`
             }`,
           ])
         }

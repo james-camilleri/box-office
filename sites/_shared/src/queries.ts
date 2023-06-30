@@ -85,7 +85,7 @@ export const BOOKING_DETAILS = `*[_type == "booking" && _id == $bookingId]{
     'discount': {
       'name': discount -> name,
       'type': discount -> type,
-      'percentage': discount -> percentage
+      'value': discount -> value
     }
   }[0]`
 
@@ -122,7 +122,7 @@ export const SHOW_DETAILS = `*[_id == $show][0]`
 export const DISCOUNT = `*[_type == 'discount' && enabled && code.current == $code]{
   _id,
   name,
-  percentage,
+  value,
   type,
   'code': code.current
 }[0]`
@@ -133,7 +133,7 @@ export const DISCOUNT = `*[_type == 'discount' && enabled && code.current == $co
 export const ALL_DISCOUNTS = `*[_type == 'discount']{
   _id,
   name,
-  percentage,
+  value,
   type,
   'code': code.current
 } | order(name asc)`
@@ -170,7 +170,7 @@ export const DAILY_BOOKINGS = `*[_type == "booking" && valid && dateTime(_create
   'discount': discount->{
     _id,
     name,
-    percentage,
+    value,
     type,
     'code': code.current
   },
@@ -195,7 +195,7 @@ export const ALL_BOOKINGS = `*[_type == "booking" && valid && !(_id in path("dra
   'discount': discount->{
     _id,
     name,
-    percentage,
+    value,
     type,
     'code': code.current
   },
