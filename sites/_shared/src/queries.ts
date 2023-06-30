@@ -105,6 +105,11 @@ export const SEAT_DETAILS = `*[_id in $seats]{
 }`
 
 /**
+ * Get all shows.
+ */
+export const SHOWS = `*[_type == "show"] | order(date asc)`
+
+/**
  * Gets the full details for a particular show.
  * @show the ID of the show to find
  */
@@ -210,3 +215,9 @@ export const TICKET_DETAILS = `*[_type == "ticket" && _id in $tickets]`
  * @id the transaction ID to check
  */
 export const TRANSACTION_ID_EXISTS = `count(*[_type == "booking" && transactionId == $id]) > 0`
+
+/**
+ * Get the valid tickets for the given show.
+ * @show the show ID to get tickets for
+ */
+export const VALID_TICKETS = `*[_type == "booking" && valid && show._ref == $show && !(_id in path("drafts.**"))].tickets[@->valid]._ref`
