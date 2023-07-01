@@ -53,6 +53,7 @@ export async function createTicketsForBooking(
       const response = await client.create({
         _id,
         _type: 'ticket',
+        booking: createReference(booking.bookingId),
         show: createReference(booking.showId),
         seat: createReference(seat),
         qrCode: {
