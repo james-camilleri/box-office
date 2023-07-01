@@ -3,7 +3,7 @@ import './styles.scss'
 import { DownloadIcon } from '@sanity/icons'
 import { Button, Flex } from '@sanity/ui'
 import { useMemo } from 'react'
-import { DISCOUNT_TYPE, Discount, PriceTier, ReportConfiguration } from 'shared/types'
+import { DISCOUNT_TYPE, Discount, ReportConfiguration } from 'shared/types'
 
 import { PriceTierColour } from '../TierColour/index.jsx'
 import { BookingWithPrices, createCsvString } from '../utils.js'
@@ -21,11 +21,14 @@ export function Summary(props: SummaryProps) {
     () =>
       rawBookings.reduce(
         (summaryData, booking) => {
-          const { source, discount, campaign } = booking
+          const { source, discount, campaigns } = booking
 
           incrementMapCount(summaryData.bookings.bySource, source)
           incrementMapCount(summaryData.bookings.byDiscount, discount?._id)
-          incrementMapCount(summaryData.bookings.byCampaign, campaign)
+          campaigns &&
+            campaigns.forEach((campaign) =>
+              incrementMapCount(summaryData.bookings.byCampaign, campaign),
+            )
 
           summaryData.seats.total += booking.seats.length
           booking.seats.forEach((seat) => {

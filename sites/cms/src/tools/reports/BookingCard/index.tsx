@@ -11,8 +11,14 @@ import { PriceTierColour } from '../TierColour/index.jsx'
 export function BookingCard(props: { booking: BookingWithPrices; config?: ReportConfiguration }) {
   const { booking, config } = props
   const badges = [
-    <Badge>{booking.source}</Badge>,
-    ...(booking.discount ? [<Badge tone="positive">{booking.discount.name}</Badge>] : []),
+    <Badge key={booking.source}>{booking.source}</Badge>,
+    ...(booking.discount
+      ? [
+          <Badge key={booking.discount.name} tone="positive">
+            {booking.discount.name}
+          </Badge>,
+        ]
+      : []),
     ...(booking?.campaigns?.map((campaign) => (
       <Badge key={campaign} tone="primary">
         {campaign}

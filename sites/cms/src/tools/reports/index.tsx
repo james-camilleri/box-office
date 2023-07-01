@@ -82,8 +82,8 @@ function ToolComponent() {
             })),
           }
         : undefined),
-      ...(discounts.size > 1 ? { discount: [...discounts.values()] } : undefined),
-      ...(campaigns.size > 1 ? { campaign: [...campaigns.values()] } : undefined),
+      ...(discounts.size > 0 ? { discount: [...discounts.values()] } : undefined),
+      ...(campaigns.size > 0 ? { campaign: [...campaigns.values()] } : undefined),
       ...(sources.size > 1 ? { source: [...sources.values()] } : undefined),
     }
   }, [config, rawBookings])

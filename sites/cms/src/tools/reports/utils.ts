@@ -4,6 +4,8 @@ import { formatShowDateTime } from 'shared/utils'
 
 import { Filters } from './FilterBar.jsx'
 
+export type { BookingWithPrices }
+
 export function filterBookings(bookings: BookingWithPrices[], filters: Filters) {
   return bookings.filter(
     (booking) =>
