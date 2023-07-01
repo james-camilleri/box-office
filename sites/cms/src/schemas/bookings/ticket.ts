@@ -1,3 +1,4 @@
+import { AccessDeniedIcon, CheckmarkCircleIcon } from '@sanity/icons'
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
@@ -54,8 +55,9 @@ export default defineType({
       id: '_id',
       show: 'show.date',
       seat: 'seat._ref',
+      valid: 'valid',
     },
-    prepare({ id, show, seat }) {
+    prepare({ id, show, seat, valid }) {
       const date = new Date(show)
 
       return {
@@ -63,6 +65,7 @@ export default defineType({
         subtitle: `${date.toLocaleDateString()} ${date
           .toLocaleTimeString()
           .replace(/:00$/, '')}, ${seat}`,
+        media: valid ? CheckmarkCircleIcon : AccessDeniedIcon,
       }
     },
   },

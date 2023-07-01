@@ -1,3 +1,4 @@
+import { AccessDeniedIcon, CheckmarkCircleIcon } from '@sanity/icons'
 import { Reference, defineField, defineType } from 'sanity'
 import { BOOKED_AND_LOCKED_SEATS } from 'shared/queries'
 
@@ -109,8 +110,9 @@ export default defineType({
       name: 'customer.name',
       show: 'show.date',
       seats: 'seats',
+      valid: 'valid',
     },
-    prepare({ name, show, seats }) {
+    prepare({ name, show, seats, valid }) {
       const date = new Date(show)
 
       return {
@@ -118,6 +120,7 @@ export default defineType({
         subtitle: `${date.toLocaleDateString()} ${date.toLocaleTimeString().replace(/:00$/, '')} x${
           seats?.length ?? ''
         }`,
+        media: valid ? CheckmarkCircleIcon : AccessDeniedIcon,
       }
     },
   },
