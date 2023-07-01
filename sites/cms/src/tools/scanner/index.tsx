@@ -70,7 +70,7 @@ function ScannerToolComponent() {
     client.fetch(VALID_TICKETS, { show: selectedShow }).then((validTicketIds: string[]) => {
       setValidTicketIds(new Set(validTicketIds))
     })
-  }, [selectedShow])
+  }, [client, selectedShow])
 
   const scanTicket = useCallback(
     (id: string) => {
@@ -81,7 +81,7 @@ function ScannerToolComponent() {
         }, 5000)
 
         setStatus(STATUS.ERROR)
-        setError(`Ticket ${id} is not valid for the currently selected show.`)
+        setError(`Ticket ${id} is not valid\nfor the currently selected show.`)
         boingRef?.current?.play()
         return
       }
@@ -125,7 +125,7 @@ function ScannerToolComponent() {
           boingRef?.current?.play()
         })
     },
-    [client, user],
+    [client, user, validTicketIds],
   )
 
   return (
