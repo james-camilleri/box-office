@@ -181,32 +181,40 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
 
   // Create booking.
   log.info('Creating booking document on Sanity.io')
-  await Promise.all([
-    sanity.create({
-      _id: bookingId,
-      _type: 'booking',
-      customer: createReference(customerId),
-      show: createReference(show),
-      seats: seatIds.map((id) => ({ ...createReference(id), _key: generateArrayKey() })),
-      discount: discount?._id && createReference(discount?._id),
-      tickets: tickets.map(({ _id }) => ({ ...createReference(_id), _key: generateArrayKey() })),
-      orderConfirmation,
-      transactionId: stripeId,
-      source: 'website',
-      campaigns,
-      readOnly: true,
-      valid: true,
-    }),
-    sanity
-      .patch(customerId)
-      .setIfMissing({ bookings: [] })
-      .insert('after', 'bookings[-1]', [createReference(bookingId)])
-      .commit({
-        autoGenerateArrayKeys: true,
-      }),
-  ])
+  await sanity.create({
+    _id: bookingId,
+    _type: 'booking',
+    customer: createReference(customerId),
+    show: createReference(show),
+    seats: seatIds.map((id) => ({ ...createReference(id), _key: generateArrayKey() })),
+    discount: discount?._id && createReference(discount?._id),
+    tickets: tickets.map(({ _id }) => ({ ...createReference(_id), _key: generateArrayKey() })),
+    orderConfirmation,
+    transactionId: stripeId,
+    source: 'website',
+    campaigns,
+    readOnly: true,
+    valid: true,
+  })
 
   log.success('Booking created')
+
+  sanity
+    .patch(customerId)
+    .setIfMissing({ bookings: [] })
+    .insert('after', 'bookings[-1]', [createReference(bookingId)])
+    .commit({
+      autoGenerateArrayKeys: true,
+    })
+
+  tickets.map(({ _id }) =>
+    sanity
+      .patch(_id)
+      .set({ booking: createReference(bookingId) })
+      .commit(),
+  )
+
+  log.info('Initiated booking reference updates')
 }
 
 async function getCustomerId(name: string, email: string): Promise<string> {
