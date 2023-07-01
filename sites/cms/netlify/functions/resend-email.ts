@@ -10,6 +10,6 @@ export const handler: Handler = async (event) => {
 
   return {
     statusCode: response.status,
-    body: await response.json(),
+    body: await response.text(),
   }
 }
