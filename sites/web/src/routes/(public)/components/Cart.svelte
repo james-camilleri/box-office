@@ -166,7 +166,8 @@
   {#if cartState === CART_STATE.CHECK_OUT}
     <Payment
       {show}
-      discountCode={discount?.code}
+      {discount}
+      paymentRequired={!!totals?.total}
       seats={[...$selection.values()]}
       on:payment-success={onPaymentSuccess}
       on:timeout={timeout}

@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { Stripe, StripeElements } from '@stripe/stripe-js'
-  import type { Seat } from 'shared/types'
+  import type { Discount, Seat } from 'shared/types'
 
   import { loadStripe } from '@stripe/stripe-js'
   import { createEventDispatcher, onMount } from 'svelte'
   import { Elements, PaymentElement } from 'svelte-stripe'
-  import { Alert, Button, TextInput, Loader } from '@svelteuidev/core'
+  import { Alert, Button, Loader } from '@svelteuidev/core'
 
   import { page } from '$app/stores'
   import {
@@ -14,6 +14,7 @@
     PUBLIC_USE_STRIPE_TEST,
   } from '$env/static/public'
   import Grid from '$lib/components/layout/Grid.svelte'
+  import AdditionalFields from './AdditionalFields.svelte'
 
   const API_KEY =
     import.meta.env.PROD && PUBLIC_USE_STRIPE_TEST !== 'true'
@@ -30,7 +31,8 @@
 
   export let show: string
   export let seats: Seat[]
-  export let discountCode: string | undefined
+  export let discount: Discount | undefined
+  export let paymentRequired: boolean
 
   let stripe: Stripe | null = null
   let clientSecret: string | undefined = undefined
@@ -51,13 +53,18 @@
       $page.url.searchParams.get('campaign')?.split(',') ||
       $page.url.searchParams.get('campaigns')?.split(',') ||
       undefined
-    clientSecret = await createPaymentIntent()
+
+    blockSeats()
+
+    if (paymentRequired) {
+      clientSecret = await createPaymentIntent()
+    }
   })
 
   const dispatch = createEventDispatcher()
 
   function startTimer() {
-    interval = setInterval(() => {
+    interval = window.setInterval(() => {
       time--
       if (time === 0) {
         clearInterval(interval)
@@ -71,58 +78,71 @@
     return string.length === 1 ? `0${string}` : string
   }
 
-  async function createPaymentIntent() {
-    const [stripeResponse, lockedSeatsResponse] = await Promise.all([
-      await fetch('/', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          show,
-          seats,
-          discountCode,
-          campaigns,
-        }),
+  async function blockSeats() {
+    const response = await fetch('/api/seats/lock', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        show,
+        seats: seats.map((seat) => seat._id),
       }),
-      fetch('/api/seats/lock', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          show,
-          seats: seats.map((seat) => seat._id),
-        }),
-      }),
-    ])
+    })
 
-    if (!lockedSeatsResponse.ok) {
-      const payload = (await lockedSeatsResponse.json()) as { message: string }
+    if (!response.ok) {
+      const payload = (await response.json()) as { message: string }
       error = { type: payload.message, message: ERROR_STRINGS[payload.message] ?? '' }
-      console.log(payload.message)
+
+      return
     }
 
     startTimer()
+  }
 
-    const { clientSecret } = await stripeResponse.json()
+  async function createPaymentIntent() {
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        show,
+        seats,
+        discountCode: discount?.code,
+        campaigns,
+      }),
+    })
+
+    const { clientSecret } = await response.json()
     return clientSecret
   }
 
-  async function submit() {
-    if (!stripe || !elements || processing) {
-      return
+  async function createBooking() {
+    const response = await fetch('api/booking', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        show,
+        seatIds: seats.map((seat) => seat._id),
+        discount,
+        campaigns,
+      }),
+    })
+
+    if (!response.ok) {
+      error = { message: 'Error placing booking' }
+      processing = false
+    } else {
+      dispatch('payment-success')
     }
+  }
 
-    submitted = true
-
-    if (!name || !email) {
-      return
-    }
-
-    processing = true
-    error = undefined
-
+  async function confirmPayment() {
     const result = await stripe.confirmPayment({
       elements,
       redirect: 'if_required',
@@ -145,6 +165,27 @@
       dispatch('payment-success')
     }
   }
+
+  function onSubmit() {
+    if ((paymentRequired && (!stripe || !elements)) || processing) {
+      return
+    }
+
+    submitted = true
+
+    if (!name || !email) {
+      return
+    }
+
+    processing = true
+    error = undefined
+
+    if (paymentRequired) {
+      confirmPayment()
+    } else {
+      createBooking()
+    }
+  }
 </script>
 
 {#if error}
@@ -154,17 +195,17 @@
     </Alert>
   </div>
 {/if}
+{#if error?.type !== 'already-locked'}
+  <div class="alert-wrapper">
+    <Alert
+      title="Your tickets will be held for {pad(Math.floor(time / 60))}:{pad(time % 60)}"
+      color="dark"
+    />
+  </div>
+{/if}
 
-{#if stripe && clientSecret}
-  {#if error?.type !== 'already-locked'}
-    <div class="alert-wrapper">
-      <Alert
-        title="Your tickets will be held for {pad(Math.floor(time / 60))}:{pad(time % 60)}"
-        color="dark"
-      />
-    </div>
-  {/if}
-  <form on:submit|preventDefault={submit}>
+{#if paymentRequired && stripe && clientSecret}
+  <form on:submit|preventDefault={onSubmit}>
     <Grid gap="var(--xxs)">
       <Elements
         {stripe}
@@ -172,25 +213,21 @@
         rules={{ '.Input': { border: 'solid 1px #0002' } }}
         bind:elements
       >
-        <div class="additional-fields">
-          <TextInput
-            bind:value={name}
-            name="name"
-            label="Name"
-            error={!name && submitted && 'Name is required'}
-          />
-          <TextInput
-            bind:value={email}
-            name="email"
-            label="Email address"
-            error={!email && submitted && 'Email is required'}
-          />
-        </div>
+        <AdditionalFields bind:name bind:email {submitted} />
         <PaymentElement />
-        <div class="pay-button">
+        <div class="confirm-button">
           <Button fullSize disabled={processing} color="red" size="lg">Pay</Button>
         </div>
       </Elements>
+    </Grid>
+  </form>
+{:else if !paymentRequired}
+  <form on:submit|preventDefault={onSubmit}>
+    <Grid gap="var(--xxs)">
+      <AdditionalFields bind:name bind:email {submitted} />
+      <div class="confirm-button">
+        <Button fullSize disabled={processing} color="red" size="lg">Confirm</Button>
+      </div>
     </Grid>
   </form>
 {:else}
@@ -210,11 +247,7 @@
     margin-bottom: var(--md);
   }
 
-  .additional-fields {
-    margin-bottom: var(--xs);
-  }
-
-  .pay-button {
+  .confirm-button {
     margin-top: var(--lg);
   }
 </style>
