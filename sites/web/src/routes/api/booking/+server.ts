@@ -41,21 +41,29 @@ const stripe = new Stripe(API_KEY)
 
 export const POST: RequestHandler = async ({ request, fetch }) => {
   const body = await request.text()
-  const signature = request.headers.get('stripe-signature') ?? ''
+  const signature = request.headers.get('stripe-signature')
 
   let event
 
-  try {
-    event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET)
-  } catch (err: any) {
-    log.error('Webhook signature verification failed:')
-    log.error(err.message)
-    await log.flushAll()
+  if (signature) {
+    try {
+      event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET)
+    } catch (err: any) {
+      log.error('Webhook signature verification failed:')
+      log.error(err.message)
+      await log.flushAll()
 
-    throw error(400)
+      throw error(400)
+    }
   }
 
-  if (event.type === 'charge.succeeded') {
+  let bookingData: BookingData
+  if (event?.type) {
+    // Don't process any stripe events besides successful payments.
+    if (event.type !== 'charge.succeeded') {
+      return new Response()
+    }
+
     const charge = event.data.object
     const {
       id,
@@ -72,7 +80,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
     const seatIds = JSON.parse(metadata.seatIds) as string[]
     const discount = (metadata.discount && JSON.parse(metadata.discount)) as Discount | undefined
     const campaigns = (metadata.campaigns && JSON.parse(metadata.campaigns)) as string[] | undefined
-    const bookingData = {
+    bookingData = {
       name,
       email,
       show: metadata.show,
@@ -81,29 +89,39 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
       campaigns,
       stripeId: id,
     }
-
-    log.setHeader(`New booking: ${name} <${email}>`)
-    log.info(
-      [
-        'Retrieved booking details from Stripe:',
-        `name: ${name}`,
-        `email: ${email}`,
-        `show: ${metadata.show}`,
-        `seats: ${seatIds.join(', ')}`,
-        `discount: ${discount?.code}`,
-        `campaign: ${campaigns}`,
-        `stripeId: ${id}`,
-      ].join('\n'),
-    )
-
-    try {
-      await finalisePurchase(bookingData, fetch)
-    } catch (e) {
-      console.error(e)
-      log.error(e)
-      await log.flushAll()
-      throw error(500)
+  } else {
+    const { name, email, show, seatIds, discount, campaigns } = JSON.parse(body)
+    bookingData = {
+      name,
+      email,
+      show,
+      seatIds,
+      discount,
+      campaigns,
     }
+  }
+
+  log.setHeader(`New booking: ${bookingData.name} <${bookingData.email}>`)
+  log.info(
+    [
+      `Retrieved booking details from ${event?.type ? 'Stripe' : 'front-end'}:`,
+      `name: ${bookingData.name}`,
+      `email: ${bookingData.email}`,
+      `show: ${bookingData.show}`,
+      `seats: ${bookingData.seatIds.join(', ')}`,
+      `discount: ${bookingData.discount?.code ?? '-'}`,
+      `campaign: ${bookingData.campaigns}`,
+      ...(bookingData.stripeId ? [`stripeId: ${bookingData.stripeId}`] : []),
+    ].join('\n'),
+  )
+
+  try {
+    await finalisePurchase(bookingData, fetch)
+  } catch (e) {
+    console.error(e)
+    log.error(e)
+    await log.flushAll()
+    throw error(500)
   }
 
   await log.flush()
@@ -117,7 +135,7 @@ interface BookingData {
   seatIds: string[]
   discount?: Discount
   campaigns?: string[]
-  stripeId: string
+  stripeId?: string
 }
 
 async function idExists(id: string) {
