@@ -1,6 +1,7 @@
 import type { TicketDocument } from 'shared/types'
 
 import { PublishIcon } from '@sanity/icons'
+import { useToast } from '@sanity/ui'
 import { useEffect, useState } from 'react'
 import {
   DocumentActionDescription,
@@ -13,7 +14,7 @@ import { API_VERSION } from 'shared/constants'
 import { createReference, createTicketsForBooking, generateOrderConfirmationId } from 'shared/utils'
 
 const EMAIL_API_URL = import.meta.env.PROD
-  ? 'https://tickets.arthaus.mt/api/booking/email'
+  ? '/.netlify/functions/resend-email'
   : 'http://localhost:5173/api/booking/email'
 
 async function emailTickets(
@@ -26,7 +27,7 @@ async function emailTickets(
     return
   }
 
-  await fetch(EMAIL_API_URL, {
+  return fetch(EMAIL_API_URL, {
     method: 'POST',
     body: JSON.stringify({
       calculateBookingFee: false,
@@ -49,6 +50,7 @@ export function CreateBooking({
   const { validation } = useValidationStatus(id, type)
   const [isPublishing, setIsPublishing] = useState(false)
   const [ticketIds, setTicketIds] = useState<string[]>([])
+  const toast = useToast()
 
   useEffect(() => {
     // if the isPublishing state was set to true and the draft has changed
@@ -99,7 +101,14 @@ export function CreateBooking({
 
       const tickets = await createTicketsForBooking(client, bookingDetails)
       setTicketIds(tickets.map((ticket) => ticket._id))
-      await emailTickets(draft?._id, orderConfirmation, tickets)
+      const emailResponse = await emailTickets(draft?._id, orderConfirmation, tickets)
+      if (!emailResponse?.ok) {
+        console.error(await emailResponse?.text())
+        toast.push({
+          title: 'Error emailing tickets',
+          status: 'error',
+        })
+      }
 
       patch.execute([
         {

@@ -7,7 +7,7 @@ import { API_VERSION } from 'shared/constants'
 import { TICKET_DETAILS } from 'shared/queries'
 
 const EMAIL_API_URL = import.meta.env.PROD
-  ? 'https://tickets.arthaus.mt/api/booking/email'
+  ? '/.netlify/functions/resend-email'
   : 'http://localhost:5173/api/booking/email'
 
 export function ResendEmail({
