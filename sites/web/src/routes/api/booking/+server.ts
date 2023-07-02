@@ -51,6 +51,7 @@ const stripe = new Stripe(API_KEY)
 export const POST: RequestHandler = async ({ request, fetch }) => {
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
+  log.debug('New booking POST', body, signature)
 
   // Prefetch all the additional data we'll be needing anyway.
   const queuedRequests: QueuedRequests = {
