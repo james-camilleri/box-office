@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit'
 import { STRIPE_LIVE_SECRET_KEY, STRIPE_TEST_SECRET_KEY } from '$env/static/private'
 import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
-import type { ConfigurationFull, Discount, PriceConfiguration, PriceTier, Seat } from 'shared/types'
-import { getSeatPrice, getTotals } from 'shared/utils'
+import type { ConfigurationFull, Discount, Seat } from 'shared/types'
+import { calculateTotal } from 'shared/utils'
 import Stripe from 'stripe'
 
 import { sanity } from '../api/sanity.js'
@@ -19,17 +19,6 @@ const API_KEY =
     ? STRIPE_LIVE_SECRET_KEY
     : STRIPE_TEST_SECRET_KEY
 const stripe = new Stripe(API_KEY)
-
-function calculateTotal(
-  seats: Seat[],
-  show: string,
-  priceTiers: PriceTier[],
-  priceConfiguration: PriceConfiguration,
-  discount?: Discount,
-) {
-  const prices = seats.map((seat) => getSeatPrice(seat, show, priceTiers, priceConfiguration) ?? 0)
-  return getTotals(prices, discount).total
-}
 
 export const POST: RequestHandler = async (event) => {
   const { request, fetch } = event

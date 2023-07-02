@@ -83,6 +83,17 @@ export function getTotals(prices: number[], discount?: Discount, calculateBookin
   }
 }
 
+export function calculateTotal(
+  seats: Seat[],
+  show: string,
+  priceTiers: PriceTier[],
+  priceConfiguration: PriceConfiguration,
+  discount?: Discount,
+) {
+  const prices = seats.map((seat) => getSeatPrice(seat, show, priceTiers, priceConfiguration) ?? 0)
+  return getTotals(prices, discount).total
+}
+
 function getPriceMapFromConfig(priceConfiguration: PriceConfiguration, showId: string): PriceMap {
   return new Map(
     Object.entries({

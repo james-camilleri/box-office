@@ -15,6 +15,7 @@ import {
 } from 'shared/queries'
 import type { ConfigurationFull, Discount, Seat, Show } from 'shared/types'
 import {
+  calculateTotal,
   createReference,
   createTicketsForBooking,
   generateArrayKey,
@@ -26,6 +27,14 @@ import Stripe from 'stripe'
 import { sanity } from '../sanity.js'
 import type { RequestHandler } from './$types.js'
 import { sendEmail } from './email/email.js'
+
+interface QueuedRequests {
+  CONFIG?: Promise<ConfigurationFull>
+  CUSTOMER_ID?: Promise<string>
+  EMAIL_TEXT?: Promise<unknown>
+  SEAT_DETAILS?: Promise<Seat[]>
+  SHOW_DETAILS?: Promise<Show>
+}
 
 const API_KEY =
   import.meta.env.PROD && PUBLIC_USE_STRIPE_TEST !== 'true'
@@ -42,6 +51,12 @@ const stripe = new Stripe(API_KEY)
 export const POST: RequestHandler = async ({ request, fetch }) => {
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
+
+  // Prefetch all the additional data we'll be needing anyway.
+  const queuedRequests: QueuedRequests = {
+    CONFIG: fetch('/api/config').then((response) => response.json()),
+    EMAIL_TEXT: sanity.fetch(EMAIL_TEXT),
+  }
 
   let event
 
@@ -80,6 +95,11 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
     const seatIds = JSON.parse(metadata.seatIds) as string[]
     const discount = (metadata.discount && JSON.parse(metadata.discount)) as Discount | undefined
     const campaigns = (metadata.campaigns && JSON.parse(metadata.campaigns)) as string[] | undefined
+
+    queuedRequests.CUSTOMER_ID = getCustomerId(name, email)
+    queuedRequests.SHOW_DETAILS = sanity.fetch(SHOW_DETAILS, { show: metadata.show })
+    queuedRequests.SEAT_DETAILS = sanity.fetch(SEAT_DETAILS, { seats: seatIds })
+
     bookingData = {
       name,
       email,
@@ -91,6 +111,16 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
     }
   } else {
     const { name, email, show, seatIds, discount, campaigns } = JSON.parse(body)
+
+    queuedRequests.CUSTOMER_ID = getCustomerId(name, email)
+    queuedRequests.SHOW_DETAILS = sanity.fetch(SHOW_DETAILS, { show })
+    queuedRequests.SEAT_DETAILS = sanity.fetch(SEAT_DETAILS, { seats: seatIds })
+
+    // Validate that booking doesn't require payment
+    if (!(await validateFreeCheckout(queuedRequests, show, discount.code, fetch))) {
+      throw error(500, 'Payment is required for this checkout')
+    }
+
     bookingData = {
       name,
       email,
@@ -116,7 +146,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
   )
 
   try {
-    await finalisePurchase(bookingData, fetch)
+    await finalisePurchase(bookingData, queuedRequests)
   } catch (e) {
     console.error(e)
     log.error(e)
@@ -142,7 +172,33 @@ async function idExists(id: string) {
   return sanity.fetch(TRANSACTION_ID_EXISTS, { id })
 }
 
-async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fetch) {
+async function validateFreeCheckout(
+  queuedRequests: QueuedRequests,
+  showId: string,
+  discountCode: string,
+  svelteFetch: typeof fetch,
+) {
+  try {
+    const [config, seats, discount] = await Promise.all([
+      queuedRequests.CONFIG,
+      queuedRequests.SEAT_DETAILS,
+      await svelteFetch(`/api/config/discount/${discountCode}`).then((response) => response.json()),
+    ])
+
+    if (!seats || !config) {
+      return false
+    }
+
+    return (
+      calculateTotal(seats, showId, config?.priceTiers, config?.priceConfiguration, discount) === 0
+    )
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
+
+async function finalisePurchase(bookingData: BookingData, queuedRequests: QueuedRequests) {
   const { name, email, show, seatIds, discount, campaigns, stripeId } = bookingData
 
   const bookingId = crypto.randomUUID()
@@ -150,18 +206,22 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
   const orderConfirmation = generateOrderConfirmationId()
   log.debug('Created order confirmation', orderConfirmation)
 
-  const [tickets, customerId, emailText, showDetails, config, seats] = await Promise.all([
+  const [tickets, config, emailText, customerId, showDetails, seats] = await Promise.all([
     await createTicketsForBooking(sanity, {
       bookingId,
       showId: show,
       seats: seatIds,
     }),
-    await getCustomerId(name, email),
-    await sanity.fetch(EMAIL_TEXT),
-    (await sanity.fetch(SHOW_DETAILS, { show })) as Show,
-    (await (await svelteFetch('/api/config')).json()) as ConfigurationFull,
-    (await sanity.fetch(SEAT_DETAILS, { seats: seatIds })) as Seat[],
+    queuedRequests.CONFIG,
+    queuedRequests.EMAIL_TEXT,
+    queuedRequests.CUSTOMER_ID,
+    queuedRequests.SHOW_DETAILS,
+    queuedRequests.SEAT_DETAILS,
   ])
+
+  if (!tickets || !config || !emailText || !customerId || !showDetails || !seats) {
+    throw error(500, 'Missing data required for checkout completion')
+  }
 
   log.info('Sending ticket email')
   await sendEmail({
@@ -198,6 +258,20 @@ async function finalisePurchase(bookingData: BookingData, svelteFetch: typeof fe
   })
 
   log.success('Booking created')
+
+  if (discount?.singleUse) {
+    log.info(`Invalidating single-use code ${discount.code}`)
+    sanity
+      .patch(discount._id)
+      .set({
+        [`singleUseCodes[_key == "${discount.code}"]`]: {
+          _key: discount.code,
+          code: discount.code,
+          used: true,
+        },
+      })
+      .commit()
+  }
 
   sanity
     .patch(customerId)
