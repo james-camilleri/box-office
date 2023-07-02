@@ -1,6 +1,8 @@
 import { defineField, defineType } from 'sanity'
 import { DISCOUNT_TYPE } from 'shared/types'
 
+import { SingleUseDiscountCodesInput } from '../../inputs/SingleUseDiscountCodesInput/index.jsx'
+
 export default defineType({
   name: 'discount',
   type: 'document',
@@ -52,6 +54,41 @@ export default defineType({
       description: 'Whether this discount should be publicly enabled',
       type: 'boolean',
       initialValue: false,
+    }),
+    defineField({
+      name: 'singleUse',
+      description:
+        'Creates a group of single-use discounts. This is especially important for fixed-value discounts, as these can be easily abused with multiple reuses. When a discount code is marked as single use, the primary code defined above cannot be used, and single-use codes need to be generated from the field below.',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'singleUseCodes',
+      description:
+        'Single-use discount codes. These are based on the primary discount code set above.',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'code',
+              type: 'string',
+              readOnly: true,
+            },
+            {
+              name: 'used',
+              type: 'boolean',
+              readOnly: true,
+              initialValue: false,
+            },
+          ],
+        },
+      ],
+      components: {
+        input: SingleUseDiscountCodesInput,
+      },
+      hidden: ({ document }) => !document?.singleUse,
     }),
   ],
   preview: {

@@ -38,6 +38,7 @@ export interface Discount {
   type: DISCOUNT_TYPE
   value?: number
   code: string
+  singleUse: boolean
 }
 
 export interface BookingDetails {
