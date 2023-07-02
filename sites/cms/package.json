@@ -46,6 +46,7 @@
     "env-cmd": "^10.1.0",
     "eslint": "^8.40.0",
     "eslint-plugin-import": "^2.27.5",
+    "nanoid": "^4.0.1",
     "prettier": "^2.8.8",
     "qr-scanner": "^1.4.2",
     "react-calendar": "^4.2.1",
