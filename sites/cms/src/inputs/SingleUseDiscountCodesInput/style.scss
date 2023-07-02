@@ -1,0 +1,35 @@
+.discount-progress-bar {
+  position: relative;
+  margin-top: 0.25em;
+  background: var(--card-border-color);
+  width: 100%;
+
+  &,
+  &::after {
+    height: 5px;
+    border-radius: 5px;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--progress);
+    background: var(--card-focus-ring-color);
+  }
+}
+
+.discount-code-pane {
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.discount-code-icon {
+  opacity: 0.7;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}

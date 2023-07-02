@@ -119,12 +119,20 @@ export const SHOW_DETAILS = `*[_id == $show][0]`
  * Gets the discount for a corresponding discount code.
  * @code the discount code to search for
  */
-export const DISCOUNT = `*[_type == 'discount' && enabled && code.current == $code]{
+export const DISCOUNT = `*[
+  _type == 'discount' &&
+  enabled &&
+  (
+    (!singleUse && code.current == $code) ||
+    (singleUse && $code in singleUseCodes[!@.used].code)
+  )
+]{
   _id,
   name,
   value,
   type,
-  'code': code.current
+  singleUse,
+  'code': $code
 }[0]`
 
 /**
