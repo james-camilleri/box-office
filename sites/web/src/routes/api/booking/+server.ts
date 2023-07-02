@@ -182,7 +182,9 @@ async function validateFreeCheckout(
     const [config, seats, discount] = await Promise.all([
       queuedRequests.CONFIG,
       queuedRequests.SEAT_DETAILS,
-      await svelteFetch(`/api/config/discount/${discountCode}`).then((response) => response.json()),
+      await svelteFetch(`/api/config/discount/${showId}/${discountCode}`).then((response) =>
+        response.json(),
+      ),
     ])
 
     if (!seats || !config) {

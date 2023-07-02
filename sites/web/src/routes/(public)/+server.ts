@@ -25,7 +25,8 @@ export const POST: RequestHandler = async (event) => {
   const { seats, show, discountCode } = (await request.json()) as Payload
 
   const requests = [(await fetch('/api/config')).json()]
-  discountCode && requests.push((await fetch(`/api/config/discount/${discountCode}`)).json())
+  discountCode &&
+    requests.push((await fetch(`/api/config/discount/${show}/${discountCode}`)).json())
   const [configuration, discount] = (await Promise.all(requests)) as [
     ConfigurationFull,
     Discount | undefined,
