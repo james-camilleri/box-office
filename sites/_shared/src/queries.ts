@@ -118,14 +118,13 @@ export const SHOW_DETAILS = `*[_id == $show][0]`
 /**
  * Gets the discount for a corresponding discount code.
  * @code the discount code to search for
+ * @show the show the discount is to be applied to
  */
 export const DISCOUNT = `*[
   _type == 'discount' &&
   enabled &&
-  (
-    (!singleUse && code.current == $code) ||
-    (singleUse && $code in singleUseCodes[!@.used].code)
-  )
+  ((!singleUse && code.current == $code) || (singleUse && $code in singleUseCodes[!@.used].code)) &&
+  (applyToAllShows || !applyToAllShows && $show in showsToApplyTo[]._ref)
 ]{
   _id,
   name,

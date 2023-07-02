@@ -39,13 +39,23 @@
   $: checkingDiscount = false
   $: discountError = ''
 
+  // Reset discount if show is changed.
+  $: show, resetDiscount()
+
+  function resetDiscount() {
+    discount = undefined
+    discountCode = ''
+    checkingDiscount = false
+    discountError = ''
+  }
+
   async function applyDiscount() {
     const discountToCheck = discountCode.trim().toUpperCase()
     checkingDiscount = true
     discountCode = ''
     discountError = ''
 
-    const response = await fetch(`/api/config/discount/${discountToCheck}`)
+    const response = await fetch(`/api/config/discount/${show}/${discountToCheck}`)
     checkingDiscount = false
 
     if (!response.ok) {

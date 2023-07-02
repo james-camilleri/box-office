@@ -56,6 +56,20 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'applyToAllShows',
+      type: 'boolean',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'showsToApplyTo',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'show' }] }],
+      options: {
+        disableNew: true,
+      },
+      hidden: ({ parent }) => parent?.applyToAllShows,
+    }),
+    defineField({
       name: 'singleUse',
       description:
         'Creates a group of single-use discounts. This is especially important for fixed-value discounts, as these can be easily abused with multiple reuses. When a discount code is marked as single use, the primary code defined above cannot be used, and single-use codes need to be generated from the field below.',
