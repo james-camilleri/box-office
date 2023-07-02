@@ -91,7 +91,6 @@ export function PublishConfig({
       setIsPublishing(true)
 
       // Create composite pricing configuration.
-      // @ts-expect-error (I think the types aren't quite right here.)
       patch.execute([
         { set: { compositePriceConfiguration: generateCompositePricingConfiguration(draft) } },
         { set: { compositeReservedSeats: generateCompositeReservedSeatsConfiguration(draft) } },
