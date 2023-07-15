@@ -2,7 +2,8 @@
  * Booked seats for a particular show.
  * @show the `_id` of the show
  */
-export const BOOKED_SEATS = '*[_type == "ticket" && valid && show._ref == $show][].seat._ref'
+export const BOOKED_SEATS =
+  '*[_type == "ticket" ** !(_id in path("drafts.**") && valid && show._ref == $show][].seat._ref'
 
 /**
  * Booked and locked seats for a particular show.
@@ -168,12 +169,12 @@ export const DAILY_BOOKINGS = `*[_type == "booking" && valid && dateTime(_create
   'name': customer->name,
   'email': customer->email,
   show->{ _id, date},
-  'seats': seats[]->{
+  'seats': tickets[@->valid]->seat->{
     _id,
     'row': row -> _id,
     'section': row -> section -> _id
   },
-  'tickets': tickets[]._ref,
+  'tickets': tickets[@->valid]._ref,
   'discount': discount->{
     _id,
     name,
@@ -193,12 +194,12 @@ export const ALL_BOOKINGS = `*[_type == "booking" && valid && !(_id in path("dra
   'name': customer->name,
   'email': customer->email,
   show->{ _id, date},
-  'seats': seats[]->{
+  'seats': tickets[@->valid]->seat->{
     _id,
     'row': row -> _id,
     'section': row -> section -> _id
   },
-  'tickets': tickets[]._ref,
+  'tickets': tickets[@->valid]._ref,
   'discount': discount->{
     _id,
     name,
