@@ -19,6 +19,7 @@ export function QrScanner({ onScan }: ScannerProps) {
       videoRef.current,
       (qrCodeResult: QrScannerEngine.default.ScanResult) => {
         const id = qrCodeResult.data
+        console.log('scanned ID', id)
 
         if (idRef.current !== id) {
           idRef.current = id

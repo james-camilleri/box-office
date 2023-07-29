@@ -74,6 +74,7 @@ function ScannerToolComponent() {
 
   const scanTicket = useCallback(
     (id: string) => {
+      console.log('scanTicket function', id)
       if (!validTicketIds?.has(id)) {
         setTimeout(() => {
           setError(undefined)
