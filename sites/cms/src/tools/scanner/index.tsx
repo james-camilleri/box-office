@@ -88,6 +88,7 @@ function ScannerToolComponent() {
       }
 
       const scannedAt = new Date().toISOString()
+      console.log('scanned at', scannedAt)
 
       client
         .patch(id)
@@ -97,6 +98,7 @@ function ScannerToolComponent() {
         })
         .commit()
         .then((response) => {
+          console.log('response', response)
           setTimeout(() => {
             setError(undefined)
             setStatus(STATUS.IDLE)
@@ -117,6 +119,7 @@ function ScannerToolComponent() {
           beepRef?.current?.play()
         })
         .catch((error) => {
+          console.error(error)
           setStatus(STATUS.ERROR)
           setError(error)
           setTimeout(() => {
