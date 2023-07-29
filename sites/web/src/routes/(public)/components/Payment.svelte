@@ -204,7 +204,7 @@
   </div>
 {/if}
 
-{#if paymentRequired && stripe && clientSecret}
+{#if paymentRequired && stripe && clientSecret && !error}
   <form on:submit|preventDefault={onSubmit}>
     <Grid gap="var(--xxs)">
       <Elements
@@ -221,7 +221,7 @@
       </Elements>
     </Grid>
   </form>
-{:else if !paymentRequired}
+{:else if !paymentRequired && !error}
   <form on:submit|preventDefault={onSubmit}>
     <Grid gap="var(--xxs)">
       <AdditionalFields bind:name bind:email {submitted} />
