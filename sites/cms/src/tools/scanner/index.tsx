@@ -119,7 +119,7 @@ function ScannerToolComponent() {
           beepRef?.current?.play()
         })
         .catch((error) => {
-          console.error(error)
+          console.error(JSON.stringify(error))
           setStatus(STATUS.ERROR)
           setError(error)
           setTimeout(() => {
@@ -144,7 +144,7 @@ function ScannerToolComponent() {
         <div className="status">
           {status !== STATUS.IDLE ? STATUS[status].replace('_', ' ') : ''}
         </div>
-        <div className="error">{error ? error : ''}</div>
+        <div className="error">{error ? error?.toString() ?? error : ''}</div>
         <Flex gap={[2, 2, 3]} direction="column" style={{ marginTop: 'auto' }}>
           <Label size={2}>Show</Label>
           <Select
