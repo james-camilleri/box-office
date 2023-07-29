@@ -2,7 +2,7 @@ import './style.css'
 
 import { ImageRemoveIcon } from '@sanity/icons'
 import { Flex, Label, Select, TextInput } from '@sanity/ui'
-import { closestTo, isAfter } from 'date-fns'
+import { closestTo, isAfter, addHours } from 'date-fns'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useClient } from 'sanity'
 import { definePlugin } from 'sanity'
@@ -47,7 +47,7 @@ function ScannerToolComponent() {
     client.fetch(CONFIG).then(setConfig)
     client.fetch(SHOWS).then((shows: Show[]) => {
       const now = new Date()
-      const filteredShows = shows.filter((show) => isAfter(new Date(show.date), now))
+      const filteredShows = shows.filter((show) => isAfter(addHours(new Date(show.date), 1), now))
 
       setShows(filteredShows)
 
