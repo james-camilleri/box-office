@@ -42,12 +42,12 @@ export default defineType({
     defineField({
       name: 'scannedAt',
       type: 'datetime',
-      readOnly: true,
+      // readOnly: true,
     }),
     defineField({
       name: 'scannedBy',
       type: 'string',
-      readOnly: true,
+      // readOnly: true,
     }),
   ],
   preview: {
