@@ -66,11 +66,12 @@ export function getTotals(prices: number[], discount?: Discount, calculateBookin
     }
   }
 
+  const vat = total * 0.05 // 5% VAT.
+
   if (bookingFee) {
     total += bookingFee
   }
 
-  const vat = total * 0.05 // 5% VAT.
   const profit = subtotal - reduction - vat
 
   return {
