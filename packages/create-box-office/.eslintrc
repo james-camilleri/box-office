@@ -1,0 +1,41 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "orderImportKind": "asc"
+        },
+        "groups": [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          "unknown",
+          "parent",
+          "sibling",
+          "index",
+          "object"
+        ],
+        "newlines-between": "always"
+      }
+    ]
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2020
+  },
+  "env": {
+    "browser": true,
+    "es2017": true,
+    "node": true
+  }
+}
