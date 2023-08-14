@@ -87,7 +87,7 @@ async function createReport() {
   )
 }
 
-const scheduledFunction: Handler = async function (event, context) {
+export const checkForDuplicateBookings: Handler = async function (event, context) {
   console.log('Checking for duplicate seat bookings.')
 
   try {
@@ -104,5 +104,3 @@ const scheduledFunction: Handler = async function (event, context) {
     statusCode: 200,
   }
 }
-
-export const handler = schedule('0 0 * * *', scheduledFunction)

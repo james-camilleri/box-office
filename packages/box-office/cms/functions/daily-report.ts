@@ -142,7 +142,7 @@ async function createReport() {
   )
 }
 
-const scheduledFunction: Handler = async function (event, context) {
+export const generateDailyReport: Handler = async function (event, context) {
   console.log('Generating daily report.')
 
   try {

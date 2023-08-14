@@ -24,7 +24,7 @@ interface LockedSeat {
   locks: string[]
 }
 
-const scheduledFunction: Handler = async function (event, context) {
+export const clearLocks: Handler = async function (event, context) {
   console.log('Clearing stale locks.')
 
   try {
@@ -59,5 +59,3 @@ const scheduledFunction: Handler = async function (event, context) {
     statusCode: 200,
   }
 }
-
-export const handler = schedule('0,15,30,45 * * * *', scheduledFunction)
