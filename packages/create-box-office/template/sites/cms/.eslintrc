@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "@sanity/eslint-config-studio"
+  ],
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "orderImportKind": "asc"
+        },
+        "groups": [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          "unknown",
+          "parent",
+          "sibling",
+          "index",
+          "object"
+        ],
+        "newlines-between": "always"
+      }
+    ]
+  }
+}

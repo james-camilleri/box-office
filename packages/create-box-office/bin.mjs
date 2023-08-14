@@ -43,7 +43,7 @@ async function initialise() {
   await installDependencies(
     {
       dependencies: ['@james-camilleri/replace-sanity-favicon', 'nodemailer'],
-      devDependencies: ['@the-gods/box-office'],
+      devDependencies: ['@netlify/functions', '@the-gods/box-office', 'env-cmd', 'ts-node'],
     },
     `${cwd}/sites/cms`,
   )
