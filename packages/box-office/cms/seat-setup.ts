@@ -1,10 +1,8 @@
 import sanityClient from '@sanity/client'
 import { API_VERSION, DATASET, PROJECT_ID } from 'shared/constants'
 
-import CONFIG from './seat-configuration.js'
-
 const { SANITY_API_KEY } = process.env
-// @ts-expect-error nodenext resolution....
+
 const client = sanityClient({
   projectId: PROJECT_ID,
   apiVersion: API_VERSION,
@@ -50,7 +48,7 @@ async function deleteExistingData() {
   await client.delete({ query: '*[_type == "section" || _type == "row" || _type == "seat"]' })
 }
 
-async function createSeatingData(seatingPlan: unknown) {
+export async function createSeatingData(seatingPlan: unknown) {
   if (!isValidSeatingConfig(seatingPlan)) {
     throw Error('Seating plan configuration is invalid.')
   }
@@ -133,5 +131,3 @@ async function createSeatingData(seatingPlan: unknown) {
     }
   }
 }
-
-await createSeatingData(CONFIG)

@@ -1,17 +1,17 @@
 import { visionTool } from '@sanity/vision'
-import { DocumentActionComponent, defineConfig } from 'sanity'
+import { DocumentActionComponent } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
-import { CancelBooking } from './src/desk/actions/cancel-booking.js'
-import { CreateBooking } from './src/desk/actions/create-booking.js'
-import { InvalidateTicket } from './src/desk/actions/invalidate-ticket.js'
-import { PublishConfig } from './src/desk/actions/publish-config.js'
-import { ResendEmail } from './src/desk/actions/resend-email.js'
-import { structure } from './src/desk/structure.js'
-import { schemaTypes } from './src/schemas/index.js'
-import { CustomToolMenu } from './src/tools/custom-tool-menu/index.jsx'
-import { reportsTool } from './src/tools/reports/index.js'
-import { scannerTool } from './src/tools/scanner/index.js'
+import { CancelBooking } from './desk/actions/cancel-booking.js'
+import { CreateBooking } from './desk/actions/create-booking.js'
+import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
+import { PublishConfig } from './desk/actions/publish-config.js'
+import { ResendEmail } from './desk/actions/resend-email.js'
+import { structure } from './desk/structure.js'
+import { schemaTypes } from './schemas/index.js'
+import { CustomToolMenu } from './tools/custom-tool-menu/index.jsx'
+import { reportsTool } from './tools/reports/index.js'
+import { scannerTool } from './tools/scanner/index.js'
 
 enum ACTIONS {
   PUBLISH = 'publish',
@@ -22,13 +22,7 @@ enum ACTIONS {
   RESTORE = 'restore',
 }
 
-export default defineConfig({
-  name: 'default',
-  title: 'tickets',
-
-  projectId: '8biawkr2',
-  dataset: 'production',
-
+export const baseConfig = {
   plugins: [
     deskTool({ title: 'Box Office', structure }),
     reportsTool(),
@@ -90,4 +84,4 @@ export default defineConfig({
       return actions
     },
   },
-})
+}
