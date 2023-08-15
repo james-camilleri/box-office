@@ -3,7 +3,12 @@
   "version": "1.0.0-alpha.1",
   "type": "module",
   "exports": {
-    "cms": "./cms/index.ts"
+    "./cms": {
+      "import": {
+        "types": "./cms/index.js",
+        "default": "./cms/index.js"
+      }
+    }
   },
   "dependencies": {
     "@james-camilleri/replace-sanity-favicon": "^1.0.1",
