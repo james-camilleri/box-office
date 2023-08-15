@@ -2,6 +2,9 @@
   "name": "@the-gods/box-office",
   "version": "1.0.0-alpha.1",
   "type": "module",
+  "exports": {
+    "cms": "./cms/index.ts"
+  },
   "dependencies": {
     "@james-camilleri/replace-sanity-favicon": "^1.0.1",
     "@sanity/client": "^6.4.6",
