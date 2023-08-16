@@ -1,6 +1,7 @@
 import { isWithinInterval } from 'date-fns'
-import { BookingWithPrices, DISCOUNT_TYPE, ReportConfiguration } from 'shared/types'
-import { formatShowDateTime } from 'shared/utils'
+
+import { BookingWithPrices, DISCOUNT_TYPE, ReportConfiguration } from '$shared/types'
+import { formatShowDateTime } from '$shared/utils'
 
 import { Filters } from './FilterBar.jsx'
 

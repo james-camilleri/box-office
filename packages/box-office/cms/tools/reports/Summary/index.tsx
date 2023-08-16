@@ -3,7 +3,8 @@ import './styles.scss'
 import { DownloadIcon } from '@sanity/icons'
 import { Button, Flex } from '@sanity/ui'
 import { useMemo } from 'react'
-import { DISCOUNT_TYPE, Discount, ReportConfiguration } from 'shared/types'
+
+import { DISCOUNT_TYPE, Discount, ReportConfiguration } from '$shared/types'
 
 import { PriceTierColour } from '../TierColour/index.jsx'
 import { BookingWithPrices, createCsvString } from '../utils.js'

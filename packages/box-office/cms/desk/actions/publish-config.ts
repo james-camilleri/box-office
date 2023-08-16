@@ -7,7 +7,8 @@ import {
   useDocumentOperation,
   useValidationStatus,
 } from 'sanity'
-import { Configuration } from 'shared/types'
+
+import { Configuration } from '$shared/types'
 
 interface ConfigurationPage extends SanityDocument, Partial<Configuration> {}
 

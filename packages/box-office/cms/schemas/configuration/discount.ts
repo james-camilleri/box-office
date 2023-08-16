@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
-import { DISCOUNT_TYPE } from 'shared/types'
+
+import { DISCOUNT_TYPE } from '$shared/types'
 
 import { SingleUseDiscountCodesInput } from '../../inputs/SingleUseDiscountCodesInput/index.jsx'
 

@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
-import { formatShowDateTime } from 'shared/utils'
+
+import { formatShowDateTime } from '$shared/utils'
 
 export default defineType({
   name: 'show',

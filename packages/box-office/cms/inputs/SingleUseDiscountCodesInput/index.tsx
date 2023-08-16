@@ -3,7 +3,8 @@ import { Button, Card, Flex, Grid, TextInput, useToast } from '@sanity/ui'
 import { customAlphabet } from 'nanoid'
 import { useState } from 'react'
 import { set, ObjectInputProps, useFormValue, useDocumentOperation, useClient } from 'sanity'
-import { API_VERSION } from 'shared/constants'
+
+import { API_VERSION } from '$shared/constants'
 
 import { DiscountCode } from './DiscountCode.jsx'
 

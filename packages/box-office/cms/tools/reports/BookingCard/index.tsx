@@ -3,8 +3,9 @@ import './styles.scss'
 import { ChevronDownIcon, ChevronUpIcon, LaunchIcon } from '@sanity/icons'
 import { Badge, Card, Flex, Inline, Stack } from '@sanity/ui'
 import { useState } from 'react'
-import { BookingWithPrices, ReportConfiguration } from 'shared/types'
-import { formatShowDateTime } from 'shared/utils'
+
+import { BookingWithPrices, ReportConfiguration } from '$shared/types'
+import { formatShowDateTime } from '$shared/utils'
 
 import { PriceTierColour } from '../TierColour/index.jsx'
 

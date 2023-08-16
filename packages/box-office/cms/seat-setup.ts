@@ -1,15 +1,4 @@
-import sanityClient from '@sanity/client'
-import { API_VERSION, DATASET, PROJECT_ID } from 'shared/constants'
-
-const { SANITY_API_KEY } = process.env
-
-const client = sanityClient({
-  projectId: PROJECT_ID,
-  apiVersion: API_VERSION,
-  dataset: DATASET,
-  token: SANITY_API_KEY,
-  useCdn: false,
-})
+import { SanityClient } from '@sanity/client'
 
 interface SeatingPlan {
   [section: string]: {
@@ -42,18 +31,18 @@ function isValidSeatingConfig(config: any): config is SeatingPlan {
   return true
 }
 
-async function deleteExistingData() {
+async function deleteExistingData(client: SanityClient) {
   console.log('Deleting existing data')
 
   await client.delete({ query: '*[_type == "section" || _type == "row" || _type == "seat"]' })
 }
 
-export async function createSeatingData(seatingPlan: unknown) {
+export async function createSeatingData(seatingPlan: unknown, client: SanityClient) {
   if (!isValidSeatingConfig(seatingPlan)) {
     throw Error('Seating plan configuration is invalid.')
   }
 
-  await deleteExistingData()
+  await deleteExistingData(client)
   console.log('Creating new seating data.')
 
   for (const sectionName in seatingPlan) {

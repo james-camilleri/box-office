@@ -1,4 +1,4 @@
-import type { TicketDocument } from 'shared/types'
+import type { TicketDocument } from '$shared/types'
 
 import { PublishIcon } from '@sanity/icons'
 import { useToast } from '@sanity/ui'
@@ -10,8 +10,13 @@ import {
   useDocumentOperation,
   useValidationStatus,
 } from 'sanity'
-import { API_VERSION } from 'shared/constants'
-import { createReference, createTicketsForBooking, generateOrderConfirmationId } from 'shared/utils'
+
+import { API_VERSION } from '$shared/constants'
+import {
+  createReference,
+  createTicketsForBooking,
+  generateOrderConfirmationId,
+} from '$shared/utils'
 
 const EMAIL_API_URL = import.meta.env.PROD
   ? '/.netlify/functions/resend-email'

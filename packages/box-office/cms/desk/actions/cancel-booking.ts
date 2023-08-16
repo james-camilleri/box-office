@@ -6,8 +6,9 @@ import {
   useClient,
   useDocumentOperation,
 } from 'sanity'
-import { API_VERSION } from 'shared/constants'
-import { BookingDocument } from 'shared/types'
+
+import { API_VERSION } from '$shared/constants'
+import { BookingDocument } from '$shared/types'
 
 export function CancelBooking({
   id,

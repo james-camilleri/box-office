@@ -4,10 +4,11 @@ import { InfoOutlineIcon, PlugIcon } from '@sanity/icons'
 import { Badge, Button, Card, Flex, Popover, Stack } from '@sanity/ui'
 import { useState, useEffect, useMemo } from 'react'
 import { ToolMenuProps, ToolLink, useClient } from 'sanity'
-import { API_VERSION } from 'shared/constants'
-import { ALL_BOOKINGS, CONFIG, NUMBER_OF_SEATS } from 'shared/queries'
-import { Booking, ReportConfiguration } from 'shared/types'
-import { addBookingPrices, formatShowDateTimeLong } from 'shared/utils'
+
+import { API_VERSION } from '$shared/constants'
+import { ALL_BOOKINGS, CONFIG, NUMBER_OF_SEATS } from '$shared/queries'
+import { Booking, ReportConfiguration } from '$shared/types'
+import { addBookingPrices, formatShowDateTimeLong } from '$shared/utils'
 
 import { ProgressBar } from './ProgressBar.jsx'
 

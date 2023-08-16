@@ -1,6 +1,7 @@
 import { ValidationContext, defineField, defineType } from 'sanity'
-import { API_VERSION } from 'shared/constants'
-import { CUSTOMER_EXISTS } from 'shared/queries'
+
+import { API_VERSION } from '$shared/constants'
+import { CUSTOMER_EXISTS } from '$shared/queries'
 
 export default defineType({
   name: 'customer',

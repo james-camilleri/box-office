@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
-import { formatShowDateTime, getAllTimeZones, getUserTimeZone } from 'shared/utils'
+
+import { formatShowDateTime, getAllTimeZones, getUserTimeZone } from '$shared/utils'
 
 export default defineType({
   name: 'pageConfigure',

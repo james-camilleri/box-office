@@ -1,6 +1,7 @@
 import { AccessDeniedIcon, CheckmarkCircleIcon } from '@sanity/icons'
 import { Reference, defineField, defineType } from 'sanity'
-import { BOOKED_AND_LOCKED_SEATS } from 'shared/queries'
+
+import { BOOKED_AND_LOCKED_SEATS } from '$shared/queries'
 
 export default defineType({
   name: 'booking',
