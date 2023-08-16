@@ -44,7 +44,9 @@ async function createReport() {
     th, tr { text-align: left; }
   </style>`
 
-  html += `<p>Bookings for ${new Date().toLocaleDateString()}:</p>\n<br>\n`
+  html += `<p>Bookings for ${new Date(
+    new Date().getTime() - 1000 * 60,
+  ).toLocaleDateString()}:</p>\n<br>\n`
   html += `<table>\n`
   html += bookings
     .map(
