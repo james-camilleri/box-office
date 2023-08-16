@@ -1,15 +1,23 @@
 {
   "name": "@the-gods/box-office",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "type": "module",
   "exports": {
     "./cms": {
       "import": {
-        "types": "./cms/index.js",
-        "default": "./cms/index.js"
+        "types": "./dist/cms/index.js",
+        "default": "./dist/cms/index.js"
       }
     }
   },
+  "scripts": {
+    "build": "node build.js",
+    "prepublishOnly": "pnpm build"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
     "@james-camilleri/logger": "^1.1.0",
