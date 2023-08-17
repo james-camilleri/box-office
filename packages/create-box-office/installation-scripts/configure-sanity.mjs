@@ -34,14 +34,14 @@ export async function configureSanity({ name, dest }) {
 
   let sanityConfig
   try {
-    sanityConfig = await fs.readFile(`${dest}/sanity.config.ts`, 'utf8')
+    sanityConfig = await fs.readFile(`${dest}/sanity.cli.ts`, 'utf8')
   } catch (e) {
-    console.error('Could not read sanity.config.ts')
+    console.error('Could not read sanity.cli.ts')
     return
   }
 
   const [_, projectId] = sanityConfig.match(
-    /export default defineConfig\({[\s\S]+projectId:\s+'(.*)',/m,
+    /export default defineCliConfig\({[\s\S]+api:\s+{[\s\S]+projectId:\s+'(.*)',/m,
   )
 
   const sanityApiKey = (
