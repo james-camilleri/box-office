@@ -17,6 +17,7 @@ export default defineConfig({
     lib: {
       entry: {
         cms: resolve(__dirname, 'src/cms/index.ts'),
+        web: resolve(__dirname, 'src/web/index.ts'),
       },
       name: '@the-gods/box-office',
       formats: ['es'],

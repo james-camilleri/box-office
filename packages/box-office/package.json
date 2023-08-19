@@ -1,6 +1,6 @@
 {
   "name": "@the-gods/box-office",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.17",
   "type": "module",
   "exports": {
     "./cms": {
@@ -8,18 +8,40 @@
         "types": "./dist/cms/index.d.ts",
         "default": "./dist/cms.js"
       }
+    },
+    "./web": {
+      "import": {
+        "types": "./dist/web/index.d.ts",
+        "default": "./dist/web.js"
+      }
     }
   },
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && node build.js",
     "prepublishOnly": "pnpm build"
   },
   "files": [
     "dist",
     "package.json"
   ],
+  "dependencies": {
+    "@james-camilleri/logger": "^1.1.0",
+    "@portabletext/svelte": "^2.0.0",
+    "@sveltejs/adapter-auto": "^2.1.0",
+    "@sveltejs/kit": "^1.22.6",
+    "@svelteuidev/composables": "^0.14.0",
+    "@svelteuidev/core": "^0.14.0",
+    "qrcode": "^1.5.3",
+    "sanitize.css": "^13.0.0",
+    "sass": "^1.66.1",
+    "stripe": "^13.2.0",
+    "svelte": "^4.2.0",
+    "svelte-preprocess": "^5.0.4",
+    "svelte-stripe": "^0.0.22"
+  },
   "devDependencies": {
     "@james-camilleri/logger": "^1.1.0",
+    "@sveltejs/vite-plugin-svelte": "^2.4.5",
     "@wojtekmaj/react-daterange-picker": "^5.4.2",
     "date-fns": "^2.30.0",
     "nanoid": "^4.0.2",
@@ -28,8 +50,8 @@
     "react-calendar": "^4.6.0",
     "react-icons": "^4.10.1",
     "react-select": "^5.7.4",
-    "sass": "^1.66.1",
     "typescript": "^5.1.6",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vite-plugin-dts": "^3.5.2"
   }
 }
