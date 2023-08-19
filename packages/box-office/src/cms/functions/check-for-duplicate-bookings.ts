@@ -7,8 +7,10 @@ import { ReportConfiguration, Show } from '$shared/types'
 import { formatShowDateTime, log } from '$shared/utils'
 
 const {
+  EMAIL,
   MAILJET_API_KEY,
   MAILJET_SECRET_KEY,
+  ORGANISATION_NAME,
   REPORT_EMAILS,
   SANITY_API_KEY,
   SANITY_API_VERSION,
@@ -73,7 +75,7 @@ async function createReport() {
   log.error(text)
 
   const transport = nodemailer.createTransport({
-    name: 'tickets@arthaus.mt',
+    name: EMAIL,
     host: 'in-v3.mailjet.com',
     port: 465,
     auth: {
@@ -87,8 +89,8 @@ async function createReport() {
   await Promise.all(
     emails.map((email) =>
       transport.sendMail({
-        from: 'Arthaus <tickets@arthaus.mt>',
-        replyTo: 'tickets@arthaus.mt',
+        from: `${ORGANISATION_NAME} <${EMAIL}>`,
+        replyTo: EMAIL,
         to: email,
         subject: '⚠ DUPLICATE BOOKINGS ⚠',
         text,

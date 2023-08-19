@@ -4,6 +4,8 @@ import nodemailer from 'nodemailer'
 import { parseFullName } from 'parse-full-name'
 import type { ConfigurationFull, Discount, Seat, TicketDocument } from '$shared/types'
 
+import { EMAIL, ORGANISATION_NAME } from '$env/static/private'
+
 import Email from './template/Email.svelte'
 
 interface SendEmailParams {
@@ -57,7 +59,7 @@ export async function sendEmail({
   const { MAILJET_API_KEY, MAILJET_SECRET_KEY } = process.env
 
   const transport = nodemailer.createTransport({
-    name: 'tickets@arthaus.mt',
+    name: EMAIL,
     host,
     port,
     auth: {
@@ -102,8 +104,8 @@ export async function sendEmail({
 
 function generateEmail(name: string, email: string, subject: string, html: string) {
   return {
-    from: 'Arthaus <tickets@arthaus.mt>',
-    replyTo: 'tickets@arthaus.mt',
+    from: `${ORGANISATION_NAME} <${EMAIL}>`,
+    replyTo: EMAIL,
     to: `${name} <${email}>`,
     subject,
     html,
