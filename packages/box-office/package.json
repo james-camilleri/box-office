@@ -1,28 +1,25 @@
 {
   "name": "@the-gods/box-office",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.12",
   "type": "module",
   "exports": {
     "./cms": {
       "import": {
-        "types": "./dist/cms/index.js",
-        "default": "./dist/cms/index.js"
+        "types": "./dist/cms/index.d.ts",
+        "default": "./dist/cms.js"
       }
     }
   },
   "scripts": {
-    "build": "node build.js",
+    "build": "vite build",
     "prepublishOnly": "pnpm build"
   },
   "files": [
     "dist",
     "package.json"
   ],
-  "dependencies": {
+  "devDependencies": {
     "@james-camilleri/logger": "^1.1.0",
-    "@sanity/icons": "^2.4.1",
-    "@sanity/ui": "^1.7.8",
-    "@sanity/vision": "^3.15.1",
     "@wojtekmaj/react-daterange-picker": "^5.4.2",
     "date-fns": "^2.30.0",
     "nanoid": "^4.0.2",
@@ -31,7 +28,8 @@
     "react-calendar": "^4.6.0",
     "react-icons": "^4.10.1",
     "react-select": "^5.7.4",
-    "sanity": "^3.15.1",
-    "sass": "^1.66.0"
+    "sass": "^1.66.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9"
   }
 }

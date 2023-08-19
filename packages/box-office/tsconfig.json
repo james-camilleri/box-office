@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -16,7 +17,7 @@
     "moduleResolution": "nodenext",
     "module": "esnext",
     "target": "esnext",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "paths": {
       "$shared/constants": [
         "./_shared/constants/index.ts"
