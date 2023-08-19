@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit'
-import { DISCOUNT } from 'shared/queries'
+import { DISCOUNT } from '$shared/queries'
 
 import { sanity } from '../../../../sanity.js'
 

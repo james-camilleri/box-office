@@ -12,16 +12,16 @@ import {
   SEAT_DETAILS,
   SHOW_DETAILS,
   TRANSACTION_ID_EXISTS,
-} from 'shared/queries'
-import type { ConfigurationFull, Discount, Seat, Show } from 'shared/types'
+} from '$shared/queries'
+import type { ConfigurationFull, Discount, Seat, Show } from '$shared/types'
 import {
   calculateTotal,
   createReference,
   createTicketsForBooking,
   generateArrayKey,
   generateOrderConfirmationId,
-} from 'shared/utils'
-import { log } from 'shared/utils'
+} from '$shared/utils'
+import { log } from '$shared/utils'
 import Stripe from 'stripe'
 
 import { sanity } from '../sanity.js'

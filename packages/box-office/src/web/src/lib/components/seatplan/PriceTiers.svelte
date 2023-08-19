@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PriceTier } from 'shared/types'
+  import type { PriceTier } from '$shared/types'
 
   export let priceTiers: PriceTier[]
 </script>

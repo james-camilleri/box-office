@@ -2,7 +2,7 @@ import { EmailPlugin, LOG_LEVEL, SlackPlugin } from '@james-camilleri/logger'
 import { LOG_EMAILS, MAILJET_API_KEY, MAILJET_SECRET_KEY, SLACK_WEBHOOK } from '$env/static/private'
 import CONFIG from '$lib/config.js'
 import { createTransport } from 'nodemailer'
-import { log } from 'shared/utils'
+import { log } from '$shared/utils'
 
 const { host, port } = CONFIG.EMAIL
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Show } from 'shared/types'
+  import type { Show } from '$shared/types'
 
   import { NativeSelect } from '@svelteuidev/core'
 
-  import { getZonedDate, getZonedTime } from 'shared/utils'
+  import { getZonedDate, getZonedTime } from '$shared/utils'
 
   export let selected: string | undefined = undefined
   export let shows: Show[]

@@ -1,5 +1,5 @@
-import { BOOKING_DETAILS, EMAIL_TEXT, SEAT_DETAILS } from 'shared/queries'
-import type { BookingDetails, ConfigurationFull, Seat, TicketDocument } from 'shared/types'
+import { BOOKING_DETAILS, EMAIL_TEXT, SEAT_DETAILS } from '$shared/queries'
+import type { BookingDetails, ConfigurationFull, Seat, TicketDocument } from '$shared/types'
 
 import { getCrossOriginHeader } from '../../cors.js'
 import { sanity } from '../../sanity.js'

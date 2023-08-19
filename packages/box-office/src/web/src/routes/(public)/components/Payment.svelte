@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Stripe, StripeElements } from '@stripe/stripe-js'
-  import type { Discount, Seat } from 'shared/types'
+  import type { Discount, Seat } from '$shared/types'
 
   import { loadStripe } from '@stripe/stripe-js'
   import { createEventDispatcher, onMount } from 'svelte'

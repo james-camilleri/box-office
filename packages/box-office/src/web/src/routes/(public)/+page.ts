@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import type { ConfigurationFull } from 'shared/types'
+import type { ConfigurationFull } from '$shared/types'
 
 import type { PageLoad } from './$types.js'
 

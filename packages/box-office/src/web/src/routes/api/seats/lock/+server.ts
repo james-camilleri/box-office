@@ -1,6 +1,6 @@
 import { error, type RequestHandler } from '@sveltejs/kit'
-import { LOCKED_SEATS } from 'shared/queries'
-import { log } from 'shared/utils'
+import { LOCKED_SEATS } from '$shared/queries'
+import { log } from '$shared/utils'
 import { sanity } from '../../sanity.js'
 
 interface Body {

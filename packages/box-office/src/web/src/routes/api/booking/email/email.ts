@@ -2,7 +2,7 @@ import CONFIG from '$lib/config.js'
 import juice from 'juice'
 import nodemailer from 'nodemailer'
 import { parseFullName } from 'parse-full-name'
-import type { ConfigurationFull, Discount, Seat, TicketDocument } from 'shared/types'
+import type { ConfigurationFull, Discount, Seat, TicketDocument } from '$shared/types'
 
 import Email from './template/Email.svelte'
 

@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit'
 import { STRIPE_LIVE_SECRET_KEY, STRIPE_TEST_SECRET_KEY } from '$env/static/private'
 import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
-import type { ConfigurationFull, Discount, Seat } from 'shared/types'
-import { calculateTotal } from 'shared/utils'
+import type { ConfigurationFull, Discount, Seat } from '$shared/types'
+import { calculateTotal } from '$shared/utils'
 import Stripe from 'stripe'
 
 import { sanity } from '../api/sanity.js'

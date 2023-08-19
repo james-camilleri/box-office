@@ -6,8 +6,8 @@
   import type { PortableTextBlock } from '@portabletext/types'
   import { PortableText } from '@portabletext/svelte'
 
-  import type { TicketDocument, PriceConfiguration, Discount, PriceTier, Seat } from 'shared/types'
-  import { getLineItem, getTotals, getZonedDate, getZonedTime } from 'shared/utils'
+  import type { TicketDocument, PriceConfiguration, Discount, PriceTier, Seat } from '$shared/types'
+  import { getLineItem, getTotals, getZonedDate, getZonedTime } from '$shared/utils'
 
   import { imageUrlBuilder } from '../../../sanity.js'
 

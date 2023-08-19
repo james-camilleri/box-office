@@ -7,7 +7,7 @@
 <script lang="ts">
   // import Tickets from '../../api/tickets/email/templates/Tickets.svelte'
   import Invoice from '../../api/tickets/email/templates/Invoice.svelte'
-  import { DISCOUNT_TYPE } from 'shared/types'
+  import { DISCOUNT_TYPE } from '$shared/types'
 
   const event = {
     name: 'A Cool Event',

@@ -3,8 +3,8 @@
 
   import { Alert, Button, Loader, TextInput } from '@svelteuidev/core'
   import { pricing, selection } from '$lib/components/seatplan/stores.js'
-  import type { Discount, PriceConfiguration, PriceTier, Seat } from 'shared/types'
-  import { getLineItem, getTotals } from 'shared/utils'
+  import type { Discount, PriceConfiguration, PriceTier, Seat } from '$shared/types'
+  import { getLineItem, getTotals } from '$shared/utils'
   import Payment from './Payment.svelte'
   import Grid from '$lib/components/layout/Grid.svelte'
   import { createEventDispatcher } from 'svelte'

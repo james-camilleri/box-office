@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit'
-import { CONFIG } from 'shared/queries'
+import { CONFIG } from '$shared/queries'
 
 import { sanity } from '../sanity.js'
 

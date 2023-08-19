@@ -3,16 +3,6 @@ export default {
     siteTitle: 'tickets',
   },
 
-  BREAKPOINTS: {
-    sm: '30em',
-    md: '70em',
-    lg: '100em',
-  },
-
-  SNIPCART: {
-    enabled: false,
-  },
-
   SANITY: {
     projectId: '8biawkr2',
     dataset: 'production',

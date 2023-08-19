@@ -6,7 +6,7 @@
   import { setContext } from 'svelte'
   import { writable } from 'svelte/store'
 
-  import type { PriceConfiguration, PriceTier, Seat as SeatType } from 'shared/types'
+  import type { PriceConfiguration, PriceTier, Seat as SeatType } from '$shared/types'
 
   import Grid from '$lib/components/layout/Grid.svelte'
 
