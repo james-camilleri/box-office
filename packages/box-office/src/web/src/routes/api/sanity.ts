@@ -1,15 +1,17 @@
-import createClient, { type SanityClient } from '@sanity/client'
+import { type SanityClient, createClient } from '@sanity/client'
 import builder from '@sanity/image-url'
-import { SANITY_API_KEY } from '$env/static/private'
 
-import CONFIG from '../../config.js'
-
-const { projectId, dataset, apiVersion } = CONFIG.SANITY
+import {
+  SANITY_PROJECT_ID,
+  SANITY_DATASET,
+  SANITY_API_VERSION,
+  SANITY_API_KEY,
+} from '$env/static/private'
 
 const CLIENT_CONFIG = {
-  projectId,
-  dataset,
-  apiVersion,
+  projectId: SANITY_PROJECT_ID,
+  dataset: SANITY_DATASET,
+  apiVersion: SANITY_API_VERSION,
   token: SANITY_API_KEY,
   useCdn: true,
 }

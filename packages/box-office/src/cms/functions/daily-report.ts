@@ -1,16 +1,25 @@
 import { Handler, schedule } from '@netlify/functions'
-import sanityClient from '@sanity/client'
+import { createClient } from '@sanity/client'
 import nodemailer from 'nodemailer'
 
 import { DAILY_BOOKINGS, CONFIG } from '$shared/queries'
 import { DISCOUNT_TYPE, Discount, ReportConfiguration, Seat, Show } from '$shared/types'
 import { getSeatPrice, getTotals, getZonedDate, getZonedTime } from '$shared/utils'
 
-const { SANITY_API_KEY, MAILJET_API_KEY, MAILJET_SECRET_KEY, REPORT_EMAILS } = process.env
-const client = sanityClient({
-  projectId: '8biawkr2',
-  apiVersion: '2022-11-01',
-  dataset: 'production',
+const {
+  MAILJET_API_KEY,
+  MAILJET_SECRET_KEY,
+  REPORT_EMAILS,
+  SANITY_API_KEY,
+  SANITY_API_VERSION,
+  SANITY_DATASET,
+  SANITY_PROJECT_ID,
+} = process.env
+
+const client = createClient({
+  projectId: SANITY_PROJECT_ID,
+  apiVersion: SANITY_API_VERSION,
+  dataset: SANITY_DATASET,
   token: SANITY_API_KEY,
   useCdn: false,
 })

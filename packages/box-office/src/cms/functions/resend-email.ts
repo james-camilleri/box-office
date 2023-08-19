@@ -1,12 +1,12 @@
 import { Handler } from '@netlify/functions'
 
-const APP_URL = 'https://tickets.arthaus.mt'
+const { FRONT_END_URL } = process.env
 
 export const resendEmail: Handler = async (event) => {
-  const response = await fetch(`${APP_URL}/api/booking/email`, {
+  const response = await fetch(`${FRONT_END_URL}/api/booking/email`, {
     method: 'POST',
     headers: {
-      origin: APP_URL,
+      origin: FRONT_END_URL ?? '',
     },
     body: event.body,
   })
