@@ -3,7 +3,6 @@ node_modules
 /.netlify
 /.pnp
 /.sanity
-/.svelte-kit
 /build
 /coverage
 /dist
@@ -15,6 +14,7 @@ node_modules
 .env
 .env.*
 .pnp.js
+.svelte-kit
 *.log
 *.pem
 *.tsbuildinfo

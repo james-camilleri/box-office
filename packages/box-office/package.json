@@ -18,7 +18,8 @@
   },
   "scripts": {
     "build": "vite build && node build.js",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "generate-sveltekit-types": "cd ./src/web/ && svelte-kit sync"
   },
   "files": [
     "dist",
@@ -41,6 +42,8 @@
   },
   "devDependencies": {
     "@james-camilleri/logger": "^1.1.0",
+    "@sanity/client": "^6.4.9",
+    "@sanity/image-url": "^1.0.2",
     "@sveltejs/vite-plugin-svelte": "^2.4.5",
     "@wojtekmaj/react-daterange-picker": "^5.4.2",
     "date-fns": "^2.30.0",
