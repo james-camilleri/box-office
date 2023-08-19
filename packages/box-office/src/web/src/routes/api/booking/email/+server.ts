@@ -1,7 +1,6 @@
 import { BOOKING_DETAILS, EMAIL_TEXT, SEAT_DETAILS } from '$shared/queries'
 import type { BookingDetails, ConfigurationFull, Seat, TicketDocument } from '$shared/types'
 
-import { getCrossOriginHeader } from '../../cors.js'
 import { sanity } from '../../sanity.js'
 import type { RequestHandler } from './$types.js'
 import { sendEmail } from './email.js'
@@ -43,11 +42,8 @@ export const POST: RequestHandler = async (event) => {
     console.error(e)
     return new Response(e as string, {
       status: 500,
-      headers: getCrossOriginHeader(request.headers),
     })
   }
 
-  return new Response(null, {
-    headers: getCrossOriginHeader(request.headers),
-  })
+  return new Response()
 }
