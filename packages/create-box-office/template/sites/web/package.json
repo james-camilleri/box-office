@@ -1,6 +1,7 @@
 {
-  "name": "{{name}}-tickets",
-  "version": "0.0.1",
+  "name": "{{packageName}}-tickets",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "env-cmd vite dev",

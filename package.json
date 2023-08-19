@@ -1,7 +1,0 @@
-{
-  "pnpm": {
-    "overrides": {
-      "@portabletext/toolkit": "1.0.5"
-    }
-  }
-}

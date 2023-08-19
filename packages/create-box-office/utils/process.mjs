@@ -8,7 +8,7 @@ export async function exec(command, cwd) {
         return
       }
 
-      resolve({ stdout, stderr })
+      resolve(stdout)
     })
   })
 }
@@ -25,9 +25,7 @@ export async function spawn(command, args, cwd) {
       if (exitCode !== 0) {
         reject(
           new Error(
-            `The command "${command} ${args.join(
-              ' ',
-            )}" exited with status code ${exitCode}`,
+            `The command "${command} ${args.join(' ')}" exited with status code ${exitCode}`,
           ),
         )
       } else {

@@ -12,8 +12,7 @@ import {
   installDependencies,
   // replacePlaceholders,
 } from './installation-scripts/index.mjs'
-import { replacePlaceholdersInFile } from './utils/file.mjs'
-import { copyDir } from './utils/file.mjs'
+import { replacePlaceholdersInFile, copyDir } from './utils/file.mjs'
 
 async function initialise() {
   const defaults = { name: process.argv[2] }
@@ -22,9 +21,10 @@ async function initialise() {
   await createProjectDir(cwd)
 
   const projectInfo = await getProjectInfo(defaults)
-  const environmentVariables = Object.entries(projectInfo)
-    .filter(([key]) => key[0] === key[0].toUpperCase())
-    .reduce((envVariables, [key, value]) => ({ ...envVariables, [key]: value }), {})
+  const environmentVariables = Object.entries(projectInfo).filter(
+    ([key]) => key[0] === key[0].toUpperCase(),
+  )
+  // .reduce((envVariables, [key, value]) => ({ ...envVariables, [key]: value }), [])
 
   const packageName = projectInfo.name
     .trim()
@@ -48,7 +48,6 @@ async function initialise() {
   await installDependencies(
     {
       dependencies: [
-        '@james-camilleri/replace-sanity-favicon',
         'nodemailer',
         'react-dom',
         'react-is',
@@ -56,7 +55,15 @@ async function initialise() {
         'sanity',
         'styled-components@^5.2',
       ],
-      devDependencies: ['@netlify/functions', '@the-gods/box-office', 'env-cmd', 'ts-node'],
+      devDependencies: [
+        '@netlify/functions',
+        '@sanity/icons',
+        '@sanity/ui',
+        '@sanity/vision',
+        '@the-gods/box-office',
+        'env-cmd',
+        'ts-node',
+      ],
     },
     `${cwd}/sites/cms`,
   )
@@ -69,11 +76,23 @@ async function initialise() {
 
   console.log()
   console.log('Initialising Sanity project.')
-  const sanityConfig = await configureSanity({ name: projectInfo.name, dest: `${cwd}/sites/cms` })
+  const sanityConfig = await configureSanity({
+    name: projectInfo.name,
+    dest: `${cwd}/sites/cms`,
+    corsOrigins: [
+      'http://sveltekit-prerender',
+      `https://${projectInfo.sveltekitUrl}`,
+      `https://${projectInfo.sanityUrl}`,
+    ],
+  })
+
+  // Re-copy tsconfig that gets overwritten.
+  await fs.copyFile('./template/sites/cms/tsconfig.json', `${cwd}/sites/cms/tsconfig.json`)
 
   const dictionary = {
+    name: projectInfo.name,
+    packageName,
     ...sanityConfig,
-    name: packageName,
   }
   console.log('dictionary', dictionary)
 
@@ -87,6 +106,14 @@ async function initialise() {
 
   console.log()
   console.log('Writing environment variables to .env file.')
+  const environmentVarString = [
+    ...environmentVariables,
+    ['SANITY_API_KEY', sanityConfig.sanityApiKey],
+  ]
+    .map((kvPair) => kvPair.join('='))
+    .join('\n')
+  await fs.writeFile(`${cwd}/sites/cms/.env`, environmentVarString, { encoding: 'utf-8' })
+  await fs.writeFile(`${cwd}/sites/web/.env`, environmentVarString, { encoding: 'utf-8' })
 
   if (projectInfo.initGit) {
     console.log()

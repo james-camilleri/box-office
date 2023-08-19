@@ -1,5 +1,5 @@
 {
-  "name": "{{name}}-tickets-cms",
+  "name": "{{packageName}}-tickets-cms",
   "version": "1.0.0",
   "private": true,
   "main": "package.json",

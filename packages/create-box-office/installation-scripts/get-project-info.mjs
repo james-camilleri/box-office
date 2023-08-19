@@ -28,5 +28,46 @@ export function getProjectInfo(defaults) {
       default: true,
       when: ({ pushToGitHub }) => pushToGitHub,
     },
+    {
+      type: 'input',
+      name: 'sveltekitUrl',
+      message: 'Front-end URL:',
+    },
+    {
+      type: 'input',
+      name: 'sanityUrl',
+      message: 'Back-end URL:',
+      default: (answers) => `manage.${answers.sveltekitUrl}`,
+    },
+    {
+      type: 'input',
+      name: 'MAILJET_API_KEY',
+      message: 'Mailjet API key:',
+    },
+    {
+      type: 'input',
+      name: 'MAILJET_SECRET_KEY',
+      message: 'Mailjet secret key:',
+    },
+    {
+      type: 'input',
+      name: 'STRIPE_API_KEY',
+      message: 'Stripe API key:',
+    },
+    {
+      type: 'input',
+      name: 'STRIPE_SECRET_KEY',
+      message: 'Stripe secret key:',
+    },
+    {
+      type: 'input',
+      name: 'STRIPE_WEBHOOK_SECRET',
+      message: 'Stripe webhook secret:',
+    },
+    {
+      type: 'input',
+      name: 'REPORT_EMAILS',
+      message: 'Report emails (comma separated):',
+    },
   ])
 }
