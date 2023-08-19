@@ -10,6 +10,7 @@ import {
   createProjectDir,
   getProjectInfo,
   installDependencies,
+  populateEnvFile,
   // replacePlaceholders,
 } from './installation-scripts/index.mjs'
 import { replacePlaceholdersInFile, copyDir } from './utils/file.mjs'
@@ -21,10 +22,6 @@ async function initialise() {
   await createProjectDir(cwd)
 
   const projectInfo = await getProjectInfo(defaults)
-  const environmentVariables = Object.entries(projectInfo).filter(
-    ([key]) => key[0] === key[0].toUpperCase(),
-  )
-  // .reduce((envVariables, [key, value]) => ({ ...envVariables, [key]: value }), [])
 
   const packageName = projectInfo.name
     .trim()
@@ -40,8 +37,6 @@ async function initialise() {
   // npm won't publish .gitignore, so we need to save
   // it under a different name and then rename it.
   await fs.rename(`${cwd}/gitignore`, `${cwd}/.gitignore`)
-  await fs.rename(`${cwd}/sites/cms/gitignore`, `${cwd}/sites/cms/.gitignore`)
-  // await fs.rename(`${cwd}/sites/web/gitignore`, `${cwd}/sites/web/.gitignore`)
 
   console.log()
   console.log('Installing dependencies.')
@@ -69,7 +64,15 @@ async function initialise() {
   )
   await installDependencies(
     {
-      devDependencies: ['@the-gods/box-office'],
+      devDependencies: [
+        '@sveltejs/adapter-auto',
+        '@sveltejs/kit',
+        '@the-gods/box-office',
+        // 'sass',
+        'svelte',
+        'svelte-preprocess',
+        'vite',
+      ],
     },
     `${cwd}/sites/web`,
   )
@@ -106,14 +109,20 @@ async function initialise() {
 
   console.log()
   console.log('Writing environment variables to .env file.')
-  const environmentVarString = [
-    ...environmentVariables,
-    ['SANITY_API_KEY', sanityConfig.sanityApiKey],
-  ]
-    .map((kvPair) => kvPair.join('='))
-    .join('\n')
-  await fs.writeFile(`${cwd}/sites/cms/.env`, environmentVarString, { encoding: 'utf-8' })
-  await fs.writeFile(`${cwd}/sites/web/.env`, environmentVarString, { encoding: 'utf-8' })
+  const environmentVariables = {
+    ...Object.entries(projectInfo)
+      .filter(([key]) => key[0] === key[0].toUpperCase())
+      .reduce((envVariables, [key, value]) => ({ ...envVariables, [key]: value }), []),
+
+    SANITY_API_KEY: sanityConfig.sanityApiKey,
+    SANITY_API_VERSION: sanityConfig.sanityApiVersion,
+    SANITY_PROJECT_ID: sanityConfig.sanityProjectId,
+    SANITY_DATASET: 'production',
+    PUBLIC_USE_STRIPE_TEST: 'true',
+  }
+
+  await populateEnvFile(`${cwd}/sites/cms/.env`, environmentVariables)
+  await populateEnvFile(`${cwd}/sites/web/.env`, environmentVariables)
 
   if (projectInfo.initGit) {
     console.log()
@@ -125,8 +134,6 @@ async function initialise() {
     console.log()
     console.log('Configuring Netlify.')
     await configureNetlify(`${cwd}/sites/web`, `${cwd}/sites/cms`)
-
-    // TODO: Post ENV variables to Netlify
   }
 }
 
