@@ -1,4 +1,6 @@
+import { Avatar } from '@sanity/ui'
 import { defineField, defineType } from 'sanity'
+
 import ColourListInput from '../../inputs/ColourListInput/index.js'
 
 export default defineType({
@@ -39,10 +41,21 @@ export default defineType({
     select: {
       name: 'name',
       price: 'price',
+      colour: 'colour',
     },
-    prepare({ name, price }) {
+    prepare({ name, price, colour }) {
       return {
         title: `${name} (€${price})`,
+        media: (
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: colour,
+              border: 'none',
+            }}
+          />
+        ),
       }
     },
   },

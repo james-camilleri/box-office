@@ -79,7 +79,6 @@ const ColourListInput = ({
     client
       .fetch(`*[_type == "${_type}" && !(_id in path("drafts.**"))].${id}`)
       .then((usedColours) => {
-        console.log('usedColours', usedColours)
         const used = new Set(usedColours)
         const availableColours = colours.filter((colour) => !used.has(colour))
         setAvailableColours(new Set(availableColours))
