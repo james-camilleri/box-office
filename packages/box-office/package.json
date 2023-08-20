@@ -3,16 +3,22 @@
   "version": "1.0.0-alpha.25",
   "type": "module",
   "exports": {
-    "./cms": {
+    "./cms/config": {
       "import": {
-        "types": "./dist/cms/index.d.ts",
-        "default": "./dist/cms.js"
+        "types": "./dist/cms/config.d.ts",
+        "default": "./dist/cms/config.js"
       }
     },
-    "./functions": {
+    "./cms/setup": {
+      "import": {
+        "types": "./dist/cms/setup.d.ts",
+        "default": "./dist/cms/setup.js"
+      }
+    },
+    "./cms/functions": {
       "import": {
         "types": "./dist/cms/functions/index.d.ts",
-        "default": "./dist/functions.js"
+        "default": "./dist/cms/functions.js"
       }
     },
     "./web": {
