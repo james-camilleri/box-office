@@ -1,5 +1,5 @@
 import { defineConfig } from 'sanity'
-import { baseConfig } from './base-config.js'
+import { baseConfig } from './config.js'
 
 export default defineConfig({
   name: 'default',

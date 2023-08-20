@@ -16,8 +16,9 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       entry: {
-        cms: resolve(__dirname, 'src/cms/index.ts'),
-        functions: resolve(__dirname, 'src/cms/functions/index.ts'),
+        'cms/functions': resolve(__dirname, 'src/cms/functions/index.ts'),
+        'cms/setup': resolve(__dirname, 'src/cms/setup.ts'),
+        'cms/config': resolve(__dirname, 'src/cms/config.ts'),
         web: resolve(__dirname, 'src/web/index.ts'),
       },
       name: '@the-gods/box-office',
