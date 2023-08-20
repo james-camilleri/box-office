@@ -21,7 +21,7 @@ const transport = createTransport({
   secure: true,
 })
 
-const emailPlugins = REPORT_EMAILS.split(',').map((email) => {
+const emailPlugins = REPORT_EMAILS?.split(',').map((email) => {
   const plugin = new EmailPlugin(transport, { from: EMAIL, to: email })
   plugin.level = LOG_LEVEL.ERROR
 
