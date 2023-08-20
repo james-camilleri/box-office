@@ -32,7 +32,8 @@
     "build": "vite build && node build.js",
     "prepublishOnly": "pnpm build",
     "generate-sveltekit-types": "cd ./src/web/ && svelte-kit sync",
-    "dev-cms": "cd ./src/cms && sanity dev"
+    "dev-cms": "cd ./src/cms && sanity dev",
+    "dev-web": "cd ./src/web && vite dev"
   },
   "files": [
     "dist",
@@ -61,11 +62,16 @@
     "@sanity/image-url": "^1.0.2",
     "@sanity/ui": "^1.7.8",
     "@sanity/vision": "^3.15.1",
+    "@stripe/stripe-js": "^2.1.0",
     "@sveltejs/vite-plugin-svelte": "^2.4.5",
     "@types/react": "^18.2.20",
     "@wojtekmaj/react-daterange-picker": "^5.4.2",
     "date-fns": "^2.30.0",
+    "eslint": "^8.47.0",
+    "eslint-plugin-import": "^2.28.0",
     "nanoid": "^4.0.2",
+    "nodemailer": "^6.9.4",
+    "prettier": "^3.0.1",
     "qr-scanner": "^1.4.2",
     "qrcode": "^1.5.3",
     "react": "^18.2.0",
