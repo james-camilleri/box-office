@@ -47,14 +47,9 @@ export default defineType({
       return {
         title: `${name} (€${price})`,
         media: (
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: colour,
-              border: 'none',
-            }}
-          />
+          <svg width="90%" height="90%">
+            <circle cx="50%" cy="50%" r="50%" fill={colour} />
+          </svg>
         ),
       }
     },
