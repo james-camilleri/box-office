@@ -30,6 +30,7 @@ export default defineConfig({
         '@sveltejs/adapter-auto',
         '@sveltejs/kit',
         '@sveltejs/kit/vite',
+        'nodemailer',
         'react',
         'react/jsx-runtime',
         'sanity',
