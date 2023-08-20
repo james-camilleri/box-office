@@ -1,6 +1,6 @@
 {
   "name": "@the-gods/box-office",
-  "version": "1.0.0-alpha.26",
+  "version": "1.0.0-alpha.28",
   "type": "module",
   "exports": {
     "./cms/config": {
@@ -46,6 +46,8 @@
     "@sveltejs/kit": "^1.22.6",
     "@svelteuidev/composables": "^0.14.0",
     "@svelteuidev/core": "^0.14.0",
+    "juice": "^9.1.0",
+    "parse-full-name": "^1.2.6",
     "qrcode": "^1.5.3",
     "sanitize.css": "^13.0.0",
     "sass": "^1.66.1",
