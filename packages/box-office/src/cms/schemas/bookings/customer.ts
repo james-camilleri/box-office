@@ -36,6 +36,11 @@ export default defineType({
           }),
     }),
     defineField({
+      name: 'telephoneNumber',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'bookings',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'booking' }] }],
