@@ -56,6 +56,7 @@
     "@sanity/ui": "^1.7.8",
     "@sanity/vision": "^3.15.1",
     "@sveltejs/vite-plugin-svelte": "^2.4.5",
+    "@types/react": "^18.2.20",
     "@wojtekmaj/react-daterange-picker": "^5.4.2",
     "date-fns": "^2.30.0",
     "nanoid": "^4.0.2",

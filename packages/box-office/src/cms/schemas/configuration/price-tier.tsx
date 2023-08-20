@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import ColourListInput from '../../inputs/ColourListInput/index.js'
 
 export default defineType({
   name: 'priceTier',
@@ -16,9 +17,17 @@ export default defineType({
     }),
     defineField({
       name: 'colour',
-      description:
-        'This is currently just a CSS colour string unfortunately, but will eventually be upgraded to a smarter selector.',
+      description: 'A colour to show on the seating plan',
       type: 'string',
+      components: {
+        input: (props) => (
+          <ColourListInput
+            {...props}
+            unique
+            colours={['#D22B33', '#FF9D00', '#BDDE16', '#75DFFF', '#6626FA', '#EC108D']}
+          />
+        ),
+      },
     }),
     defineField({
       name: 'price',
