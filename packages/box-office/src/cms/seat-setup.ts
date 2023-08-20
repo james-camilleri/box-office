@@ -56,7 +56,7 @@ async function deleteExistingData(client: SanityClient) {
 function generateSeatArray(firstSeat: number, lastSeat: number) {
   return Array(lastSeat - firstSeat + 1)
     .fill(0)
-    .map((offset: number, i) => `${offset + i}`)
+    .map((_, i) => `${firstSeat + i}`)
 }
 
 export async function createSeatingData(seatingPlan: unknown) {
