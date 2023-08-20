@@ -112,6 +112,7 @@ async function initialise() {
       .filter(([key]) => key[0] === key[0].toUpperCase())
       .reduce((envVariables, [key, value]) => ({ ...envVariables, [key]: value }), []),
 
+    ORGANISATION_NAME: projectInfo.name,
     FRONT_END_URL: projectInfo.sveltekitUrl,
     SANITY_API_KEY: sanityConfig.sanityApiKey,
     SANITY_API_VERSION: sanityConfig.sanityApiVersion,

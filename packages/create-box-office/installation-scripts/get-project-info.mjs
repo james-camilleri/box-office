@@ -3,12 +3,6 @@ import inquirer from 'inquirer'
 export function getProjectInfo(defaults) {
   return inquirer.prompt([
     {
-      type: 'input',
-      name: 'name',
-      message: 'Performance name (use the correct case & punctuation):',
-      default: defaults.name,
-    },
-    {
       type: 'confirm',
       name: 'initGit',
       message: 'Initialise git repository:',
@@ -30,6 +24,17 @@ export function getProjectInfo(defaults) {
     },
     {
       type: 'input',
+      name: 'name',
+      message: 'Organisation name:',
+      default: defaults.name,
+    },
+    {
+      type: 'input',
+      name: 'EMAIL',
+      message: 'Email address (for tickets):',
+    },
+    {
+      type: 'input',
       name: 'sveltekitUrl',
       message: 'Front-end URL:',
     },
@@ -38,16 +43,6 @@ export function getProjectInfo(defaults) {
       name: 'sanityUrl',
       message: 'Back-end URL:',
       default: (answers) => `manage.${answers.sveltekitUrl}`,
-    },
-    {
-      type: 'input',
-      name: 'EMAIL',
-      message: 'Ticket email address:',
-    },
-    {
-      type: 'input',
-      name: 'ORGANISATION_NAME',
-      message: 'Organisation name:',
     },
     {
       type: 'input',
