@@ -15,7 +15,7 @@ export async function configureNetlify(...paths) {
 
     try {
       await fs.access(`${path}/.env`)
-      await spawn(crossPlatform('netlify'), ['env:import', `${path}/.env`], path)
+      await spawn(crossPlatform('netlify'), ['env:import', '.env'], path)
     } catch {
       // .env file does not exist, keep calm and carry on
     }

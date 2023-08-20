@@ -66,6 +66,11 @@ export function getProjectInfo(defaults) {
     },
     {
       type: 'input',
+      name: 'STRIPE_TEST_WEBHOOK_SECRET',
+      message: 'Stripe webhook secret (test):',
+    },
+    {
+      type: 'input',
       name: 'STRIPE_LIVE_API_KEY',
       message: 'Stripe API key (live):',
     },
@@ -76,8 +81,8 @@ export function getProjectInfo(defaults) {
     },
     {
       type: 'input',
-      name: 'STRIPE_WEBHOOK_SECRET',
-      message: 'Stripe webhook secret:',
+      name: 'STRIPE_LIVE_WEBHOOK_SECRET',
+      message: 'Stripe webhook secret (live):',
     },
     {
       type: 'input',

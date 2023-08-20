@@ -130,7 +130,7 @@ async function initialise() {
   if (projectInfo.initGit) {
     console.log()
     console.log('Initialising git repository.')
-    await configureGit(cwd, projectInfo.pushToGitHub, packageName)
+    await configureGit(cwd, projectInfo.pushToGitHub, `${packageName}-tickets`)
   }
 
   if (projectInfo.configNetlify) {
