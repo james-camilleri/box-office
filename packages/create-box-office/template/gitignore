@@ -1,13 +1,13 @@
 node_modules
 
-/.netlify
-/.pnp
-/.sanity
-/build
-/coverage
-/dist
-/logs
-/package
+.netlify/
+.pnp/
+.sanity/
+build/
+coverage/
+dist/
+logs/
+package/
 
 !.env.example
 .DS_Store
