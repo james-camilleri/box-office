@@ -68,7 +68,6 @@ async function initialise() {
         '@sveltejs/adapter-auto',
         '@sveltejs/kit',
         '@the-gods/box-office',
-        // 'sass',
         'svelte',
         'svelte-preprocess',
         'vite',
@@ -97,7 +96,6 @@ async function initialise() {
     packageName,
     ...sanityConfig,
   }
-  console.log('dictionary', dictionary)
 
   console.log()
   console.log('Replacing template placeholders.')
@@ -114,6 +112,7 @@ async function initialise() {
       .filter(([key]) => key[0] === key[0].toUpperCase())
       .reduce((envVariables, [key, value]) => ({ ...envVariables, [key]: value }), []),
 
+    FRONT_END_URL: projectInfo.sveltekitUrl,
     SANITY_API_KEY: sanityConfig.sanityApiKey,
     SANITY_API_VERSION: sanityConfig.sanityApiVersion,
     SANITY_PROJECT_ID: sanityConfig.sanityProjectId,

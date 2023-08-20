@@ -41,6 +41,16 @@ export function getProjectInfo(defaults) {
     },
     {
       type: 'input',
+      name: 'EMAIL',
+      message: 'Ticket email address:',
+    },
+    {
+      type: 'input',
+      name: 'ORGANISATION_NAME',
+      message: 'Organisation name:',
+    },
+    {
+      type: 'input',
       name: 'MAILJET_API_KEY',
       message: 'Mailjet API key:',
     },
