@@ -120,10 +120,10 @@ async function initialise() {
 
     ORGANISATION_NAME: projectInfo.name,
     FRONT_END_URL: projectInfo.sveltekitUrl,
-    SANITY_API_KEY: sanityConfig.sanityApiKey,
-    SANITY_API_VERSION: sanityConfig.sanityApiVersion,
-    SANITY_PROJECT_ID: sanityConfig.sanityProjectId,
-    SANITY_DATASET: 'production',
+    SANITY_STUDIO_API_KEY: sanityConfig.sanityApiKey,
+    SANITY_STUDIO_API_VERSION: sanityConfig.sanityApiVersion,
+    SANITY_STUDIO_PROJECT_ID: sanityConfig.sanityProjectId,
+    SANITY_STUDIO_DATASET: 'production',
     PUBLIC_USE_STRIPE_TEST: 'true',
   }
 
