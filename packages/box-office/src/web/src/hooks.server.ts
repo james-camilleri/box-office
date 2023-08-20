@@ -6,16 +6,13 @@ import {
   MAILJET_SECRET_KEY,
   SLACK_WEBHOOK,
 } from '$env/static/private'
-import CONFIG from '$lib/config.js'
 import { createTransport } from 'nodemailer'
 import { log } from '$shared/utils'
 
-const { host, port } = CONFIG.EMAIL
-
 const transport = createTransport({
   name: EMAIL,
-  host,
-  port,
+  host: 'in-v3.mailjet.com',
+  port: 465,
   auth: {
     user: MAILJET_API_KEY,
     pass: MAILJET_SECRET_KEY,

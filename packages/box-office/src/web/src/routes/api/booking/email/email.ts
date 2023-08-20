@@ -1,4 +1,3 @@
-import CONFIG from '$lib/config.js'
 import juice from 'juice'
 import nodemailer from 'nodemailer'
 import { parseFullName } from 'parse-full-name'
@@ -60,8 +59,8 @@ export async function sendEmail({
 
   const transport = nodemailer.createTransport({
     name: EMAIL,
-    host,
-    port,
+    host: 'in-v3.mailjet.com',
+    port: 465,
     auth: {
       user: MAILJET_API_KEY,
       pass: MAILJET_SECRET_KEY,

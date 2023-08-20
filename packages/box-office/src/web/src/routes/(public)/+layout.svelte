@@ -1,10 +1,5 @@
 <script lang="ts">
   import '../../styles/global.scss'
-
-  import { setContext } from 'svelte'
-  import CONFIG from '$lib/config.js'
-
-  setContext('CONFIG', CONFIG)
 </script>
 
 <main class="grid">
