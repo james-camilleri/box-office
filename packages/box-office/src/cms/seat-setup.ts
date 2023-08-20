@@ -1,8 +1,10 @@
-import { SanityClient } from '@sanity/client'
+import { createClient, SanityClient } from '@sanity/client'
+
+const { SANITY_API_KEY, SANITY_API_VERSION, SANITY_DATASET, SANITY_PROJECT_ID } = process.env
 
 interface SeatingPlan {
   [section: string]: {
-    [row: string]: number | string[]
+    [row: string]: number | [number, number] | string[]
   }
 }
 
@@ -20,8 +22,14 @@ function isValidSeatingConfig(config: any): config is SeatingPlan {
       const seat = config[rowName][seatName]
 
       if (
-        typeof seat !== 'number' &&
-        !(Array.isArray(seat) && seat.length > 0 && seat.every((seat) => typeof seat === 'string'))
+        typeof seat !== 'number' && // Single number of seats, e.g. `A: 20`
+        !(
+          (
+            Array.isArray(seat) &&
+            ((seat.length === 2 && seat.every((seat) => typeof seat === 'number')) || // Start and end count, e.g. A: [3, 17]
+              (seat.length > 0 && seat.every((seat) => typeof seat === 'string')))
+          ) // Individually names seats, e.g. ['TABLE-1-2', 'TABLE-2-3']
+        )
       ) {
         return false
       }
@@ -37,7 +45,15 @@ async function deleteExistingData(client: SanityClient) {
   await client.delete({ query: '*[_type == "section" || _type == "row" || _type == "seat"]' })
 }
 
-export async function createSeatingData(seatingPlan: unknown, client: SanityClient) {
+export async function createSeatingData(seatingPlan: unknown) {
+  const client = createClient({
+    projectId: SANITY_PROJECT_ID,
+    apiVersion: SANITY_API_VERSION,
+    dataset: SANITY_DATASET,
+    token: SANITY_API_KEY,
+    useCdn: false,
+  })
+
   if (!isValidSeatingConfig(seatingPlan)) {
     throw Error('Seating plan configuration is invalid.')
   }
