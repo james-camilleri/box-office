@@ -94,6 +94,9 @@ async function initialise() {
     `${cwd}/sites/cms/tsconfig.json`,
   )
 
+  // Remove unneeded schemas directory.
+  await fs.rm(`${cwd}/sites/cms/schemas`, { recursive: true, force: true })
+
   const dictionary = {
     name: projectInfo.name,
     packageName,
