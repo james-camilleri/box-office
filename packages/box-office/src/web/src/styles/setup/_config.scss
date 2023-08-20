@@ -6,16 +6,16 @@
 // [5] Add custom styles as required.
 
 // Typography.
-$font-family: "";
-$base-font-size: 16px;
-$base-font-weight: 300; // For variable fonts.
-$line-height: 1.5;
+$font-family: 'Lexend';
+$base-font-size: 18px;
+$base-font-weight: 250; // For variable fonts.
+$line-height: 1.2;
 
 // Typographic ratio.
 // Select from: 'octave', 'major-seventh', 'minor-seventh', 'major-sixth',
 // 'minor-sixth', fifth', 'augmented-fourth', 'fourth', 'major-third',
 // 'minor-third', 'major-second', 'minor-second', 'cinema', and 'golden'.
-$ratio: "fourth";
+$ratio: 'fourth';
 
 :root {
   // Colours
@@ -45,11 +45,11 @@ $ratio: "fourth";
 
   --disabled: rgb(127 127 127);
   // TODO: Temporary.
-  --selected: rgb(0 255 0);
-  --pricing-platinum: rgb(54 33 162);
-  --pricing-gold: rgb(255 99 42);
-  --pricing-silver: rgb(50 200 236);
-  --pricing-bronze: rgb(134 215 12);
+  // --selected: rgb(0 255 0);
+  // --pricing-platinum: rgb(54 33 162);
+  // --pricing-gold: rgb(255 99 42);
+  // --pricing-silver: rgb(50 200 236);
+  // --pricing-bronze: rgb(134 215 12);
 
   // Spacing
   --gutter: var(--xl);
