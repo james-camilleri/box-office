@@ -5,6 +5,8 @@ import { Avatar, Card, Flex, Stack } from '@sanity/ui'
 import { useCallback, useEffect, useState } from 'react'
 import { set, StringInputProps, unset, useClient, useFormValue } from 'sanity'
 
+import { API_VERSION } from '$shared/constants'
+
 type ColourCircleProps = {
   colour: string
   active: boolean
@@ -66,7 +68,7 @@ const ColourListInput = ({
 }: ColourListInputProps) => {
   const _type = (useFormValue(['_type']) as string).replace('drafts.', '')
 
-  const client = useClient({ apiVersion: process.env.SANITY_STUDIO_API_VERSION ?? '' })
+  const client = useClient({ apiVersion: API_VERSION })
   const [availableColours, setAvailableColours] = useState<Set<string>>(
     new Set(unique ? [] : colours),
   )

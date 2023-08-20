@@ -1,4 +1,3 @@
-import { Avatar } from '@sanity/ui'
 import { defineField, defineType } from 'sanity'
 
 import ColourListInput from '../../inputs/ColourListInput/index.js'
