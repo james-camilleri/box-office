@@ -41,7 +41,8 @@ async function readAndRewrite(src, dest) {
       const fullPath = path
         .relative(dir, replacementPath)
         .replaceAll(path.sep, '/')
-        .replace('../', '') // Remove first level because we're working in a directory below the cwd
+        // TODO: This ugly. This all ugly.
+        .replace('../../', '') // Remove first levels because we're working in a directory below the cwd
 
       const sourceText = await fs.readFile(src, { encoding: 'utf-8' })
       const destinationText = sourceText.replaceAll(
@@ -55,8 +56,10 @@ async function readAndRewrite(src, dest) {
 }
 
 async function build() {
-  await fs.rm('./dist', { recursive: true, force: true })
-  await copyDirAndRewritePaths('./src', './dist')
+  await fs.rm('./dist/web', { recursive: true, force: true })
+  await fs.rm('./dist/_shared', { recursive: true, force: true })
+  await copyDirAndRewritePaths('./src/web/src', './dist/web')
+  await copyDirAndRewritePaths('./src/_shared', './dist/_shared')
 }
 
 build()
