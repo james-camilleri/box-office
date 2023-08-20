@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity dev",
-    "build": "sanity build && node ./node_modules/@james-camilleri/replace-sanity-favicon",
+    "build": "sanity build",
     "deploy": "sanity deploy",
     "generate-seat-data": "env-cmd ts-node --esm ./setup/index.ts",
     "data:delete-all-booking-data": "env-cmd node ./scripts/delete-all-booking-data.js",
