@@ -1,0 +1,10 @@
+{
+  "name": "box-office-cms",
+  "version": "1.0.0",
+  "private": true,
+  "main": "package.json",
+  "type": "module",
+  "dependencies": {
+    "styled-components": "^5.2"
+  }
+}
