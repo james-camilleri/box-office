@@ -1,12 +1,18 @@
 {
   "name": "@the-gods/box-office",
-  "version": "1.0.0-alpha.18",
+  "version": "1.0.0-alpha.19",
   "type": "module",
   "exports": {
     "./cms": {
       "import": {
         "types": "./dist/cms/index.d.ts",
         "default": "./dist/cms.js"
+      }
+    },
+    "./functions": {
+      "import": {
+        "types": "./dist/cms/functions/index.d.ts",
+        "default": "./dist/functions.js"
       }
     },
     "./web": {

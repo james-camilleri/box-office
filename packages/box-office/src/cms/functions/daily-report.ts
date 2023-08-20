@@ -175,5 +175,3 @@ export const generateDailyReport: Handler = async function (event, context) {
     statusCode: 200,
   }
 }
-
-export const handler = schedule('0 0 * * *', scheduledFunction)

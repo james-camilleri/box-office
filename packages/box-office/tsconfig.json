@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "rootDir": "src",
     "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -34,6 +35,6 @@
     }
   },
   "exclude": [
-    "../node_modules/**",
+    "node_modules/**",
   ],
 }
