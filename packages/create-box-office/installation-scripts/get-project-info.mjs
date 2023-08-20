@@ -56,7 +56,7 @@ export function getProjectInfo(defaults) {
     },
     {
       type: 'input',
-      name: 'STRIPE_TEST_API_KEY',
+      name: 'PUBLIC_STRIPE_TEST_API_KEY',
       message: 'Stripe API key (test):',
     },
     {
@@ -71,7 +71,7 @@ export function getProjectInfo(defaults) {
     },
     {
       type: 'input',
-      name: 'STRIPE_LIVE_API_KEY',
+      name: 'PUBLIC_STRIPE_LIVE_API_KEY',
       message: 'Stripe API key (live):',
     },
     {
