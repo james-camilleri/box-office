@@ -8,6 +8,14 @@ interface SeatingPlan {
   }
 }
 
+function isArrayOfNumbers(array: any[]): array is number[] {
+  return array.every((item) => typeof item === 'number')
+}
+
+function isArrayOfStrings(array: any[]): array is string[] {
+  return array.every((item) => typeof item === 'string')
+}
+
 function isValidSeatingConfig(config: any): config is SeatingPlan {
   if (typeof config !== 'object' || config == null || Array.isArray(config)) {
     return false
@@ -26,8 +34,8 @@ function isValidSeatingConfig(config: any): config is SeatingPlan {
         !(
           (
             Array.isArray(seat) &&
-            ((seat.length === 2 && seat.every((seat) => typeof seat === 'number')) || // Start and end count, e.g. A: [3, 17]
-              (seat.length > 0 && seat.every((seat) => typeof seat === 'string')))
+            ((seat.length === 2 && isArrayOfNumbers(seat)) || // Start and end count, e.g. A: [3, 17]
+              (seat.length > 0 && isArrayOfStrings(seat)))
           ) // Individually names seats, e.g. ['TABLE-1-2', 'TABLE-2-3']
         )
       ) {
@@ -43,6 +51,12 @@ async function deleteExistingData(client: SanityClient) {
   console.log('Deleting existing data')
 
   await client.delete({ query: '*[_type == "section" || _type == "row" || _type == "seat"]' })
+}
+
+function generateSeatArray(firstSeat: number, lastSeat: number) {
+  return Array(lastSeat - firstSeat + 1)
+    .fill(0)
+    .map((offset: number, i) => `${offset + i}`)
 }
 
 export async function createSeatingData(seatingPlan: unknown) {
@@ -88,10 +102,10 @@ export async function createSeatingData(seatingPlan: unknown) {
       })
 
       const seatNumbers = Array.isArray(row)
-        ? row.map((seat) => seat)
-        : Array(row)
-            .fill(1)
-            .map((offset: number, i) => `${offset + i}`)
+        ? isArrayOfNumbers(row)
+          ? generateSeatArray(row[0], row[1])
+          : row
+        : generateSeatArray(1, row)
 
       const seatRequests = seatNumbers.map((number) => {
         const _id = `${rowId}-${number}`
