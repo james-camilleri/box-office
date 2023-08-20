@@ -1,13 +1,18 @@
-import { Handler, schedule } from '@netlify/functions'
+import { Handler } from '@netlify/functions'
 import { createClient } from '@sanity/client'
 
-const { SANITY_API_KEY, SANITY_API_VERSION, SANITY_DATASET, SANITY_PROJECT_ID } = process.env
+const {
+  SANITY_STUDIO_API_KEY,
+  SANITY_STUDIO_API_VERSION,
+  SANITY_STUDIO_DATASET,
+  SANITY_STUDIO_PROJECT_ID,
+} = process.env
 
 const client = createClient({
-  projectId: SANITY_PROJECT_ID,
-  apiVersion: SANITY_API_VERSION,
-  dataset: SANITY_DATASET,
-  token: SANITY_API_KEY,
+  projectId: SANITY_STUDIO_PROJECT_ID,
+  apiVersion: SANITY_STUDIO_API_VERSION,
+  dataset: SANITY_STUDIO_DATASET,
+  token: SANITY_STUDIO_API_KEY,
   useCdn: false,
 })
 

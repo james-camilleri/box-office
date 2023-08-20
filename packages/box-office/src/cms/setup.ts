@@ -1,6 +1,11 @@
 import { createClient, SanityClient } from '@sanity/client'
 
-const { SANITY_API_KEY, SANITY_API_VERSION, SANITY_DATASET, SANITY_PROJECT_ID } = process.env
+const {
+  SANITY_STUDIO_API_KEY,
+  SANITY_STUDIO_API_VERSION,
+  SANITY_STUDIO_DATASET,
+  SANITY_STUDIO_PROJECT_ID,
+} = process.env
 
 interface SeatingPlan {
   [section: string]: {
@@ -61,10 +66,10 @@ function generateSeatArray(firstSeat: number, lastSeat: number) {
 
 export async function createSeatingData(seatingPlan: unknown) {
   const client = createClient({
-    projectId: SANITY_PROJECT_ID,
-    apiVersion: SANITY_API_VERSION,
-    dataset: SANITY_DATASET,
-    token: SANITY_API_KEY,
+    projectId: SANITY_STUDIO_PROJECT_ID,
+    apiVersion: SANITY_STUDIO_API_VERSION,
+    dataset: SANITY_STUDIO_DATASET,
+    token: SANITY_STUDIO_API_KEY,
     useCdn: false,
   })
 
