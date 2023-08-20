@@ -2,4 +2,4 @@
 
 A theatre booking system built on Sanity.io and SvelteKit, using Stripe for payments. Supports box-office bookings, discount codes, reports, and ticket scanning during the event.
 
-Initially developed for the Chicago production by Arthaus, and still under construction. Some bits might still be specific/hard-coded to this performance.
+This is a monorepo containing two packages – an npm init utility for creating new box office projects, and the theatre booking system itself.
