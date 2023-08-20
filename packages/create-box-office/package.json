@@ -1,6 +1,6 @@
 {
   "name": "@the-gods/create-box-office",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "NPM initialiser for @the-gods ticketing system",
   "main": "bin.mjs",
   "bin": "bin.mjs",

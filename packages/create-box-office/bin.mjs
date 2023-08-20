@@ -32,7 +32,7 @@ async function initialise() {
 
   console.log()
   console.log('Copying templates.')
-  await copyDir(fileURLToPath(new URL(`./template`, import.meta.url).href), cwd)
+  await copyDir(fileURLToPath(new URL('./template', import.meta.url).href), cwd)
 
   // npm won't publish .gitignore, so we need to save
   // it under a different name and then rename it.
@@ -89,7 +89,10 @@ async function initialise() {
   })
 
   // Re-copy tsconfig that gets overwritten.
-  await fs.copyFile('./template/sites/cms/tsconfig.json', `${cwd}/sites/cms/tsconfig.json`)
+  await fs.copyFile(
+    fileURLToPath(new URL('./template/sites/cms/tsconfig.json', import.meta.url).href),
+    `${cwd}/sites/cms/tsconfig.json`,
+  )
 
   const dictionary = {
     name: projectInfo.name,
