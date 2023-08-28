@@ -8,7 +8,9 @@ import {
   type SeatWithPrice,
 } from '../types/bookings.js'
 
-const BOOKING_FEE = 0.045
+const STRIPE_FIXED_FEE = 0.25
+const STRIPE_PERCENTAGE_FEE = 0.015
+const INTERNAL_PERCENTAGE_FEE = 0.03
 const MAX_BOOKING_FEE = 5
 
 export function getSeatPriceTier(
@@ -43,13 +45,17 @@ export function getLineItem(
   }
 }
 
-export function getTotals(prices: number[], discount?: Discount, calculateBookingFee = true) {
+function calculateBookingFee(ticketPrice: number) {
+  const amountToCharge = ticketPrice + ticketPrice * INTERNAL_PERCENTAGE_FEE
+  const amountWithStripeFee = (amountToCharge + STRIPE_FIXED_FEE) / (1 - STRIPE_PERCENTAGE_FEE)
+
+  return Math.min(amountWithStripeFee - ticketPrice, MAX_BOOKING_FEE)
+}
+
+export function getTotals(prices: number[], discount?: Discount, shouldCalculateBookingFee = true) {
   const subtotal = prices.reduce((total, price) => total + price, 0)
-  let bookingFee = calculateBookingFee
-    ? prices.reduce(
-        (bookingFee, price) => bookingFee + Math.min(price * BOOKING_FEE, MAX_BOOKING_FEE),
-        0,
-      )
+  let bookingFee = shouldCalculateBookingFee
+    ? prices.reduce((bookingFee, price) => bookingFee + calculateBookingFee(price), 0)
     : undefined
 
   let total = subtotal
