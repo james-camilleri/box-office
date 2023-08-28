@@ -1,9 +1,7 @@
-<script lang="ts" context="module">
-  export const SECTION_ID = Symbol()
-</script>
-
 <script lang="ts">
   import { setContext } from 'svelte'
+
+  import { SECTION_ID } from './context.js'
 
   export let id: string
 

@@ -1,9 +1,7 @@
-<script lang="ts" context="module">
-  export const ROW_ID = Symbol()
-</script>
-
 <script lang="ts">
   import { setContext } from 'svelte'
+
+  import { ROW_ID } from './context.js'
   import Seat from './Seat.svelte'
 
   export let id: string

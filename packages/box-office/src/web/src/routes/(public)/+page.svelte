@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types.js'
-  import SeatPlan from '$lib/components/seatplan/SeatPlan.svelte'
+  import SeatSelection from '$lib/components/seatplan/SeatSelection.svelte'
   import { page } from '$app/stores'
   import ShowSelection from './components/ShowSelection.svelte'
   import Cart from './components/Cart.svelte'
@@ -57,7 +57,7 @@
       </div>
     {/if}
     <div class="seatplan">
-      <SeatPlan
+      <SeatSelection
         showId={selectedShowId}
         {priceTiers}
         {priceConfiguration}

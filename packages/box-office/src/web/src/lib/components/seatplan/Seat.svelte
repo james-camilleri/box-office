@@ -3,9 +3,7 @@
   import type { Writable } from 'svelte/store'
 
   import { pricing, selection, unavailable } from './stores.js'
-  import { ALLOW_SELECTION } from './SeatPlan.svelte'
-  import { SECTION_ID } from './Section.svelte'
-  import { ROW_ID } from './Row.svelte'
+  import { ALLOW_SELECTION, ROW_ID, SECTION_ID } from './context.js'
 
   export let number: number | string
   export let x: number | undefined = undefined
