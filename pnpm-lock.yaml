@@ -8,6 +8,15 @@ importers:
 
   packages/box-office:
     devDependencies:
+      '@floating-ui/core':
+        specifier: ^1.4.1
+        version: 1.4.1
+      '@floating-ui/dom':
+        specifier: ^1.5.1
+        version: 1.5.1
+      '@floating-ui/utils':
+        specifier: ^0.1.1
+        version: 0.1.1
       '@james-camilleri/logger':
         specifier: ^1.1.0
         version: 1.1.0
@@ -17,6 +26,9 @@ importers:
       '@portabletext/svelte':
         specifier: ^2.0.0
         version: 2.0.0(svelte@4.2.0)
+      '@portabletext/toolkit':
+        specifier: ^2.0.8
+        version: 2.0.8
       '@sanity/client':
         specifier: ^6.4.9
         version: 6.4.9
@@ -32,6 +44,9 @@ importers:
       '@sanity/vision':
         specifier: ^3.15.1
         version: 3.15.1(@babel/runtime@7.22.10)(@codemirror/lint@6.4.0)(@codemirror/state@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.4)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+      '@stitches/core':
+        specifier: ^1.2.8
+        version: 1.2.8
       '@stripe/stripe-js':
         specifier: ^2.1.0
         version: 2.1.0
@@ -59,12 +74,21 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
+      dijkstrajs:
+        specifier: ^1.0.3
+        version: 1.0.3
+      encode-utf8:
+        specifier: ^2.0.0
+        version: 2.0.0
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
       eslint-plugin-import:
         specifier: ^2.28.0
         version: 2.28.0(eslint@8.47.0)
+      esm-env:
+        specifier: ^1.0.0
+        version: 1.0.0
       juice:
         specifier: ^9.1.0
         version: 9.1.0
@@ -1163,19 +1187,19 @@ packages:
     peerDependencies:
       svelte: ^3.47.0
     dependencies:
-      '@portabletext/toolkit': 2.0.4
+      '@portabletext/toolkit': 2.0.8
       svelte: 4.2.0
     dev: true
 
-  /@portabletext/toolkit@2.0.4:
-    resolution: {integrity: sha512-ZE+WntiZQ40vxMBu3/QXRbGjzL8/R2BOFgdf6danJOahvlL9lZ1/DDShyUsxNaAvoBarwGJtjuZVOcRJWcsVng==}
+  /@portabletext/toolkit@2.0.8:
+    resolution: {integrity: sha512-MI3FKYZiL+/dYsClkkTDRjSvNS7K4j+U2LNZ5XIEoq67qCY0l7CYjvT0fn+lFBEUxjegtEmbxLk6T9nV/iXA+Q==}
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
-      '@portabletext/types': 2.0.5
+      '@portabletext/types': 2.0.6
     dev: true
 
-  /@portabletext/types@2.0.5:
-    resolution: {integrity: sha512-AceKp/Y6UIzvUe/T675oPKlO2Dnt1BVIiUpwhcplPzLeYqaYaWYvb7ricVyWj7j0rukYRgBRQdrTBvgo9E1D+g==}
+  /@portabletext/types@2.0.6:
+    resolution: {integrity: sha512-6iqorcsQ0Z1/4Y7PWLvoknyiUv0DngSPao+q5UIE0+0gT2cZwFdItUyLZRheG85AisSEvacHEEnvN+TT8mxXVg==}
     engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
     dev: true
 
@@ -3097,6 +3121,11 @@ packages:
 
   /encode-utf8@1.0.3:
     resolution: {integrity: sha512-ucAnuBEhUK4boH2HjVYG5Q2mQyPorvv0u/ocS+zhdw0S8AlHYY+GOFhP1Gio5z4icpP2ivFSvhtFjQi8+T9ppw==}
+    dev: true
+
+  /encode-utf8@2.0.0:
+    resolution: {integrity: sha512-3EyMFxZj1/7oMotElDQUEQcP7N4TIe1aJ0m1uBDoyQ8I2LBHhBsXx8P3KsPbqNlGzG+NYxFwEauUwMPHZg3YDQ==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
   /end-of-stream@1.4.4:

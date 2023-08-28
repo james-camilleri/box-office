@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SeatPlan from 'virtual:seat-plan'
+  import SeatPlan from 'seat-plan'
 
   import { setContext } from 'svelte'
   import { writable } from 'svelte/store'
@@ -9,10 +9,10 @@
   import Grid from '$lib/components/layout/Grid.svelte'
 
   import { ALLOW_SELECTION } from './context.js'
-  import PriceTiers from './PriceTiers.svelte.js'
-  import Section from './Section.svelte.js'
-  import Row from './Row.svelte.js'
-  import Seat from './Seat.svelte.js'
+  import PriceTiers from './PriceTiers.svelte'
+  import Section from './Section.svelte'
+  import Row from './Row.svelte'
+  import Seat from './Seat.svelte'
 
   import { pricing, selection, unavailable } from './stores.js'
 
