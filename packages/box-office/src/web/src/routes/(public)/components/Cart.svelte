@@ -188,7 +188,7 @@
 <style lang="scss">
   .cart {
     padding: var(--md);
-    background: var(--light);
+    background: var(--light-1);
   }
 
   .success-notice {
@@ -245,10 +245,10 @@
     display: flex;
     gap: var(--xs);
     align-items: start;
-  }
 
-  :global(.discount-code > :first-child) {
-    flex-grow: 1;
+    > :first-child {
+      flex-grow: 1;
+    }
   }
 
   .checkout-small-print {

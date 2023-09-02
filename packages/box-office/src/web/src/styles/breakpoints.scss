@@ -1,5 +1,5 @@
-@use "./setup/config";
+@use './setup/config';
 
-$sm: __breakpoint-sm__;
-$md: __breakpoint-md__;
-$lg: __breakpoint-lg__;
+$sm: 30em;
+$md: 70em;
+$lg: 100em;
