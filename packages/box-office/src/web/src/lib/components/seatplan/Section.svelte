@@ -4,10 +4,11 @@
   import { SECTION_ID } from './context.js'
 
   export let id: string
+  export let transform?: string | undefined
 
   setContext(SECTION_ID, id)
 </script>
 
-<g>
+<g {transform}>
   <slot />
 </g>
