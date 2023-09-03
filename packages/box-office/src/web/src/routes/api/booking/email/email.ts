@@ -54,7 +54,6 @@ export async function sendEmail({
       ? `${first} ${nick}`
       : first ?? ''
 
-  const { host, port } = CONFIG.EMAIL
   const { MAILJET_API_KEY, MAILJET_SECRET_KEY } = process.env
 
   const transport = nodemailer.createTransport({
