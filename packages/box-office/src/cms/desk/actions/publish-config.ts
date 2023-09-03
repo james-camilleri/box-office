@@ -46,8 +46,7 @@ function generateCompositePricingConfiguration(draft: ConfigurationPage | null) 
 
 function generateCompositeReservedSeatsConfiguration(draft: ConfigurationPage | null) {
   if (!draft || !draft.reservedSeats) {
-    console.error('Missing data in draft document for publishing.')
-    return ''
+    return '{}'
   }
 
   const configuration = draft.reservedSeats

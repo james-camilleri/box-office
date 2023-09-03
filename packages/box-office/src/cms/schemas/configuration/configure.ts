@@ -227,12 +227,14 @@ export default defineType({
       name: 'compositePriceConfiguration',
       // Store this as a JSON string, since we can't do freeform objects.
       type: 'string',
+      initialValue: '{}',
       hidden: true,
     }),
     defineField({
       name: 'compositeReservedSeats',
       // Store this as a JSON string, since we can't do freeform objects.
       type: 'string',
+      initialValue: '{}',
       hidden: true,
     }),
   ],
