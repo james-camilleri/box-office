@@ -1,6 +1,6 @@
 {
   "name": "@the-gods/box-office",
-  "version": "1.0.0-alpha.33",
+  "version": "1.0.0-alpha.34",
   "type": "module",
   "exports": {
     "./cms/config": {
@@ -21,10 +21,16 @@
         "default": "./dist/cms/functions.js"
       }
     },
-    "./web": {
+    "./web/setup": {
       "import": {
         "types": "./dist/web/index.d.ts",
         "default": "./dist/web.js"
+      }
+    },
+    "./web/components": {
+      "import": {
+        "types": "./dist/web/components.ts",
+        "default": "./dist/web/components.ts"
       }
     }
   },
