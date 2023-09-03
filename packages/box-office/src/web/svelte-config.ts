@@ -1,12 +1,12 @@
 import type { Config } from '@sveltejs/kit'
 
 import adapter from '@sveltejs/adapter-auto'
-import preprocess from 'svelte-preprocess'
+import { vitePreprocess } from '@sveltejs/kit/vite'
 
 export function createSvelteConfig(config?: Config) {
   return {
     ...config,
-    preprocess: preprocess() || config?.preprocess,
+    preprocess: vitePreprocess() || config?.preprocess,
     kit: {
       adapter: adapter(),
       files: {
