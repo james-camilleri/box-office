@@ -6,10 +6,10 @@
 
   export let id: string
   export let seats: { x: number; y: number }[] | number
-  export let x?: number | undefined
-  export let y?: number | undefined
+  export let x: number | undefined = undefined
+  export let y: number | undefined = undefined
   export let startFrom = 1
-  export let transform?: string | undefined
+  export let transform: string | undefined = undefined
 
   setContext(ROW_ID, id)
 

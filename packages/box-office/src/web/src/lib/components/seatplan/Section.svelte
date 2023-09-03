@@ -4,7 +4,7 @@
   import { SECTION_ID } from './context.js'
 
   export let id: string
-  export let transform?: string | undefined
+  export let transform: string | undefined = undefined
 
   setContext(SECTION_ID, id)
 </script>
