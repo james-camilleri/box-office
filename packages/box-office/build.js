@@ -56,8 +56,8 @@ async function readAndRewrite(src, dest) {
 }
 
 async function build() {
-  await fs.rm('./dist/web', { recursive: true, force: true })
-  await fs.rm('./dist/_shared', { recursive: true, force: true })
+  // await fs.rm('./dist/web', { recursive: true, force: true })
+  // await fs.rm('./dist/_shared', { recursive: true, force: true })
   await copyDirAndRewritePaths('./src/web/src', './dist/web')
   await copyDirAndRewritePaths('./src/_shared', './dist/_shared')
 }
