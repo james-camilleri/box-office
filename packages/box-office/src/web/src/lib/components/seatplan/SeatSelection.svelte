@@ -10,9 +10,6 @@
 
   import { ALLOW_SELECTION } from './context.js'
   import PriceTiers from './PriceTiers.svelte'
-  import Section from './Section.svelte'
-  import Row from './Row.svelte'
-  import Seat from './Seat.svelte'
 
   import { pricing, selection, unavailable } from './stores.js'
 
