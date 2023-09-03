@@ -5,13 +5,24 @@
   import Seat from './Seat.svelte'
 
   export let id: string
-  export let seats: { x: number; y: number }[] = []
+  export let seats: { x: number; y: number }[] | number
+  export let x: number | undefined
+  export let y: number | undefined
   export let startFrom = 1
+  export let transform: string | undefined
 
   setContext(ROW_ID, id)
+
+  // Generate row of seats.
+  if (typeof seats === 'number' && x != null && y !== null) {
+    seats = Array.from({ length: seats }, (_, i) => ({
+      x: x + i * 40,
+      y,
+    }))
+  }
 </script>
 
-<g>
+<g {transform}>
   <slot>
     <text x={seats[0].x - 50} y={seats[0].y + 10}>{id}</text>
     {#each seats as { x, y }, i}
