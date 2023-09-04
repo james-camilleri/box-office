@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer'
 import { parseFullName } from 'parse-full-name'
 import type { ConfigurationFull, Discount, Seat, TicketDocument } from '$shared/types'
 
-import { EMAIL, ORGANISATION_NAME } from '$env/static/private'
+import { EMAIL, ORGANISATION_NAME, MAILJET_API_KEY, MAILJET_SECRET_KEY } from '$env/static/private'
 
 import Email from './template/Email.svelte'
 
@@ -53,8 +53,6 @@ export async function sendEmail({
       : nick
       ? `${first} ${nick}`
       : first ?? ''
-
-  const { MAILJET_API_KEY, MAILJET_SECRET_KEY } = process.env
 
   const transport = nodemailer.createTransport({
     name: EMAIL,
