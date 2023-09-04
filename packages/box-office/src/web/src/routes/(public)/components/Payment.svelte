@@ -11,6 +11,7 @@
   import {
     PUBLIC_STRIPE_LIVE_API_KEY,
     PUBLIC_STRIPE_TEST_API_KEY,
+    PUBLIC_STRIPE_CONNECT_ID,
     PUBLIC_USE_STRIPE_TEST,
   } from '$env/static/public'
   import Grid from '$lib/components/layout/Grid.svelte'
@@ -48,7 +49,7 @@
   let interval: number
 
   onMount(async () => {
-    stripe = await loadStripe(API_KEY)
+    stripe = await loadStripe(API_KEY, { stripeAccount: PUBLIC_STRIPE_CONNECT_ID })
     campaigns =
       $page.url.searchParams.get('campaign')?.split(',') ||
       $page.url.searchParams.get('campaigns')?.split(',') ||

@@ -45,17 +45,19 @@ export function getLineItem(
   }
 }
 
-function calculateBookingFee(ticketPrice: number) {
-  const amountToCharge = ticketPrice + ticketPrice * INTERNAL_PERCENTAGE_FEE
-  const amountWithStripeFee = (amountToCharge + STRIPE_FIXED_FEE) / (1 - STRIPE_PERCENTAGE_FEE)
+function calculateApplicationFee(ticketPrice: number) {
+  return Math.min(ticketPrice * INTERNAL_PERCENTAGE_FEE, MAX_BOOKING_FEE)
+}
 
-  return Math.min(amountWithStripeFee - ticketPrice, MAX_BOOKING_FEE)
+function calculateTotalBookingFee(total: number, internalBookingFee: number) {
+  const amountToCharge = total + internalBookingFee
+  return (amountToCharge + STRIPE_FIXED_FEE) / (1 - STRIPE_PERCENTAGE_FEE) - total
 }
 
 export function getTotals(prices: number[], discount?: Discount, shouldCalculateBookingFee = true) {
   const subtotal = prices.reduce((total, price) => total + price, 0)
-  let bookingFee = shouldCalculateBookingFee
-    ? prices.reduce((bookingFee, price) => bookingFee + calculateBookingFee(price), 0)
+  const applicationFee = shouldCalculateBookingFee
+    ? prices.reduce((bookingFee, price) => bookingFee + calculateApplicationFee(price), 0)
     : undefined
 
   let total = subtotal
@@ -65,12 +67,11 @@ export function getTotals(prices: number[], discount?: Discount, shouldCalculate
     reduction =
       discount.type === DISCOUNT_TYPE.PERCENTAGE ? total * (discount.value / 100) : discount.value
     total = Math.max(0, total - reduction)
-
-    // Don't charge a booking fee for free checkouts.
-    if (total === 0) {
-      bookingFee = undefined
-    }
   }
+
+  const bookingFee =
+    // Don't charge a booking fee for free checkouts.
+    applicationFee && total !== 0 ? calculateTotalBookingFee(total, applicationFee) : undefined
 
   const vat = total * 0.05 // 5% VAT.
 
@@ -82,6 +83,7 @@ export function getTotals(prices: number[], discount?: Discount, shouldCalculate
 
   return {
     subtotal,
+    applicationFee,
     bookingFee,
     reduction,
     total,

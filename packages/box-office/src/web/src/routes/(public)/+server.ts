@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit'
 import { STRIPE_LIVE_SECRET_KEY, STRIPE_TEST_SECRET_KEY } from '$env/static/private'
-import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
+import { PUBLIC_USE_STRIPE_TEST, PUBLIC_STRIPE_CONNECT_ID } from '$env/static/public'
 import type { ConfigurationFull, Discount, Seat } from '$shared/types'
-import { calculateTotal } from '$shared/utils'
+import { calculateTotal, getSeatPrice, getTotals } from '$shared/utils'
 import Stripe from 'stripe'
 
 import { sanity } from '../api/sanity.js'
@@ -32,26 +32,27 @@ export const POST: RequestHandler = async (event) => {
     Discount | undefined,
   ]
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: Math.floor(
-      calculateTotal(
-        seats,
+  const prices = seats.map(
+    (seat) =>
+      getSeatPrice(seat, show, configuration.priceTiers, configuration.priceConfiguration) ?? 0,
+  )
+  const { total, applicationFee } = getTotals(prices, discount)
+
+  const paymentIntent = await stripe.paymentIntents.create(
+    {
+      amount: Math.floor(total * 100),
+      currency: 'eur',
+      metadata: {
         show,
-        configuration.priceTiers,
-        configuration.priceConfiguration,
-        discount,
-      ) * 100,
-    ),
-    currency: 'eur',
-    automatic_payment_methods: {
-      enabled: true,
+        seatIds: JSON.stringify(seats.map((seat) => seat._id)),
+        discount: JSON.stringify(discount),
+      },
+      application_fee_amount: Math.floor((applicationFee ?? 0) * 100),
     },
-    metadata: {
-      show,
-      seatIds: JSON.stringify(seats.map((seat) => seat._id)),
-      discount: JSON.stringify(discount),
+    {
+      stripeAccount: PUBLIC_STRIPE_CONNECT_ID,
     },
-  })
+  )
 
   return json({
     clientSecret: paymentIntent.client_secret,
