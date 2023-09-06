@@ -10,6 +10,7 @@
   .grid {
     display: grid;
     grid-template-rows: auto 1fr;
+    width: 100vw;
     height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
