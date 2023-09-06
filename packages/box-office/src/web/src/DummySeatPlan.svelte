@@ -79,7 +79,7 @@
 
   <Section id="DRESS-CIRCLE" transform="translate(0, {SEAT_SIZE * 10 + AISLE_WIDTH})">
     <g>
-      <Row id="A" startFrom={13} seats={18} x={CIRCLE_CENTRE_START} y={y(1)} />
+      <Row id="A" seats={18} x={CIRCLE_CENTRE_START} y={y(1)} />
     </g>
     <g>
       <Row id="B" startFrom={1} seats={12} x={CIRCLE_LEFT_START} y={y(2)} />
@@ -175,7 +175,7 @@
       />
       <Row
         id="A"
-        startFrom={23}
+        startFrom={25}
         seats={15}
         x={BALCONY_START + SEAT_SIZE * 23 + AISLE_WIDTH * 2}
         y={y(1)}
@@ -199,7 +199,7 @@
       />
       <Row
         id="B"
-        startFrom={23}
+        startFrom={25}
         seats={15}
         x={BALCONY_START + SEAT_SIZE * 23 + AISLE_WIDTH * 2}
         y={y(2)}
@@ -223,7 +223,7 @@
       />
       <Row
         id="C"
-        startFrom={23}
+        startFrom={25}
         seats={15}
         x={BALCONY_START + SEAT_SIZE * 23 + AISLE_WIDTH * 2}
         y={y(3)}
@@ -242,7 +242,7 @@
       <Row
         id="D"
         startFrom={6}
-        seats={16}
+        seats={17}
         x={BALCONY_START + SEAT_SIZE * 5 + AISLE_WIDTH}
         y={y(4) + AISLE_WIDTH / 2}
       />
@@ -266,7 +266,7 @@
       <Row
         id="E"
         startFrom={6}
-        seats={16}
+        seats={17}
         x={BALCONY_START + SEAT_SIZE * 5 + AISLE_WIDTH}
         y={y(5) + AISLE_WIDTH / 2}
       />
@@ -290,7 +290,7 @@
       <Row
         id="F"
         startFrom={6}
-        seats={16}
+        seats={17}
         x={BALCONY_START + SEAT_SIZE * 5 + AISLE_WIDTH}
         y={y(6) + AISLE_WIDTH / 2}
       />
