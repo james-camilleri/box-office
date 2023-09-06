@@ -43,6 +43,7 @@
   let processing = false
   let name: string
   let email: string
+  let phone: string
   let submitted = false
 
   let time = 60 * 5
@@ -128,6 +129,7 @@
       body: JSON.stringify({
         name,
         email,
+        phone,
         show,
         seatIds: seats.map((seat) => seat._id),
         discount,
@@ -152,6 +154,7 @@
           billing_details: {
             name,
             email,
+            phone,
           },
         },
       },
@@ -174,7 +177,7 @@
 
     submitted = true
 
-    if (!name || !email) {
+    if (!name || !email || !phone) {
       return
     }
 
@@ -214,7 +217,7 @@
         rules={{ '.Input': { border: 'solid 1px #0002' } }}
         bind:elements
       >
-        <AdditionalFields bind:name bind:email {submitted} />
+        <AdditionalFields bind:name bind:email bind:phone {submitted} />
         <PaymentElement />
         <div class="confirm-button">
           <Button fullSize disabled={processing} color="red" size="lg">Pay</Button>

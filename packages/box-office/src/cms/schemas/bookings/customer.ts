@@ -36,7 +36,8 @@ export default defineType({
           }),
     }),
     defineField({
-      name: 'telephoneNumber',
+      name: 'phone',
+      description: 'Phone number',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),

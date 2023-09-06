@@ -3,6 +3,7 @@
 
   export let name: string
   export let email: string
+  export let phone: string
   export let submitted: boolean
 </script>
 
@@ -18,6 +19,14 @@
     name="email"
     label="Email address"
     error={!email && submitted && 'Email is required'}
+  />
+  <TextInput
+    bind:value={phone}
+    name="phone"
+    label="Phone number"
+    error={!phone &&
+      submitted &&
+      'Phone number is required (just in case we need to contact you about your tickets)'}
   />
 </div>
 
