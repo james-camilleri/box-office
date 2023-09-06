@@ -13,6 +13,10 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'showLogo',
+      type: 'image',
+    }),
+    defineField({
       name: 'vatNumber',
       title: 'VAT Number',
       type: 'string',

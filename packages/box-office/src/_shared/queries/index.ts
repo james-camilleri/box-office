@@ -151,6 +151,7 @@ export const ALL_DISCOUNTS = `*[_type == 'discount']{
  */
 export const CONFIG = `*[_id == 'configure']{
   showName,
+  'showLogo': showLogo.asset->url,
   showLocation,
   vatNumber,
   vatPermitNumber,

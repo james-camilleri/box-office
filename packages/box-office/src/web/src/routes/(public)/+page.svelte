@@ -48,7 +48,13 @@
   }
 </script>
 
-<ShowSelection bind:selected={selectedShowId} {shows} {timeZone} />
+<ShowSelection
+  bind:selected={selectedShowId}
+  name={configuration.showName}
+  logo={configuration.showLogo}
+  {shows}
+  {timeZone}
+/>
 <Grid columns={['3fr', 'minmax(auto, 1fr)']} gap="0">
   <div class="seatplan-wrapper" class:waiting={!selectedShowId || loading}>
     {#if !selectedShowId || loading}

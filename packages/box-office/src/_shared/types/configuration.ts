@@ -1,7 +1,8 @@
-import type { Reference } from '@sanity/types'
+import { Image, Reference } from 'sanity'
 
 export interface Configuration {
   showName: string
+  showLogo: string
   showLocation: string
   vatPermitNumber: string
   vatNumber: string

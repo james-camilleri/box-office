@@ -5,6 +5,8 @@
 
   import { getZonedDate, getZonedTime } from '$shared/utils'
 
+  export let name: string
+  export let logo: string | undefined = undefined
   export let selected: string | undefined = undefined
   export let shows: Show[]
   export let timeZone: string
@@ -16,7 +18,13 @@
 </script>
 
 <header>
-  <h1 class="title">CHICAGO</h1>
+  <h1 class="title">
+    {#if logo}
+      <img src="{logo}?h=300&auto=format" alt={name} />
+    {:else}
+      {name}
+    {/if}
+  </h1>
   <div class="select-wrapper">
     <NativeSelect
       bind:value={selected}
@@ -39,6 +47,10 @@
 
   .title {
     margin: 0 auto 0 0;
+  }
+
+  img {
+    max-width: 300px;
   }
 
   .select-wrapper {
