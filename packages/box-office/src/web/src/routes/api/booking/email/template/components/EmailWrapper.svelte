@@ -31,7 +31,9 @@
               </tr>
             </table>
 
-            <slot name="footer" />
+            <div class="footer">
+              <slot name="footer" />
+            </div>
           </div>
         </td>
         <td>&nbsp;</td>
@@ -65,7 +67,8 @@
     width: 100%;
   }
 
-  .wrapper {
+  .wrapper,
+  .footer {
     box-sizing: border-box;
     padding: 20px;
   }

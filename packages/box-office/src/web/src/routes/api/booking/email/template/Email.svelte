@@ -6,8 +6,11 @@
   import type { PortableTextBlock } from '@portabletext/types'
   import { PortableText } from '@portabletext/svelte'
 
+  import Footer from 'email-footer'
+
   import type { TicketDocument, PriceConfiguration, Discount, PriceTier, Seat } from '$shared/types'
   import { getLineItem, getTotals, getZonedDate, getZonedTime } from '$shared/utils'
+  import { ORGANISATION_NAME } from '$env/static/private'
 
   import { imageUrlBuilder } from '../../../sanity.js'
 
@@ -28,6 +31,7 @@
   export let tickets: TicketDocument[]
   export let seats: Seat[]
   export let orderConfirmation: string
+  export let receiptNumber: string
   export let priceTiers: PriceTier[]
   export let priceConfiguration: PriceConfiguration
   export let discount: Discount | undefined
@@ -100,7 +104,7 @@
       {/each}
       {#if (discount && reduction) || bookingFee}
         <tr class="line-item subtotal">
-          <td>Subtotal</td>
+          <td>Subtotal (5% VAT)</td>
           <td>€</td>
           <td>{subtotal.toFixed(2)}</td>
         </tr>
@@ -114,7 +118,7 @@
       {/if}
       {#if bookingFee}
         <tr class="line-item booking-fee">
-          <td>Booking fee</td>
+          <td>Booking fee (0% VAT)</td>
           <td>€</td>
           <td>{bookingFee.toFixed(2)}</td>
         </tr>
@@ -133,22 +137,23 @@
 
     <table class="details">
       <tr>
-        <td class="details-heading" valign="bottom"><strong>VAT number</strong></td>
+        <td class="details-heading" valign="bottom"
+          >Tickets issued by <strong>{ORGANISATION_NAME}</strong></td
+        >
       </tr>
       <tr>
-        <td class="details-text">{event.vatNumber}</td>
+        <td class="details-text" valign="bottom"><strong>VAT number:</strong> {event.vatNumber}</td>
       </tr>
       <tr>
-        <td class="details-heading" valign="bottom"><strong>VAT permit number</strong></td>
-      </tr>
-      <tr>
-        <td class="details-text">{event.vatPermitNumber}</td>
+        <td class="details-text" valign="bottom"
+          ><strong>VAT permit number:</strong> {event.vatPermitNumber}</td
+        >
       </tr>
     </table>
   </div>
-  <!-- <div slot="footer">
-    <Footer />
-  </div> -->
+  <div slot="footer">
+    <Footer {receiptNumber} />
+  </div>
 </EmailWrapper>
 
 <style lang="scss">
@@ -165,6 +170,7 @@
   }
 
   .invoice {
+    width: 100%;
     border-spacing: 0;
 
     .line-item td {

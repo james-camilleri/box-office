@@ -2,14 +2,20 @@ import type { UserConfig } from 'vite'
 
 import { sveltekit } from '@sveltejs/kit/vite'
 
-export function createViteConfig(seatPlanPath?: string, config?: UserConfig) {
+interface PathOverrides {
+  seatPlan: string
+  emailFooter: string
+}
+
+export function createViteConfig(paths?: PathOverrides, config?: UserConfig) {
   return {
     ...config,
     resolve: {
       ...config?.resolve,
       alias: {
         ...config?.resolve?.alias,
-        'seat-plan': seatPlanPath,
+        'seat-plan': paths?.seatPlan,
+        'email-footer': paths?.emailFooter,
       },
       preserveSymlinks: true,
     },
