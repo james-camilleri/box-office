@@ -83,7 +83,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
     const charge = event.data.object
     const {
       id,
-      billing_details: { name, email },
+      billing_details: { name, email, phone },
       metadata,
     } = charge
 
@@ -97,7 +97,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
     const discount = (metadata.discount && JSON.parse(metadata.discount)) as Discount | undefined
     const campaigns = (metadata.campaigns && JSON.parse(metadata.campaigns)) as string[] | undefined
 
-    queuedRequests.CUSTOMER_ID = getCustomerId(name, email)
+    queuedRequests.CUSTOMER_ID = getCustomerId({ name, email, phone })
     queuedRequests.SHOW_DETAILS = sanity.fetch(SHOW_DETAILS, { show: metadata.show })
     queuedRequests.SEAT_DETAILS = sanity.fetch(SEAT_DETAILS, { seats: seatIds })
 
@@ -111,9 +111,9 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
       stripeId: id,
     }
   } else {
-    const { name, email, show, seatIds, discount, campaigns } = JSON.parse(body)
+    const { name, email, phone, show, seatIds, discount, campaigns } = JSON.parse(body)
 
-    queuedRequests.CUSTOMER_ID = getCustomerId(name, email)
+    queuedRequests.CUSTOMER_ID = getCustomerId({ name, email, phone })
     queuedRequests.SHOW_DETAILS = sanity.fetch(SHOW_DETAILS, { show })
     queuedRequests.SEAT_DETAILS = sanity.fetch(SEAT_DETAILS, { seats: seatIds })
 
@@ -147,6 +147,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
   )
 
   try {
+    await createInvoice(bookingData, queuedRequests)
     await finalisePurchase(bookingData, queuedRequests)
   } catch (e) {
     console.error(e)
@@ -294,7 +295,15 @@ async function finalisePurchase(bookingData: BookingData, queuedRequests: Queued
   log.info('Initiated booking reference updates')
 }
 
-async function getCustomerId(name: string, email: string): Promise<string> {
+async function getCustomerId({
+  name,
+  email,
+  phone,
+}: {
+  name: string
+  email: string
+  phone: string
+}): Promise<string> {
   log.debug('Getting customer ID for', name, email)
   const customerId = await sanity.fetch(CUSTOMER_ID, { email })
 
@@ -308,8 +317,52 @@ async function getCustomerId(name: string, email: string): Promise<string> {
     _type: 'customer',
     name,
     email,
+    phone,
   })
 
   log.info('Created new customer', response._id)
   return response._id
+}
+
+async function createInvoice(bookingData: BookingData, queuedRequests: QueuedRequests) {
+  const invoice = await stripe.invoices.create({
+    auto_advance: false,
+    // TODO: use actual customer ID
+    customer: 'cus_OZCKzv1Lg1q8DP',
+    // TODO: Add this as a memo because stripe doesn't accept VAT exempt numbers?
+    // account_tax_ids: ['MY_VAT_NUMBER'],
+    currency: 'EUR',
+  })
+
+  console.log('🎈 got receipt number', invoice.id, invoice.number)
+
+  await Promise.all([
+    stripe.invoiceItems.create({
+      invoice: invoice.id,
+      customer: 'cus_OZCKzv1Lg1q8DP',
+      amount: 500,
+      description: 'A-TICKET',
+      tax_rates: ['txr_1Nn8rgFWTKgVyWTE08kT3WmM'],
+      currency: 'EUR',
+    }),
+    stripe.invoiceItems.create({
+      invoice: invoice.id,
+      customer: 'cus_OZCKzv1Lg1q8DP',
+      amount: 250,
+      description: 'ANOTHER-TICKET',
+      tax_rates: ['txr_1Nn8rgFWTKgVyWTE08kT3WmM'],
+      currency: 'EUR',
+    }),
+    stripe.invoiceItems.create({
+      invoice: invoice.id,
+      customer: 'cus_OZCKzv1Lg1q8DP',
+      amount: -440,
+      description: 'discount',
+      currency: 'EUR',
+    }),
+  ])
+
+  await stripe.invoices.pay(invoice.id, {
+    paid_out_of_band: true,
+  })
 }
