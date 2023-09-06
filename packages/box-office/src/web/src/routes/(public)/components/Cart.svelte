@@ -108,7 +108,7 @@
       {/each}
       {#if lineItems.length}
         <span class="line-item subtotal">
-          <span>Subtotal</span>
+          <span>Subtotal <small>(5% VAT)</small></span>
           <span>€{totals.subtotal.toFixed(2)}</span>
         </span>
         {#if discount && totals.reduction}
@@ -118,7 +118,7 @@
           </span>
         {/if}
         <span class="line-item booking-fee">
-          <span>Booking fee</span>
+          <span>Booking fee <small>(0% VAT)</small></span>
           <span>€{totals?.bookingFee?.toFixed(2) ?? '0'}</span>
         </span>
         <span class="line-item total">
