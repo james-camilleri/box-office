@@ -84,6 +84,7 @@
 
   .status {
     position: absolute;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
