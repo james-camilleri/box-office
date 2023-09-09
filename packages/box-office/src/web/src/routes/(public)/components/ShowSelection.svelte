@@ -40,7 +40,7 @@
   header {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sm);
+    gap: var(--md);
     padding: var(--md);
     background: var(--secondary);
   }

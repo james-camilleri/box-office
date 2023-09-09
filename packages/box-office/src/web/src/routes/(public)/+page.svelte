@@ -53,15 +53,13 @@
         <span>{loading ? 'Loading' : 'Select a show to begin'}</span>
       </div>
     {/if}
-    <div class="seatplan">
-      <SeatSelection
-        showId={$selectedShowId}
-        {priceTiers}
-        {priceConfiguration}
-        {unavailableSeats}
-        {allowSelection}
-      />
-    </div>
+    <SeatSelection
+      showId={$selectedShowId}
+      {priceTiers}
+      {priceConfiguration}
+      {unavailableSeats}
+      {allowSelection}
+    />
   </div>
   <Cart
     show={$selectedShowId}
@@ -78,14 +76,10 @@
     position: relative;
     display: flex;
     align-items: center;
+    overflow: auto;
     background: var(--light-2);
     border-bottom: var(--border);
     box-shadow: var(--shadow-inset);
-  }
-
-  .seatplan {
-    width: 100%;
-    padding: var(--lg);
   }
 
   .status {
@@ -103,7 +97,7 @@
       padding: var(--sm) var(--lg);
       font-size: var(--xl);
       text-transform: uppercase;
-      background: var(--foreground);
+      background: var(--primary);
       border-radius: var(--border-radius-sm);
     }
   }

@@ -15,6 +15,9 @@
 
 <style>
   .price-tiers {
+    position: absolute;
+    top: var(--lg);
+    left: 50%;
     display: flex;
     flex-wrap: wrap;
     gap: var(--xl);
@@ -22,6 +25,7 @@
     margin: 0 auto;
     background: var(--light-3);
     border-radius: var(--border-radius);
+    transform: translateX(-50%);
   }
 
   .price-tier {
