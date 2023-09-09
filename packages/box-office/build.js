@@ -1,6 +1,14 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 
+const FILETYPES_TO_REWRITE = [
+  '.svelte',
+  '.ts',
+  '.js',
+  '.css',
+  '.scss',
+]
+
 export async function copyDirAndRewritePaths(srcPath, destPath) {
   let dest = path.resolve(destPath)
   const current = path.resolve(srcPath)
@@ -44,13 +52,17 @@ async function readAndRewrite(src, dest) {
         // TODO: This ugly. This all ugly.
         .replace('../../', '') // Remove first levels because we're working in a directory below the cwd
 
-      const sourceText = await fs.readFile(src, { encoding: 'utf-8' })
-      const destinationText = sourceText.replaceAll(
-        new RegExp('\\' + alias + `/(.*)(['"])`, 'g'),
-        `${fullPath}/$1/index.js$2`,
-      )
+      if (FILETYPES_TO_REWRITE.some(filetype => src.includes(filetype))) {
+        const sourceText = await fs.readFile(src, { encoding: 'utf-8' })
+        const destinationText = sourceText.replaceAll(
+          new RegExp('\\' + alias + `/(.*)(['"])`, 'g'),
+          `${fullPath}/$1/index.js$2`,
+        )
 
-      return fs.writeFile(dest, destinationText, { encoding: 'utf-8' })
+        return fs.writeFile(dest, destinationText, { encoding: 'utf-8' })
+      } else {
+        return fs.copyFile(src, dest)
+      }
     }),
   )
 }
