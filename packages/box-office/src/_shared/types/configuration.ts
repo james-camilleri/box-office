@@ -1,8 +1,7 @@
-import { Image, Reference } from 'sanity'
+import { Image, PortableTextBlock, Reference } from 'sanity'
 
 export interface Configuration {
   showName: string
-  showLogo: string
   showLocation: string
   vatPermitNumber: string
   vatNumber: string
@@ -69,3 +68,24 @@ export interface PriceConfiguration {
 }
 
 export type PriceMap = Map<string, string>
+
+export interface Colour {
+  r: number
+  g: number
+  b: number
+  a: number
+}
+
+export interface WebConfigurationRaw {
+  logoSrc: string
+  primaryColour: Colour
+  secondaryColour: Colour
+  text: PortableTextBlock
+}
+
+export interface WebConfiguration {
+  logoSrc: string
+  primaryColour: string
+  secondaryColour: string
+  text: PortableTextBlock[]
+}

@@ -1,3 +1,4 @@
+import { colorInput } from '@sanity/color-input'
 import { visionTool } from '@sanity/vision'
 import { DocumentActionComponent } from 'sanity'
 import { deskTool } from 'sanity/desk'
@@ -28,6 +29,7 @@ export const baseConfig = {
     reportsTool(),
     scannerTool(),
     visionTool({ title: 'Database' }),
+    colorInput(),
   ],
 
   studio: {

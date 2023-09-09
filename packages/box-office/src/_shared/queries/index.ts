@@ -151,7 +151,6 @@ export const ALL_DISCOUNTS = `*[_type == 'discount']{
  */
 export const CONFIG = `*[_id == 'configure']{
   showName,
-  'showLogo': showLogo.asset->url,
   showLocation,
   vatNumber,
   vatPermitNumber,
@@ -230,3 +229,14 @@ export const TRANSACTION_ID_EXISTS = `count(*[_type == "booking" && transactionI
  * @show the show ID to get tickets for
  */
 export const VALID_TICKETS = `*[_type == "booking" && valid && show._ref == $show && !(_id in path("drafts.**"))].tickets[@->valid]._ref`
+
+/**
+ * Get the UI configuration for the ticket front-end.
+ */
+export const WEBSITE_CONFIGURATION = `*[_id == "website"][0]{
+  'logoSrc': logo.asset->url,
+  'primaryColour': primaryColour.rgb,
+  'secondaryColour': secondaryColour.rgb,
+  text
+}
+`
