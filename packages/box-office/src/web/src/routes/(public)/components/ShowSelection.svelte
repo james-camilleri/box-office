@@ -50,7 +50,7 @@
   }
 
   img {
-    max-width: 300px;
+    max-width: 250px;
   }
 
   .select-wrapper {

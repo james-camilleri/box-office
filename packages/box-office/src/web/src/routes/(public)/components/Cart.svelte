@@ -145,12 +145,14 @@
           >
             <svelte:fragment slot="rightSection">
               {#if checkingDiscount}
-                <Loader color="red" size="xs" />
+                <Loader color="var(--primary)" size="xs" />
               {/if}
             </svelte:fragment>
           </TextInput>
-          <Button disabled={!discountCode || checkingDiscount} color="red" variant="outline"
-            >Apply discount</Button
+          <Button
+            disabled={!discountCode || checkingDiscount}
+            color="var(--primary)"
+            variant="outline">Apply discount</Button
           >
         </form>
         <div>
@@ -158,7 +160,7 @@
             fullSize
             disabled={!lineItems.length}
             on:click={startCheckout}
-            color="red"
+            color="var(--primary)"
             size="lg">Checkout</Button
           >
           <div class="checkout-small-print">

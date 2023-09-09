@@ -2,15 +2,13 @@
   import type { PageData } from './$types.js'
   import SeatSelection from '$lib/components/seatplan/SeatSelection.svelte'
   import { page } from '$app/stores'
-  import ShowSelection from './components/ShowSelection.svelte'
   import Cart from './components/Cart.svelte'
   import Grid from '$lib/components/layout/Grid.svelte'
+  import { selectedShowId } from './state/selected-show.js'
 
   export let data: PageData
-  const { configuration, text } = data
-  const { priceTiers, priceConfiguration, shows, timeZone } = configuration
+  const { priceTiers, priceConfiguration } = data.ticketConfig
 
-  let selectedShowId: string | undefined = undefined
   let unavailableSeats: string[] | undefined = undefined
   let loading = false
   let allowSelection = true
@@ -30,7 +28,7 @@
       loading = true
     }, 500)
 
-    fetch(`${$page.url.origin}/api/seats/${selectedShowId}`)
+    fetch(`${$page.url.origin}/api/seats/${$selectedShowId}`)
       .then((response) => response.json())
       .then(({ unavailable }) => {
         unavailableSeats = unavailable
@@ -42,29 +40,22 @@
   $: {
     unavailableSeats = undefined
 
-    if (selectedShowId) {
+    if ($selectedShowId) {
       fetchSeatData()
     }
   }
 </script>
 
-<ShowSelection
-  bind:selected={selectedShowId}
-  name={configuration.showName}
-  logo={configuration.showLogo}
-  {shows}
-  {timeZone}
-/>
 <Grid columns={['3fr', 'minmax(auto, 1fr)']} gap="0">
-  <div class="seatplan-wrapper" class:waiting={!selectedShowId || loading}>
-    {#if !selectedShowId || loading}
+  <div class="seatplan-wrapper" class:waiting={!$selectedShowId || loading}>
+    {#if !$selectedShowId || loading}
       <div class="status">
         <span>{loading ? 'Loading' : 'Select a show to begin'}</span>
       </div>
     {/if}
     <div class="seatplan">
       <SeatSelection
-        showId={selectedShowId}
+        showId={$selectedShowId}
         {priceTiers}
         {priceConfiguration}
         {unavailableSeats}
@@ -73,10 +64,10 @@
     </div>
   </div>
   <Cart
-    show={selectedShowId}
+    show={$selectedShowId}
     {priceTiers}
     {priceConfiguration}
-    {text}
+    text={data.uiConfig.text}
     on:checkout-start={onCheckoutStart}
     on:refresh={onRefresh}
   />

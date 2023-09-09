@@ -1,12 +1,13 @@
 import { json } from '@sveltejs/kit'
 import { STRIPE_LIVE_SECRET_KEY, STRIPE_TEST_SECRET_KEY } from '$env/static/private'
 import { PUBLIC_USE_STRIPE_TEST, PUBLIC_STRIPE_CONNECT_ID } from '$env/static/public'
-import type { ConfigurationFull, Discount, Seat } from '$shared/types'
-import { calculateTotal, getSeatPrice, getTotals } from '$shared/utils'
+import type { Colour, ConfigurationFull, Discount, Seat, WebConfigurationRaw } from '$shared/types'
+import { getSeatPrice, getTotals } from '$shared/utils'
 import Stripe from 'stripe'
 
 import { sanity } from '../api/sanity.js'
 import type { RequestHandler } from './$types.js'
+import { WEBSITE_CONFIGURATION } from '$shared/queries'
 
 interface Payload {
   seats: Seat[]
@@ -59,7 +60,16 @@ export const POST: RequestHandler = async (event) => {
   })
 }
 
+function colourToString({ r, g, b, a }: Colour) {
+  return `rgb(${r} ${g} ${b} / ${a * 100}%)`
+}
+
 export const GET: RequestHandler = async () => {
-  const websiteText = await sanity.fetch('*[_id == "website"][0].text')
-  return json(websiteText)
+  const webConfig = (await sanity.fetch(WEBSITE_CONFIGURATION)) as WebConfigurationRaw
+
+  return json({
+    ...webConfig,
+    primaryColour: colourToString(webConfig.primaryColour),
+    secondaryColour: colourToString(webConfig.secondaryColour),
+  })
 }
