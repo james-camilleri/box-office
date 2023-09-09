@@ -6,36 +6,63 @@ export default defineType({
   name: 'pageConfigure',
   type: 'document',
   title: 'Configure',
+  fieldsets: [
+    {
+      name: 'showDetails',
+      options: {
+        collapsible: true,
+      },
+    },
+    {
+      name: 'datesAndTimes',
+      options: {
+        collapsible: true,
+      },
+    },
+    {
+      name: 'pricing',
+      options: {
+        collapsible: true,
+      },
+    },
+  ],
   fields: [
     defineField({
-      name: 'showName',
+      name: 'organisationName',
       type: 'string',
+      fieldset: 'showDetails',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'showLogo',
-      type: 'image',
+      name: 'showName',
+      type: 'string',
+      fieldset: 'showDetails',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'vatNumber',
       title: 'VAT Number',
       type: 'string',
+      fieldset: 'showDetails',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'vatPermitNumber',
       title: 'VAT Permit Number',
       type: 'string',
+      fieldset: 'showDetails',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'showLocation',
       type: 'string',
+      fieldset: 'showDetails',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'mapUrl',
       type: 'url',
+      fieldset: 'showDetails',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -43,6 +70,7 @@ export default defineType({
       description: 'The dates and times of every show.',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'show' }] }],
+      fieldset: 'datesAndTimes',
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
@@ -50,6 +78,7 @@ export default defineType({
       description:
         'The time zone the show will be held in – important to get the dates and times to show correctly in emails and on the front-end.',
       type: 'string',
+      fieldset: 'datesAndTimes',
       initialValue: getUserTimeZone(),
       options: {
         list: getAllTimeZones()
@@ -67,6 +96,7 @@ export default defineType({
         'The different pricing levels that can be assigned to tickets. Shows must have at least one pricing tier.',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'priceTier' }] }],
+      fieldset: 'pricing',
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
@@ -75,6 +105,7 @@ export default defineType({
         'The pricing tier that will be assigned to seats, unless overridden by the pricing configuration below.',
       type: 'reference',
       to: [{ type: 'priceTier' }],
+      fieldset: 'pricing',
       options: {
         disableNew: true,
       },
@@ -145,6 +176,7 @@ export default defineType({
           },
         },
       ],
+      fieldset: 'pricing',
     }),
     defineField({
       name: 'reservedSeats',
