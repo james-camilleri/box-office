@@ -67,7 +67,12 @@ export function getProjectInfo(defaults) {
     {
       type: 'input',
       name: 'STRIPE_TEST_WEBHOOK_SECRET',
-      message: 'Stripe webhook secret (test):',
+      message: 'Stripe webhook secret (test, own account):',
+    },
+    {
+      type: 'input',
+      name: 'STRIPE_TEST_CONNECT_WEBHOOK_SECRET',
+      message: 'Stripe webhook secret (test, connected accounts):',
     },
     {
       type: 'input',
@@ -82,7 +87,12 @@ export function getProjectInfo(defaults) {
     {
       type: 'input',
       name: 'STRIPE_LIVE_WEBHOOK_SECRET',
-      message: 'Stripe webhook secret (live):',
+      message: 'Stripe webhook secret (live, own account):',
+    },
+    {
+      type: 'input',
+      name: 'STRIPE_LIVE_CONNECT_WEBHOOK_SECRET',
+      message: 'Stripe webhook secret (live, connected accounts):',
     },
     {
       type: 'input',
