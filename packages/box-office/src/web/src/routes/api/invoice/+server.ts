@@ -91,7 +91,7 @@ async function createInvoice(booking: Booking, store: DataStore) {
   if (discount) {
     await stripe.invoiceItems.create({
       ...sharedInvoiceItemProperties,
-      description: `${discount.name}`,
+      description: `Discount: ${discount.name}`,
       amount: Math.floor(reduction * 100) * -1,
     })
   }
