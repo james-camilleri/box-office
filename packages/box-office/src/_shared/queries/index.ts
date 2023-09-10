@@ -82,7 +82,11 @@ export const BOOKING = `*[_type == "booking" && _id == $bookingId]{
     ...,
     'customer': customer->,
     'discount': discount->,
-    'seats': seats[]->,
+    'seats': seats[]->{
+      _id,
+      'row': row -> _id,
+      'section': row -> section -> _id
+    },
     'show': show->,
     'tickets': tickets[]->
   }[0]`

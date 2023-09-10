@@ -5,12 +5,6 @@ export default defineType({
   type: 'document',
   title: 'Seat',
   fields: [
-    // Will we ever need this?
-    // defineField({
-    //   name: 'section',
-    //   type: 'reference',
-    //   to: [{ type: 'section' }],
-    // }),
     defineField({
       name: 'name',
       type: 'string',
