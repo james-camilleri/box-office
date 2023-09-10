@@ -107,11 +107,19 @@ export async function getCustomer({
   }
 
   log.debug(`Creating customer ${name} (${email})`)
-  const stripeCustomer = await stripe.customers.create({
-    name,
-    email,
-    phone,
-  })
+
+  let stripeCustomer = (
+    await stripe.customers.search({ query: `name: '${name}' AND email: '${email}'` })
+  ).data[0]
+
+  if (!stripeCustomer) {
+    log.debug('No existing Stripe customer, creating new entity')
+    stripeCustomer = await stripe.customers.create({
+      name,
+      email,
+      phone,
+    })
+  }
 
   const response = await sanity.create({
     _type: 'customer',
