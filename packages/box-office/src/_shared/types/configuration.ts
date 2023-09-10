@@ -1,4 +1,4 @@
-import { Image, PortableTextBlock, Reference } from 'sanity'
+import { PortableTextBlock, Reference } from 'sanity'
 
 export interface Configuration {
   showName: string

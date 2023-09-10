@@ -1,6 +1,6 @@
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import dts from 'vite-plugin-dts'
-import sveltePreprocess from 'svelte-preprocess'
+import { vitePreprocess } from '@sveltejs/kit/vite'
 
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
@@ -48,7 +48,7 @@ export default defineConfig({
   plugins: [
     dts(),
     svelte({
-      preprocess: [sveltePreprocess({ typescript: true })],
+      preprocess: [vitePreprocess()],
     }),
   ],
 })

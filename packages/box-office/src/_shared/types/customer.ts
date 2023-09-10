@@ -1,4 +1,4 @@
-import { SanityDocument } from 'sanity'
+import type { SanityDocument } from 'sanity'
 
 export interface Customer extends SanityDocument {
   name: string
