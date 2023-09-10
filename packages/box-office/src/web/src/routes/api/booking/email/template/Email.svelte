@@ -3,19 +3,19 @@
   https://github.com/leemunroe/responsive-html-email-template
 -->
 <script lang="ts">
+  import type { TicketDocument, PriceConfiguration, Discount, PriceTier, Seat } from '$shared/types'
   import type { PortableTextBlock } from '@portabletext/types'
-  import { PortableText } from '@portabletext/svelte'
 
+  import { PortableText } from '@portabletext/svelte'
   import Footer from 'email-footer'
 
-  import type { TicketDocument, PriceConfiguration, Discount, PriceTier, Seat } from '$shared/types'
-  import { getLineItem, getTotals, getZonedDate, getZonedTime } from '$shared/utils'
   import { ORGANISATION_NAME } from '$env/static/private'
+  import { getLineItem, getTotals, getZonedDate, getZonedTime } from '$shared/utils'
 
   import { imageUrlBuilder } from '../../../sanity.js'
 
-  import QrCode from './components/QrCode.svelte'
   import EmailWrapper from './components/EmailWrapper.svelte'
+  import QrCode from './components/QrCode.svelte'
 
   export let event: {
     name: string
