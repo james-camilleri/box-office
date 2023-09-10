@@ -107,7 +107,7 @@ export async function getCustomer({
   }
 
   log.debug(`Creating customer ${name} (${email})`)
-  const stripeCustomer = stripe.customers.create({
+  const stripeCustomer = await stripe.customers.create({
     name,
     email,
     phone,
