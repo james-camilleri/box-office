@@ -1,4 +1,6 @@
 import { EmailPlugin, LOG_LEVEL, SlackPlugin } from '@james-camilleri/logger'
+import { createTransport } from 'nodemailer'
+
 import {
   EMAIL,
   REPORT_EMAILS,
@@ -6,7 +8,6 @@ import {
   MAILJET_SECRET_KEY,
   SLACK_WEBHOOK,
 } from '$env/static/private'
-import { createTransport } from 'nodemailer'
 import { log } from '$shared/utils'
 
 const transport = createTransport({
