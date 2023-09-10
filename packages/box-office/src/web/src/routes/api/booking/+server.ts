@@ -1,145 +1,73 @@
+import type Stripe from 'stripe'
+
 import { error } from '@sveltejs/kit'
+
+import { BOOKING, EMAIL_TEXT, SEAT_DETAILS, SHOW_DETAILS } from '$shared/queries'
+import { BOOKING_STATUS, type Booking } from '$shared/types'
 import {
-  STRIPE_LIVE_SECRET_KEY,
-  STRIPE_LIVE_WEBHOOK_SECRET,
-  STRIPE_TEST_SECRET_KEY,
-  STRIPE_TEST_WEBHOOK_SECRET,
-} from '$env/static/private'
-import { PUBLIC_USE_STRIPE_TEST } from '$env/static/public'
-import {
-  CUSTOMER_ID,
-  EMAIL_TEXT,
-  SEAT_DETAILS,
-  SHOW_DETAILS,
-  TRANSACTION_ID_EXISTS,
-} from '$shared/queries'
-import type { ConfigurationFull, Discount, Seat, Show } from '$shared/types'
-import {
-  calculateTotal,
   createReference,
   createTicketsForBooking,
   generateArrayKey,
   generateOrderConfirmationId,
 } from '$shared/utils'
 import { log } from '$shared/utils'
-import Stripe from 'stripe'
 
+import { DataStore, REQUEST_KEY } from '../data-store.js'
 import { sanity } from '../sanity.js'
-import type { RequestHandler } from './$types.js'
+import { getStripeEvent } from '../stripe.js'
+
 import { sendEmail } from './email/email.js'
+import {
+  parseFreeCheckout,
+  parseStripeChargeEvent,
+  type BookingData,
+  getCustomer,
+} from './helpers.js'
 
-interface QueuedRequests {
-  CONFIG?: Promise<ConfigurationFull>
-  CUSTOMER_ID?: Promise<string>
-  EMAIL_TEXT?: Promise<unknown>
-  SEAT_DETAILS?: Promise<Seat[]>
-  SHOW_DETAILS?: Promise<Show>
-}
+export async function POST({ request, fetch }) {
+  const event = await getStripeEvent(request)
 
-const API_KEY =
-  import.meta.env.PROD && PUBLIC_USE_STRIPE_TEST !== 'true'
-    ? STRIPE_LIVE_SECRET_KEY
-    : STRIPE_TEST_SECRET_KEY
+  const store = new DataStore()
+  store.set(
+    REQUEST_KEY.CONFIG,
+    fetch('/api/config').then((response) => response.json()),
+  )
 
-const WEBHOOK_SECRET =
-  import.meta.env.PROD && PUBLIC_USE_STRIPE_TEST !== 'true'
-    ? STRIPE_LIVE_WEBHOOK_SECRET
-    : STRIPE_TEST_WEBHOOK_SECRET
+  if (event?.type === 'invoice.paid') {
+    const invoice = event.data.object as Stripe.Invoice
+    const { metadata, number } = invoice
 
-const stripe = new Stripe(API_KEY)
-
-export const POST: RequestHandler = async ({ request, fetch }) => {
-  const body = await request.text()
-  const signature = request.headers.get('stripe-signature')
-  log.debug('New booking POST', body, signature)
-
-  // Prefetch all the additional data we'll be needing anyway.
-  const queuedRequests: QueuedRequests = {
-    CONFIG: fetch('/api/config').then((response) => response.json()),
-    EMAIL_TEXT: sanity.fetch(EMAIL_TEXT),
-  }
-
-  let event
-
-  if (signature) {
-    try {
-      event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET)
-    } catch (err: any) {
-      log.error('Webhook signature verification failed:')
-      log.error(err.message)
-      await log.flushAll()
-
-      throw error(400)
-    }
-  }
-
-  let bookingData: BookingData
-  if (event?.type) {
-    // Don't process any stripe events besides successful payments.
-    if (event.type !== 'charge.succeeded') {
-      return new Response()
-    }
-
-    const charge = event.data.object
-    const {
-      id,
-      billing_details: { name, email, phone },
-      metadata,
-    } = charge
-
-    if (await idExists(id)) {
-      log.warn(`Transaction ID "${id}" already exists in Sanity database.`)
+    const bookingId = metadata?.booking
+    if (!bookingId || !number) {
+      const message = `Missing data in invoice: ${bookingId ? 'invoice number' : 'booking id'}`
+      log.error(message)
       await log.flush()
-      return new Response()
+      throw error(400, message)
     }
 
-    const seatIds = JSON.parse(metadata.seatIds) as string[]
-    const discount = (metadata.discount && JSON.parse(metadata.discount)) as Discount | undefined
-    const campaigns = (metadata.campaigns && JSON.parse(metadata.campaigns)) as string[] | undefined
+    await finaliseBooking(bookingId, number)
+    await emailTickets(bookingId, number, store)
+    await log.flush()
 
-    queuedRequests.CUSTOMER_ID = getCustomerId({ name, email, phone })
-    queuedRequests.SHOW_DETAILS = sanity.fetch(SHOW_DETAILS, { show: metadata.show })
-    queuedRequests.SEAT_DETAILS = sanity.fetch(SEAT_DETAILS, { seats: seatIds })
-
-    bookingData = {
-      name,
-      email,
-      show: metadata.show,
-      seatIds,
-      discount,
-      campaigns,
-      stripeId: id,
-    }
-  } else {
-    const { name, email, phone, show, seatIds, discount, campaigns } = JSON.parse(body)
-
-    queuedRequests.CUSTOMER_ID = getCustomerId({ name, email, phone })
-    queuedRequests.SHOW_DETAILS = sanity.fetch(SHOW_DETAILS, { show })
-    queuedRequests.SEAT_DETAILS = sanity.fetch(SEAT_DETAILS, { seats: seatIds })
-
-    // Validate that booking doesn't require payment
-    if (!(await validateFreeCheckout(queuedRequests, show, discount.code, fetch))) {
-      throw error(500, 'Payment is required for this checkout')
-    }
-
-    bookingData = {
-      name,
-      email,
-      show,
-      seatIds,
-      discount,
-      campaigns,
-    }
+    return new Response()
   }
 
-  log.setHeader(`New booking: ${bookingData.name} <${bookingData.email}>`)
+  const bookingData = await (event?.type
+    ? parseStripeChargeEvent(event)
+    : parseFreeCheckout(request, store, fetch))
+
+  store.set(REQUEST_KEY.CUSTOMER, getCustomer((await bookingData).customer))
+  store.set(REQUEST_KEY.SHOW_DETAILS, sanity.fetch(SHOW_DETAILS, { show: bookingData.show }))
+  store.set(REQUEST_KEY.SEAT_DETAILS, sanity.fetch(SEAT_DETAILS, { seats: bookingData.seats }))
+
+  log.setHeader(`New booking: ${bookingData.customer.name} <${bookingData.customer.email}>`)
   log.info(
     [
       `Retrieved booking details from ${event?.type ? 'Stripe' : 'front-end'}:`,
-      `name: ${bookingData.name}`,
-      `email: ${bookingData.email}`,
+      `name: ${bookingData.customer.name}`,
+      `email: ${bookingData.customer.email}`,
       `show: ${bookingData.show}`,
-      `seats: ${bookingData.seatIds.join(', ')}`,
+      `seats: ${bookingData.seats.join(', ')}`,
       `discount: ${bookingData.discount?.code ?? '-'}`,
       `campaign: ${bookingData.campaigns}`,
       ...(bookingData.stripeId ? [`stripeId: ${bookingData.stripeId}`] : []),
@@ -147,8 +75,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
   )
 
   try {
-    await createInvoice(bookingData, queuedRequests)
-    await finalisePurchase(bookingData, queuedRequests)
+    await createBooking(bookingData, store)
   } catch (e) {
     console.error(e)
     log.error(e)
@@ -160,95 +87,36 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
   return new Response()
 }
 
-interface BookingData {
-  name: string
-  email: string
-  show: string
-  seatIds: string[]
-  discount?: Discount
-  campaigns?: string[]
-  stripeId?: string
-}
-
-async function idExists(id: string) {
-  return sanity.fetch(TRANSACTION_ID_EXISTS, { id })
-}
-
-async function validateFreeCheckout(
-  queuedRequests: QueuedRequests,
-  showId: string,
-  discountCode: string,
-  svelteFetch: typeof fetch,
-) {
-  try {
-    const [config, seats, discount] = await Promise.all([
-      queuedRequests.CONFIG,
-      queuedRequests.SEAT_DETAILS,
-      await svelteFetch(`/api/config/discount/${showId}/${discountCode}`).then((response) =>
-        response.json(),
-      ),
-    ])
-
-    if (!seats || !config) {
-      return false
-    }
-
-    return (
-      calculateTotal(seats, showId, config?.priceTiers, config?.priceConfiguration, discount) === 0
-    )
-  } catch (e) {
-    console.error(e)
-    return false
-  }
-}
-
-async function finalisePurchase(bookingData: BookingData, queuedRequests: QueuedRequests) {
-  const { name, email, show, seatIds, discount, campaigns, stripeId } = bookingData
+async function createBooking(bookingData: BookingData, store: DataStore) {
+  const { show, seats: seatIds, discount, campaigns, stripeId } = bookingData
 
   const bookingId = crypto.randomUUID()
   log.debug('Created booking ID', bookingId)
   const orderConfirmation = generateOrderConfirmationId()
   log.debug('Created order confirmation', orderConfirmation)
 
-  const [tickets, config, emailText, customerId, showDetails, seats] = await Promise.all([
+  const [tickets, config, customer, showDetails, seats] = await Promise.all([
     await createTicketsForBooking(sanity, {
       bookingId,
       showId: show,
       seats: seatIds,
     }),
-    queuedRequests.CONFIG,
-    queuedRequests.EMAIL_TEXT,
-    queuedRequests.CUSTOMER_ID,
-    queuedRequests.SHOW_DETAILS,
-    queuedRequests.SEAT_DETAILS,
+    store.get(REQUEST_KEY.CONFIG),
+    store.get(REQUEST_KEY.CUSTOMER),
+    store.get(REQUEST_KEY.SHOW_DETAILS),
+    store.get(REQUEST_KEY.SEAT_DETAILS),
   ])
 
-  if (!tickets || !config || !emailText || !customerId || !showDetails || !seats) {
+  if (!tickets || !config || !customer || !showDetails || !seats) {
     throw error(500, 'Missing data required for checkout completion')
   }
-
-  log.info('Sending ticket email')
-  await sendEmail({
-    orderConfirmation,
-    tickets,
-    bookingDetails: {
-      name,
-      email,
-      show,
-      date: showDetails.date,
-      discount,
-    },
-    config,
-    seats,
-    emailText,
-  })
 
   // Create booking.
   log.info('Creating booking document on Sanity.io')
   await sanity.create({
     _id: bookingId,
     _type: 'booking',
-    customer: createReference(customerId),
+    customer: createReference(customer._id),
     show: createReference(show),
     seats: seatIds.map((id) => ({ ...createReference(id), _key: generateArrayKey() })),
     discount: discount?._id && createReference(discount?._id),
@@ -259,6 +127,7 @@ async function finalisePurchase(bookingData: BookingData, queuedRequests: Queued
     campaigns,
     readOnly: true,
     valid: true,
+    status: BOOKING_STATUS.PENDING,
   })
 
   log.success('Booking created')
@@ -278,7 +147,7 @@ async function finalisePurchase(bookingData: BookingData, queuedRequests: Queued
   }
 
   sanity
-    .patch(customerId)
+    .patch(customer._id)
     .setIfMissing({ bookings: [] })
     .insert('after', 'bookings[-1]', [createReference(bookingId)])
     .commit({
@@ -295,74 +164,45 @@ async function finalisePurchase(bookingData: BookingData, queuedRequests: Queued
   log.info('Initiated booking reference updates')
 }
 
-async function getCustomerId({
-  name,
-  email,
-  phone,
-}: {
-  name: string
-  email: string
-  phone: string
-}): Promise<string> {
-  log.debug('Getting customer ID for', name, email)
-  const customerId = await sanity.fetch(CUSTOMER_ID, { email })
+async function finaliseBooking(bookingId: string, receiptNumber: string) {
+  log.info(`Finalising booking ${bookingId}`)
+  await sanity
+    .patch(bookingId)
+    .set({
+      receiptNumber,
+      status: BOOKING_STATUS.COMPLETE,
+    })
+    .commit()
 
-  if (customerId) {
-    log.info(`Customer ID for ${email} found: ${customerId}`)
-    return customerId
-  }
-
-  log.debug(`Creating customer ${name} (${email}).`)
-  const response = await sanity.create({
-    _type: 'customer',
-    name,
-    email,
-    phone,
-  })
-
-  log.info('Created new customer', response._id)
-  return response._id
+  log.success(`Booking ${bookingId} finalised`)
 }
 
-async function createInvoice(bookingData: BookingData, queuedRequests: QueuedRequests) {
-  const invoice = await stripe.invoices.create({
-    auto_advance: false,
-    // TODO: use actual customer ID
-    customer: 'cus_OZCKzv1Lg1q8DP',
-    // TODO: Add this as a memo because stripe doesn't accept VAT exempt numbers?
-    // account_tax_ids: ['MY_VAT_NUMBER'],
-    currency: 'EUR',
+async function emailTickets(bookingId: string, receiptNumber: string, store: DataStore) {
+  const { customer, discount, orderConfirmation, seats, show, tickets } = (await sanity.fetch(
+    BOOKING,
+    { bookingId },
+  )) as Booking
+
+  store.set(REQUEST_KEY.EMAIL_TEXT, sanity.fetch(EMAIL_TEXT))
+  store.set(REQUEST_KEY.SHOW_DETAILS, sanity.fetch(SHOW_DETAILS, { show: show._id }))
+
+  log.info('Sending ticket email')
+
+  await sendEmail({
+    orderConfirmation,
+    receiptNumber,
+    tickets,
+    bookingDetails: {
+      name: customer.name,
+      email: customer.email,
+      show: show._id,
+      date: show.date,
+      discount,
+    },
+    config: await store.get(REQUEST_KEY.CONFIG),
+    seats,
+    emailText: await store.get(REQUEST_KEY.EMAIL_TEXT),
   })
 
-  console.log('🎈 got receipt number', invoice.id, invoice.number)
-
-  await Promise.all([
-    stripe.invoiceItems.create({
-      invoice: invoice.id,
-      customer: 'cus_OZCKzv1Lg1q8DP',
-      amount: 500,
-      description: 'A-TICKET',
-      tax_rates: ['txr_1Nn8rgFWTKgVyWTE08kT3WmM'],
-      currency: 'EUR',
-    }),
-    stripe.invoiceItems.create({
-      invoice: invoice.id,
-      customer: 'cus_OZCKzv1Lg1q8DP',
-      amount: 250,
-      description: 'ANOTHER-TICKET',
-      tax_rates: ['txr_1Nn8rgFWTKgVyWTE08kT3WmM'],
-      currency: 'EUR',
-    }),
-    stripe.invoiceItems.create({
-      invoice: invoice.id,
-      customer: 'cus_OZCKzv1Lg1q8DP',
-      amount: -440,
-      description: 'discount',
-      currency: 'EUR',
-    }),
-  ])
-
-  await stripe.invoices.pay(invoice.id, {
-    paid_out_of_band: true,
-  })
+  log.success(`Ticket email sent to ${customer.name} <${customer.email}>`)
 }
