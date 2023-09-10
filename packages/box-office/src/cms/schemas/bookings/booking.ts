@@ -1,7 +1,8 @@
-import { AccessDeniedIcon, CheckmarkCircleIcon } from '@sanity/icons'
+import { AccessDeniedIcon, CheckmarkCircleIcon, CircleIcon } from '@sanity/icons'
 import { Reference, defineField, defineType } from 'sanity'
 
 import { BOOKED_AND_LOCKED_SEATS } from '$shared/queries'
+import { BOOKING_STATUS } from '$shared/types'
 
 export default defineType({
   name: 'booking',
@@ -80,11 +81,17 @@ export default defineType({
       readOnly: true,
     }),
     defineField({
+      name: 'receiptNumber',
+      description: 'The Stripe invoice number, for cross-referencing',
+      type: 'string',
+      readOnly: true,
+    }),
+    defineField({
       name: 'source',
       description: 'Where the booking was made from (mostly used for filtering)',
       type: 'string',
       options: {
-        list: ['pre-booking', 'box-office', 'website'],
+        list: ['box-office', 'website'],
       },
       readOnly: ({ document }) => !!document?.readOnly,
     }),
@@ -101,6 +108,15 @@ export default defineType({
       readOnly: true,
     }),
     defineField({
+      name: 'status',
+      type: 'string',
+      initialValue: BOOKING_STATUS.PENDING,
+      options: {
+        list: Object.values(BOOKING_STATUS) as string[],
+      },
+      readOnly: true,
+    }),
+    defineField({
       name: 'readOnly',
       type: 'boolean',
       hidden: true,
@@ -111,9 +127,10 @@ export default defineType({
       name: 'customer.name',
       show: 'show.date',
       seats: 'seats',
+      status: 'status',
       valid: 'valid',
     },
-    prepare({ name, show, seats, valid }) {
+    prepare({ name, show, seats, status, valid }) {
       const date = new Date(show)
 
       return {
@@ -121,7 +138,12 @@ export default defineType({
         subtitle: `${date.toLocaleDateString()} ${date.toLocaleTimeString().replace(/:00$/, '')} x${
           seats?.length ?? ''
         }`,
-        media: valid ? CheckmarkCircleIcon : AccessDeniedIcon,
+        media:
+          status === BOOKING_STATUS.PENDING
+            ? CircleIcon
+            : valid
+            ? CheckmarkCircleIcon
+            : AccessDeniedIcon,
       }
     },
   },

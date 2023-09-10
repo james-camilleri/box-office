@@ -42,6 +42,12 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'stripeId',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+      readOnly: true,
+    }),
+    defineField({
       name: 'bookings',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'booking' }] }],

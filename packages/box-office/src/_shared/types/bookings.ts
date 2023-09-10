@@ -1,5 +1,6 @@
-import type { Image, Reference, SanityDocument } from '@sanity/types'
+import type { Image, Reference, SanityDocument } from 'sanity'
 import type { PriceTier, Show } from './configuration.js'
+import type { Customer } from './customer.js'
 
 export interface Seat {
   _id: string
@@ -41,25 +42,14 @@ export interface Discount {
   singleUse: boolean
 }
 
-export interface BookingDetails {
-  name: string
-  email: string
-  show: string
-  date: string
-  discount: Discount
-}
-
-export interface Booking {
-  _id: string
-  _createdAt: string
-  orderConfirmation: string
-  name: string
-  email: string
+export interface Booking extends SanityDocument {
   show: Show
   seats: Seat[]
-  tickets: string[]
-  source: string
   discount?: Discount
+  customer: Customer
+  tickets: TicketDocument[]
+  orderConfirmation: string
+  source: string
   campaigns?: string[]
 }
 
@@ -74,4 +64,9 @@ export interface BookingWithPrices extends Booking {
   bookingFee?: number
   total?: number
   profit?: number
+}
+
+export enum BOOKING_STATUS {
+  PENDING = 'pending',
+  COMPLETE = 'complete',
 }
