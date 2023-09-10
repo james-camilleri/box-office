@@ -69,25 +69,22 @@ export const CUSTOMER_EXISTS =
   'defined(*[_type == "customer" && !(_id in path("drafts.**")) && email == $email][0]._id)'
 
 /**
- * Get customer ID.
+ * Get customer.
  * @email the email to retrieve the ID for
  */
-export const CUSTOMER_ID = '*[_type == "customer" && email == $email][0]._id'
+export const CUSTOMER = '*[_type == "customer" && email == $email][0]'
 
 /**
  * Get full booking information for email.
- * @bookingId the booking ID to dereference
+ * @bookingId the booking ID to reference
  */
-export const BOOKING_DETAILS = `*[_type == "booking" && _id == $bookingId]{
-    'name': customer -> name,
-    'email': customer -> email,
-    'show': show -> _id,
-    'date': show -> date,
-    'discount': {
-      'name': discount -> name,
-      'type': discount -> type,
-      'value': discount -> value
-    }
+export const BOOKING = `*[_type == "booking" && _id == $bookingId]{
+    ...,
+    'customer': customer->,
+    'discount': discount->,
+    'seats': seats[]->,
+    'show': show->,
+    'tickets': tickets[]->
   }[0]`
 
 /**
