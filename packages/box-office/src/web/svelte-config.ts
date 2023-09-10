@@ -14,6 +14,9 @@ export function createSvelteConfig(config?: Config) {
         appTemplate: 'node_modules/@the-gods/box-office/dist/web/app.html',
         routes: 'node_modules/@the-gods/box-office/dist/web/routes',
         lib: 'node_modules/@the-gods/box-office/dist/web/lib',
+        hooks: {
+          server: 'node_modules/@the-gods/box-office/dist/web/hooks.server.ts',
+        },
       },
       ...config?.kit,
     },
