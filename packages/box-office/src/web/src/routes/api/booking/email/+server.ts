@@ -1,42 +1,41 @@
-import { BOOKING_DETAILS, EMAIL_TEXT, SEAT_DETAILS } from '$shared/queries'
-import type { BookingDetails, ConfigurationFull, Seat, TicketDocument } from '$shared/types'
+import type { Booking, ConfigurationFull } from '$shared/types'
+import type { PortableTextBlock } from 'sanity'
+
+import { BOOKING, EMAIL_TEXT } from '$shared/queries'
 
 import { sanity } from '../../sanity.js'
-import type { RequestHandler } from './$types.js'
+
 import { sendEmail } from './email.js'
 
 interface BookingPayload {
   bookingId: string
-  orderConfirmation: string
-  tickets: TicketDocument[]
-  calculateBookingFee: boolean
 }
 
-export const POST: RequestHandler = async (event) => {
-  const { request } = event
-
+export async function POST({ request, fetch }) {
   try {
-    const { bookingId, orderConfirmation, tickets, calculateBookingFee } =
-      (await request.json()) as BookingPayload
-    const seatIds = tickets.map(({ seat }) => seat._ref)
+    const { bookingId } = (await request.json()) as BookingPayload
 
-    const [config, bookingDetails, seats, emailText] = await Promise.all([
-      // TODO: FIGURE OUT WHY THE HELL RELATIVE FETCH IS FAILING ON THE SERVER
-      (await (await fetch(event.url.origin + '/api/config')).json()) as Promise<ConfigurationFull>,
-      // (await (await fetch('/api/config')).json()) as Promise<ConfigurationFull>,
-      (await sanity.fetch(BOOKING_DETAILS, { bookingId })) as BookingDetails,
-      (await sanity.fetch(SEAT_DETAILS, { seats: seatIds })) as Seat[],
-      await sanity.fetch(EMAIL_TEXT),
+    const [config, booking, emailText] = await Promise.all([
+      fetch('/api/config').then((payload) => payload.json()) as Promise<ConfigurationFull>,
+      sanity.fetch(BOOKING, { bookingId }) as Promise<Booking>,
+      sanity.fetch(EMAIL_TEXT) as Promise<PortableTextBlock[]>,
     ])
 
     await sendEmail({
-      bookingDetails,
+      bookingDetails: {
+        name: booking.customer.name,
+        email: booking.customer.email,
+        show: booking.show._id,
+        date: booking.show.date,
+        discount: booking.discount,
+      },
       config,
-      seats,
+      seats: booking.seats,
       emailText,
-      orderConfirmation,
-      tickets,
-      calculateBookingFee,
+      orderConfirmation: booking.orderConfirmation,
+      receiptNumber: booking.receiptNumber,
+      tickets: booking.tickets,
+      calculateBookingFee: booking.source === 'website',
     })
   } catch (e) {
     console.error(e)
