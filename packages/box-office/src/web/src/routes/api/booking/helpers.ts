@@ -60,11 +60,11 @@ export async function parseStripeChargeEvent(event: Stripe.Event): Promise<Booki
 }
 
 export async function parseFreeCheckout(
-  request: Request,
+  body: string,
   store: DataStore,
   svelteFetch: typeof fetch,
 ): Promise<BookingData> {
-  const { name, email, phone, show, seatIds, discount, campaigns } = (await request.json()) as {
+  const { name, email, phone, show, seatIds, discount, campaigns } = JSON.parse(body) as {
     name: string
     email: string
     phone: string

@@ -25,7 +25,8 @@ import {
 } from './helpers.js'
 
 export async function POST({ request, fetch }) {
-  const event = await getStripeEvent(request)
+  const body = await request.text()
+  const event = await getStripeEvent(request.headers, body)
 
   const store = new DataStore()
   store.set(
@@ -54,7 +55,7 @@ export async function POST({ request, fetch }) {
 
   const bookingData = await (event?.type
     ? parseStripeChargeEvent(event)
-    : parseFreeCheckout(request, store, fetch))
+    : parseFreeCheckout(body, store, fetch))
 
   store.set(REQUEST_KEY.CUSTOMER, getCustomer((await bookingData).customer))
   store.set(REQUEST_KEY.SHOW_DETAILS, sanity.fetch(SHOW_DETAILS, { show: bookingData.show }))

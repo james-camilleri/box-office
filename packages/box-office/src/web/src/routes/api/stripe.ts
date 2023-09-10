@@ -33,9 +33,11 @@ export function getWebhookSecret(type: 'account' | 'connect') {
   return type === 'account' ? WEBHOOK_SECRET : CONNECT_WEBHOOK_SECRET
 }
 
-export async function getStripeEvent(request: Request): Promise<Stripe.Event | undefined> {
-  const body = await request.text()
-  const signature = request.headers.get('stripe-signature')
+export async function getStripeEvent(
+  headers: Request['headers'],
+  body: string,
+): Promise<Stripe.Event | undefined> {
+  const signature = headers.get('stripe-signature')
 
   // Use the connect webhook secret if the payload body includes the connect account ID.
   const secret = body.includes(PUBLIC_STRIPE_CONNECT_ID) ? CONNECT_WEBHOOK_SECRET : WEBHOOK_SECRET
