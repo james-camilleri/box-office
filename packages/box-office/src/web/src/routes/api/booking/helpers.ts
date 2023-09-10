@@ -55,6 +55,7 @@ export async function parseStripeChargeEvent(event: Stripe.Event): Promise<Booki
     discount,
     campaigns,
     customer: { name, email, phone },
+    stripeId: id,
   }
 }
 
