@@ -93,7 +93,8 @@ export default defineType({
       options: {
         list: ['box-office', 'website'],
       },
-      readOnly: ({ document }) => !!document?.readOnly,
+      initialValue: 'box-office',
+      readOnly: true,
     }),
     defineField({
       name: 'campaigns',
