@@ -10,7 +10,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'import'],
   ignorePatterns: ['*.cjs'],
   parserOptions: {
-    project: './packages/box-office/src/web/tsconfig.json',
+    project: './tsconfig.json',
     ecmaVersion: 2020,
     extraFileExtensions: ['.svelte'],
     sourceType: 'module',
