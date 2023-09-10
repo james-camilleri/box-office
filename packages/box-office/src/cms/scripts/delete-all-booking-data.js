@@ -1,6 +1,13 @@
 import readline from 'readline'
 
-import sanityClient from '@sanity/client'
+import { createClient } from '@sanity/client'
+
+const {
+  SANITY_STUDIO_API_KEY,
+  SANITY_STUDIO_API_VERSION,
+  SANITY_STUDIO_DATASET,
+  SANITY_STUDIO_PROJECT_ID,
+} = process.env
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -15,12 +22,11 @@ rl.question(
       process.exit(0)
     }
 
-    const { SANITY_API_KEY } = process.env
-    const client = sanityClient({
-      projectId: '8biawkr2',
-      apiVersion: '2022-11-01',
-      dataset: 'production',
-      token: SANITY_API_KEY,
+    const client = createClient({
+      projectId: SANITY_STUDIO_PROJECT_ID,
+      apiVersion: SANITY_STUDIO_API_VERSION,
+      dataset: SANITY_STUDIO_DATASET,
+      token: SANITY_STUDIO_API_KEY,
       useCdn: false,
     })
 

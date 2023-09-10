@@ -39,7 +39,8 @@
     "prepublishOnly": "pnpm build",
     "generate-sveltekit-types": "cd ./src/web/ && svelte-kit sync",
     "dev-cms": "cd ./src/cms && sanity dev",
-    "dev-web": "cd ./src/web && vite dev"
+    "dev-web": "cd ./src/web && vite dev",
+    "delete-all-booking-data": "cd ./src/cms && env-cmd node ./scripts/delete-all-booking-data.js"
   },
   "files": [
     "dist",
