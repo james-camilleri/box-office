@@ -1,7 +1,8 @@
+import type { ConfigurationFull, Discount, Seat, TicketDocument } from '$shared/types'
+
 import juice from 'juice'
 import nodemailer from 'nodemailer'
 import { parseFullName } from 'parse-full-name'
-import type { ConfigurationFull, Discount, Seat, TicketDocument } from '$shared/types'
 
 import { EMAIL, ORGANISATION_NAME, MAILJET_API_KEY, MAILJET_SECRET_KEY } from '$env/static/private'
 
@@ -9,6 +10,7 @@ import Email from './template/Email.svelte'
 
 interface SendEmailParams {
   orderConfirmation: string
+  receiptNumber: string
   tickets: TicketDocument[]
   bookingDetails: {
     name: string
@@ -20,7 +22,7 @@ interface SendEmailParams {
   config: ConfigurationFull
   seats: Seat[]
   emailText: unknown
-  calculateBookingFee: boolean
+  calculateBookingFee?: boolean
 }
 
 export async function sendEmail({
@@ -30,6 +32,7 @@ export async function sendEmail({
   emailText,
   tickets,
   orderConfirmation,
+  receiptNumber,
   calculateBookingFee = true,
 }: SendEmailParams) {
   const { name, email, date, show, discount } = bookingDetails
@@ -92,6 +95,7 @@ export async function sendEmail({
           discount,
           emailText,
           calculateBookingFee,
+          receiptNumber,
         }),
       ),
     ),
