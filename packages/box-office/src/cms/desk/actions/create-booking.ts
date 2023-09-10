@@ -18,31 +18,6 @@ import {
   generateOrderConfirmationId,
 } from '$shared/utils'
 
-const EMAIL_API_URL = import.meta.env.PROD
-  ? '/.netlify/functions/resend-email'
-  : 'http://localhost:5173/api/booking/email'
-
-async function emailTickets(
-  bookingId: string | undefined,
-  orderConfirmation: string,
-  tickets: TicketDocument[],
-) {
-  if (!bookingId) {
-    console.error('No booking ID for email')
-    return
-  }
-
-  return fetch(EMAIL_API_URL, {
-    method: 'POST',
-    body: JSON.stringify({
-      calculateBookingFee: false,
-      bookingId,
-      orderConfirmation,
-      tickets,
-    }),
-  })
-}
-
 export function CreateBooking({
   id,
   type,
@@ -106,14 +81,6 @@ export function CreateBooking({
 
       const tickets = await createTicketsForBooking(client, bookingDetails)
       setTicketIds(tickets.map((ticket) => ticket._id))
-      const emailResponse = await emailTickets(draft?._id, orderConfirmation, tickets)
-      if (!emailResponse?.ok) {
-        console.error(await emailResponse?.text())
-        toast.push({
-          title: 'Error emailing tickets',
-          status: 'error',
-        })
-      }
 
       patch.execute([
         {
