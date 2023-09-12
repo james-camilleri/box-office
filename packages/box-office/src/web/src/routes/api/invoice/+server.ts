@@ -58,6 +58,7 @@ async function createInvoice(booking: Booking, store: DataStore) {
     currency,
     metadata: {
       booking: booking._id,
+      transaction: booking.transactionId,
     },
   })
   log.debug(`Stripe invoice "${id}" created`)

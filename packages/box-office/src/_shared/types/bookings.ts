@@ -49,6 +49,7 @@ export interface Booking extends SanityDocument {
   customer: Customer
   tickets: TicketDocument[]
   orderConfirmation: string
+  transactionId: string
   receiptNumber: string
   source: string
   campaigns?: string[]
