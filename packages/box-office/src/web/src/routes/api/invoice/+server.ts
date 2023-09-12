@@ -12,7 +12,11 @@ import { stripe } from '../stripe.js'
   {
     ...,
     'show': show->,
-    'seats': seats[]->,
+    'seats': seats[]->{
+      _id,
+      'row': row -> _id,
+      'section': row -> section -> _id
+    },
     'discount': discount->,
     'customer': customer->
   }
