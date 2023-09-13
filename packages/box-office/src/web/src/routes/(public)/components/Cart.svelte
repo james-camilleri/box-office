@@ -147,7 +147,7 @@
           >
             <svelte:fragment slot="rightSection">
               {#if checkingDiscount}
-                <Loader color="var(--primary)" size="xs" />
+                <Loader color="gray" size="xs" />
               {/if}
             </svelte:fragment>
           </TextInput>
