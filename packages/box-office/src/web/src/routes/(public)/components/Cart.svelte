@@ -3,8 +3,9 @@
   import type { PortableTextBlock } from '@portabletext/types'
 
   import { PortableText } from '@portabletext/svelte'
-  import { Alert, Button, Loader, TextInput } from '@svelteuidev/core'
+  import { Alert, Button, Loader, TextInput, Tooltip } from '@svelteuidev/core'
   import { createEventDispatcher } from 'svelte'
+  import SvelteLogo from 'virtual:icons/fluent/info-28-regular'
 
   import Grid from '$lib/components/layout/Grid.svelte'
   import { selection } from '$lib/components/seatplan/stores.js'
@@ -120,7 +121,18 @@
           </span>
         {/if}
         <span class="line-item booking-fee">
-          <span>Booking fee <small>(0% VAT)</small></span>
+          <span
+            >Booking fee <small>(0% VAT)</small><Tooltip
+              wrapLines
+              width={300}
+              withArrow
+              transitionDuration={200}
+              label="This booking fee covers credit card processing costs and maintenance of the ticketing platform, so that 100% of the ticket price goes to the artists. Booking fees are regrettably not refundable."
+              ><span class="info-icon">
+                <SvelteLogo />
+              </span></Tooltip
+            ></span
+          >
           <span>€{totals?.bookingFee?.toFixed(2) ?? '0'}</span>
         </span>
         <span class="line-item total">
@@ -254,6 +266,14 @@
     .input {
       flex-grow: 1;
     }
+  }
+
+  .info-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-inline-start: 0.5em;
+    cursor: pointer;
   }
 
   .checkout-small-print {
