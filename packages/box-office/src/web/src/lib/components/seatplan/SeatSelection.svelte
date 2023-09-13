@@ -1,17 +1,13 @@
 <script lang="ts">
-  import SeatPlan from 'seat-plan'
+  import type { PriceConfiguration, PriceTier, Seat } from '$shared/types'
 
+  import SeatPlan from 'seat-plan'
   import { setContext } from 'svelte'
   import { writable } from 'svelte/store'
   import { ZoomSvg } from 'svelte-parts/zoom'
 
-  import type { PriceConfiguration, PriceTier, Seat as SeatType } from '$shared/types'
-
-  import Grid from '$lib/components/layout/Grid.svelte'
-
-  import { ALLOW_SELECTION } from './context.js'
   import PriceTiers from './PriceTiers.svelte'
-
+  import { ALLOW_SELECTION } from './context.js'
   import { pricing, selection, unavailable } from './stores.js'
 
   export let priceTiers: PriceTier[]
@@ -19,6 +15,7 @@
   export let showId: string
   export let unavailableSeats: string[] | undefined
   export let allowSelection = true
+  export let initialSelection: string[] | undefined
 
   const _allowSelection = writable(allowSelection)
   $: $_allowSelection = allowSelection
@@ -33,7 +30,7 @@
 
   $: {
     $unavailable = !unavailableSeats ? unavailableSeats : new Set(unavailableSeats)
-    $selection = new Map<string, SeatType>()
+    $selection = new Map<string, Seat>()
   }
 
   $: colours = priceTiers.map(({ _id, colour }) => `--pricing-${_id}: ${colour}`).join(';')

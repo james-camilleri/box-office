@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { getContext } from 'svelte'
   import type { Writable } from 'svelte/store'
 
-  import { pricing, selection, unavailable } from './stores.js'
+  import { getContext } from 'svelte'
+
   import { ALLOW_SELECTION, ROW_ID, SECTION_ID } from './context.js'
+  import { pricing, selection, unavailable } from './stores.js'
 
   export let number: number | string
   export let x: number | undefined = undefined
