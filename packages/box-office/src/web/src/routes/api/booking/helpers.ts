@@ -3,7 +3,7 @@ import type Stripe from 'stripe'
 
 import { error } from '@sveltejs/kit'
 
-import { CUSTOMER, TRANSACTION_ID_EXISTS } from '$shared/queries'
+import { CUSTOMER, SEAT_DETAILS, TRANSACTION_ID_EXISTS } from '$shared/queries'
 import { calculateTotal, log } from '$shared/utils'
 
 import { REQUEST_KEY, type DataStore } from '../data-store.js'
@@ -73,6 +73,8 @@ export async function parseFreeCheckout(
     discount: Discount | undefined
     campaigns: string[] | undefined
   }
+
+  store.set(REQUEST_KEY.SEAT_DETAILS, sanity.fetch(SEAT_DETAILS, { seats: seatIds }))
 
   // Validate that booking doesn't require payment
   if (!(await validateFreeCheckout(show, discount?.code, store, svelteFetch))) {
