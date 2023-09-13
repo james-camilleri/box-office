@@ -5,7 +5,7 @@
   import { PortableText } from '@portabletext/svelte'
   import { Alert, Button, Loader, TextInput, Tooltip } from '@svelteuidev/core'
   import { createEventDispatcher } from 'svelte'
-  import SvelteLogo from 'virtual:icons/fluent/info-28-regular'
+  import Info from 'virtual:icons/fluent/info-28-regular'
 
   import Grid from '$lib/components/layout/Grid.svelte'
   import { selection } from '$lib/components/seatplan/stores.js'
@@ -129,7 +129,7 @@
               transitionDuration={200}
               label="This booking fee covers credit card processing costs and maintenance of the ticketing platform, so that 100% of the ticket price goes to the artists. Booking fees are regrettably not refundable."
               ><span class="info-icon">
-                <SvelteLogo />
+                <Info />
               </span></Tooltip
             ></span
           >
