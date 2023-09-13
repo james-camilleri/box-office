@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Stripe, StripeElements } from '@stripe/stripe-js'
   import type { Discount, Seat } from '$shared/types'
+  import type { Stripe, StripeElements } from '@stripe/stripe-js'
 
   import { loadStripe } from '@stripe/stripe-js'
+  import { Alert, Button, Loader } from '@svelteuidev/core'
   import { createEventDispatcher, onMount } from 'svelte'
   import { Elements, PaymentElement } from 'svelte-stripe'
-  import { Alert, Button, Loader } from '@svelteuidev/core'
 
   import { page } from '$app/stores'
   import {
@@ -15,6 +15,7 @@
     PUBLIC_USE_STRIPE_TEST,
   } from '$env/static/public'
   import Grid from '$lib/components/layout/Grid.svelte'
+
   import AdditionalFields from './AdditionalFields.svelte'
 
   const API_KEY =
@@ -194,7 +195,10 @@
 
 {#if error}
   <div class="alert-wrapper">
-    <Alert title="Problem submitting payment!" color="yellow">
+    <Alert
+      title={paymentRequired ? 'Problem submitting payment!' : 'Problem processing checkout!'}
+      color="yellow"
+    >
       {error.message}
     </Alert>
   </div>
@@ -228,15 +232,15 @@
 {:else if !paymentRequired && !error}
   <form on:submit|preventDefault={onSubmit}>
     <Grid gap="var(--xxs)">
-      <AdditionalFields bind:name bind:email {submitted} />
+      <AdditionalFields bind:name bind:email bind:phone {submitted} />
       <div class="confirm-button">
-        <Button fullSize disabled={processing} color="red" size="lg">Confirm</Button>
+        <Button fullSize disabled={processing} color="var(--primary)" size="lg">Confirm</Button>
       </div>
     </Grid>
   </form>
 {:else}
   <div class="loader">
-    <Loader color="red" size="lg" />
+    <Loader color="gray" size="lg" />
   </div>
 {/if}
 
