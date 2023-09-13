@@ -1,9 +1,11 @@
 <script lang="ts">
   import type { PageData } from './$types.js'
-  import SeatSelection from '$lib/components/seatplan/SeatSelection.svelte'
+
   import { page } from '$app/stores'
-  import Cart from './components/Cart.svelte'
   import Grid from '$lib/components/layout/Grid.svelte'
+  import SeatSelection from '$lib/components/seatplan/SeatSelection.svelte'
+
+  import Cart from './components/Cart.svelte'
   import { selectedShowId } from './state/selected-show.js'
 
   export let data: PageData
