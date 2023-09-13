@@ -3,11 +3,20 @@
 
   import type { PageData } from './$types.js'
 
+  import { page } from '$app/stores'
+
   import ShowSelection from './components/ShowSelection.svelte'
   import { selectedShowId } from './state/selected-show.js'
 
   export let data: PageData
   const { ticketConfig, uiConfig } = data
+
+  if (
+    $page.url.searchParams.has('show') &&
+    ticketConfig.shows.some((show) => $page.url.searchParams.get('show') === show._id)
+  ) {
+    selectedShowId.set($page.url.searchParams.get('show') as string)
+  }
 </script>
 
 <main style:--primary={uiConfig.primaryColour} style:--secondary={uiConfig.secondaryColour}>
