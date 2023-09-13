@@ -140,6 +140,7 @@
       <Grid>
         <form on:submit|preventDefault={applyDiscount} class="discount-code">
           <TextInput
+            class="input"
             aria-label="Discount code"
             placeholder="Discount code"
             error={!discountCode && discountError}
@@ -250,7 +251,7 @@
     gap: var(--xs);
     align-items: start;
 
-    > :first-child {
+    .input {
       flex-grow: 1;
     }
   }
