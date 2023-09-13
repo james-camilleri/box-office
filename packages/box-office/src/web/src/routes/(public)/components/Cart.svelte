@@ -1,14 +1,16 @@
 <script lang="ts">
+  import type { Discount, PriceConfiguration, PriceTier, Seat } from '$shared/types'
   import type { PortableTextBlock } from '@portabletext/types'
 
-  import { Alert, Button, Loader, TextInput } from '@svelteuidev/core'
-  import { pricing, selection } from '$lib/components/seatplan/stores.js'
-  import type { Discount, PriceConfiguration, PriceTier, Seat } from '$shared/types'
-  import { getLineItem, getTotals } from '$shared/utils'
-  import Payment from './Payment.svelte'
-  import Grid from '$lib/components/layout/Grid.svelte'
-  import { createEventDispatcher } from 'svelte'
   import { PortableText } from '@portabletext/svelte'
+  import { Alert, Button, Loader, TextInput } from '@svelteuidev/core'
+  import { createEventDispatcher } from 'svelte'
+
+  import Grid from '$lib/components/layout/Grid.svelte'
+  import { selection } from '$lib/components/seatplan/stores.js'
+  import { getLineItem, getTotals } from '$shared/utils'
+
+  import Payment from './Payment.svelte'
 
   export let show: string
   export let priceTiers: PriceTier[]
