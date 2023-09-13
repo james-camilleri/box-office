@@ -24,7 +24,9 @@ export class DataStore {
     key: REQUEST_KEY,
     value: Promise<ConfigurationFull | PortableTextBlock[] | Customer | Seat[] | Show>,
   ) {
-    this.#cache.set(key, value)
+    if (!this.#cache.has(key)) {
+      this.#cache.set(key, value)
+    }
   }
 
   get(key: REQUEST_KEY.CONFIG): Promise<ConfigurationFull>
