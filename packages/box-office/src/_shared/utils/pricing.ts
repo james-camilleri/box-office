@@ -73,7 +73,7 @@ export function getTotals(prices: number[], discount?: Discount, shouldCalculate
     // Don't charge a booking fee for free checkouts.
     applicationFee && total !== 0 ? calculateTotalBookingFee(total, applicationFee) : undefined
 
-  const vat = total * 0.05 // 5% VAT.
+  const vat = (total / 1.05 - total) * -1 // 5% VAT.
 
   if (bookingFee) {
     total += bookingFee
