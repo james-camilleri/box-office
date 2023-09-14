@@ -1,7 +1,6 @@
 import type { UserConfig } from 'vite'
 
 import { sveltekit } from '@sveltejs/kit/vite'
-import icons from 'unplugin-icons/vite'
 
 interface PathOverrides {
   seatPlan: string
@@ -20,12 +19,6 @@ export function createViteConfig(paths?: PathOverrides, config?: UserConfig) {
       },
       preserveSymlinks: true,
     },
-    plugins: [
-      sveltekit(),
-      icons({
-        compiler: 'svelte',
-      }),
-      ...(config?.plugins || []),
-    ],
+    plugins: [sveltekit(), ...(config?.plugins || [])],
   }
 }

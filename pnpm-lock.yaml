@@ -71,6 +71,9 @@ importers:
       '@svelteuidev/core':
         specifier: ^0.14.0
         version: 0.14.0(@svelteuidev/composables@0.14.0)(svelte@4.2.0)
+      '@tabler/icons-svelte':
+        specifier: ^2.34.0
+        version: 2.34.0(svelte@4.2.0)
       '@types/react':
         specifier: ^18.2.21
         version: 18.2.21
@@ -1983,6 +1986,19 @@ packages:
       '@stitches/core': 1.2.8
       '@svelteuidev/composables': 0.14.0(svelte@4.2.0)
       svelte: 4.2.0
+    dev: true
+
+  /@tabler/icons-svelte@2.34.0(svelte@4.2.0):
+    resolution: {integrity: sha512-/qLJWUo8jcn6wzYrcqtlwfjpvRDbBoDP53qQPU6ig/SzaaB5aFe7dJEl4YJ1m/c+UNgTXVbbDbZw7NqJLh1cxw==}
+    peerDependencies:
+      svelte: '>=3 <5'
+    dependencies:
+      '@tabler/icons': 2.34.0
+      svelte: 4.2.0
+    dev: true
+
+  /@tabler/icons@2.34.0:
+    resolution: {integrity: sha512-65GsJsT4ZBETWcdrNxbsjsbRoZvbVk3CcU2SafaElrzP1wpOeuAn9aELVEbxhdyZyP9dg2SCfgH6iAArJgp7lw==}
     dev: true
 
   /@tanstack/react-virtual@3.0.0-beta.54(react@18.2.0):
