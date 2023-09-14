@@ -4,7 +4,6 @@
 
   import { PortableText } from '@portabletext/svelte'
   import { Alert, Button, Loader, TextInput, Tooltip } from '@svelteuidev/core'
-  import { IconInfoCircle } from '@tabler/icons-svelte'
   import { createEventDispatcher } from 'svelte'
 
   import Grid from '$lib/components/layout/Grid.svelte'
@@ -129,7 +128,23 @@
               transitionDuration={200}
               label="This booking fee covers credit card processing costs and maintenance of the ticketing platform, so that 100% of the ticket price goes to the artists. Booking fees are regrettably not refundable."
               ><span class="info-icon">
-                <IconInfoCircle />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="icon icon-tabler icon-tabler-info-circle"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                  <path d="M12 9h.01" />
+                  <path d="M11 12h1v4h1" />
+                </svg>
               </span></Tooltip
             ></span
           >
