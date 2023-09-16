@@ -201,7 +201,7 @@ async function emailTickets(
   await sendEmail({
     orderConfirmation,
     receiptNumber: number,
-    receiptTime: string,
+    receiptTime: time,
     tickets,
     bookingDetails: {
       name: customer.name,
