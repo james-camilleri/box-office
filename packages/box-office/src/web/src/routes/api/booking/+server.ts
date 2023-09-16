@@ -46,7 +46,6 @@ export async function POST({ request, fetch }) {
       throw error(400, message)
     }
 
-    log.info('created time', created, new Date(created * 1000).toISOString())
     const time = new Date(created * 1000).toISOString()
     await finaliseBooking(bookingId, { number, time })
     await emailTickets(bookingId, { number, time }, store)
@@ -176,7 +175,7 @@ async function finaliseBooking(
     .patch(bookingId)
     .set({
       receiptNumber: number,
-      receiptTime: new Date(time * 1000).toISOString(),
+      receiptTime: time,
       status: BOOKING_STATUS.COMPLETE,
     })
     .commit()
