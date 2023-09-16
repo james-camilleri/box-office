@@ -87,6 +87,12 @@ export default defineType({
       readOnly: true,
     }),
     defineField({
+      name: 'receiptTime',
+      type: 'datetime',
+      readOnly: true,
+      hidden: true,
+    }),
+    defineField({
       name: 'source',
       description: 'Where the booking was made from (mostly used for filtering)',
       type: 'string',

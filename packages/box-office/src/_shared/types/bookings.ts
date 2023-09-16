@@ -51,6 +51,7 @@ export interface Booking extends SanityDocument {
   orderConfirmation: string
   transactionId: string
   receiptNumber: string
+  receiptTime: string
   source: string
   campaigns?: string[]
 }

@@ -32,6 +32,7 @@
   export let seats: Seat[]
   export let orderConfirmation: string
   export let receiptNumber: string
+  export let receiptTime: string
   export let priceTiers: PriceTier[]
   export let priceConfiguration: PriceConfiguration
   export let discount: Discount | undefined
@@ -152,7 +153,13 @@
     </table>
   </div>
   <div slot="footer">
-    <Footer {receiptNumber} />
+    <Footer
+      {receiptNumber}
+      receiptTime="{getZonedDate(receiptTime, event.timeZone)} {getZonedTime(
+        receiptTime,
+        event.timeZone,
+      )}"
+    />
   </div>
 </EmailWrapper>
 

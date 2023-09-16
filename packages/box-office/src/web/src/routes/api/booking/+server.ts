@@ -36,7 +36,7 @@ export async function POST({ request, fetch }) {
 
   if (event?.type === 'invoice.paid') {
     const invoice = event.data.object as Stripe.Invoice
-    const { metadata, number } = invoice
+    const { created, metadata, number } = invoice
 
     const bookingId = metadata?.booking
     if (!bookingId || !number) {
@@ -46,8 +46,9 @@ export async function POST({ request, fetch }) {
       throw error(400, message)
     }
 
-    await finaliseBooking(bookingId, number)
-    await emailTickets(bookingId, number, store)
+    const time = new Date(created * 1000).toISOString()
+    await finaliseBooking(bookingId, { number, time })
+    await emailTickets(bookingId, { number, time }, store)
     await log.flush()
 
     return new Response()
@@ -165,12 +166,16 @@ async function createBooking(bookingData: BookingData, store: DataStore) {
   log.info('Initiated booking reference updates')
 }
 
-async function finaliseBooking(bookingId: string, receiptNumber: string) {
+async function finaliseBooking(
+  bookingId: string,
+  { number, time }: { number: string; time: string },
+) {
   log.info(`Finalising booking ${bookingId}`)
   await sanity
     .patch(bookingId)
     .set({
-      receiptNumber,
+      receiptNumber: number,
+      receiptTime: new Date(time * 1000).toISOString(),
       status: BOOKING_STATUS.COMPLETE,
     })
     .commit()
@@ -178,7 +183,11 @@ async function finaliseBooking(bookingId: string, receiptNumber: string) {
   log.success(`Booking ${bookingId} finalised`)
 }
 
-async function emailTickets(bookingId: string, receiptNumber: string, store: DataStore) {
+async function emailTickets(
+  bookingId: string,
+  { number, time }: { number: string; time: string },
+  store: DataStore,
+) {
   const { customer, discount, orderConfirmation, seats, show, tickets } = (await sanity.fetch(
     BOOKING,
     { bookingId },
@@ -191,7 +200,8 @@ async function emailTickets(bookingId: string, receiptNumber: string, store: Dat
 
   await sendEmail({
     orderConfirmation,
-    receiptNumber,
+    receiptNumber: number,
+    receiptTime: string,
     tickets,
     bookingDetails: {
       name: customer.name,

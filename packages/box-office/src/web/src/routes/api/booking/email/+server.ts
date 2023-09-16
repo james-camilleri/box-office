@@ -34,6 +34,7 @@ export async function POST({ request, fetch }) {
       emailText,
       orderConfirmation: booking.orderConfirmation,
       receiptNumber: booking.receiptNumber,
+      receiptTime: booking.receiptTime,
       tickets: booking.tickets,
       calculateBookingFee: booking.source === 'website',
     })

@@ -11,6 +11,7 @@ import Email from './template/Email.svelte'
 interface SendEmailParams {
   orderConfirmation: string
   receiptNumber: string
+  receiptTime: string
   tickets: TicketDocument[]
   bookingDetails: {
     name: string
@@ -33,6 +34,7 @@ export async function sendEmail({
   tickets,
   orderConfirmation,
   receiptNumber,
+  receiptTime,
   calculateBookingFee = true,
 }: SendEmailParams) {
   const { name, email, date, show, discount } = bookingDetails
@@ -96,6 +98,7 @@ export async function sendEmail({
           emailText,
           calculateBookingFee,
           receiptNumber,
+          receiptTime,
         }),
       ),
     ),
