@@ -46,12 +46,18 @@ export async function POST({ request, fetch }) {
       throw error(400, message)
     }
 
-    const time = new Date(created * 1000).toISOString()
-    await finaliseBooking(bookingId, { number, time })
-    await emailTickets(bookingId, { number, time }, store)
-    await log.flush()
+    try {
+      const time = new Date(created * 1000).toISOString()
+      await finaliseBooking(bookingId, { number, time })
+      await emailTickets(bookingId, { number, time }, store)
+      await log.flush()
 
-    return new Response()
+      return new Response()
+    } catch (e) {
+      log.error(e)
+      await log.flushAll()
+      throw error(500)
+    }
   }
 
   const bookingData = await (event?.type
