@@ -49,7 +49,7 @@ export async function POST({ request, fetch }) {
     try {
       const time = new Date(created * 1000).toISOString()
       await finaliseBooking(bookingId, { number, time })
-      // await emailTickets(bookingId, { number, time }, store)
+      await emailTickets(bookingId, { number, time }, store)
       await log.flush()
 
       return new Response()
