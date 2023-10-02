@@ -38,9 +38,13 @@ export async function getStripeEvent(
   body: string,
 ): Promise<Stripe.Event | undefined> {
   const signature = headers.get('stripe-signature')
+  log.debug('Parsing stripe event')
+  log.debug(JSON.parse(body))
 
   // Use the connect webhook secret if the payload body includes the connect account ID.
   const secret = body.includes(PUBLIC_STRIPE_CONNECT_ID) ? CONNECT_WEBHOOK_SECRET : WEBHOOK_SECRET
+  log.debug('body.includes', PUBLIC_STRIPE_CONNECT_ID, body.includes(PUBLIC_STRIPE_CONNECT_ID))
+  log.debug('webhook secret', secret)
 
   if (signature) {
     try {

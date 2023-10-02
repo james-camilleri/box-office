@@ -27,6 +27,7 @@ import {
 export async function POST({ request, fetch }) {
   const body = await request.text()
   const event = await getStripeEvent(request.headers, body)
+  log.debug('got event from stripe')
 
   const store = new DataStore()
   store.set(
