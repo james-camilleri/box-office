@@ -4,8 +4,9 @@
 
   import { PortableText } from '@portabletext/svelte'
   import { Alert, Button, Loader, TextInput, Tooltip } from '@svelteuidev/core'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
 
+  import { page } from '$app/stores'
   import Grid from '$lib/components/layout/Grid.svelte'
   import { selection } from '$lib/components/seatplan/stores.js'
   import { getLineItem, getTotals } from '$shared/utils'
@@ -43,6 +44,15 @@
 
   // Reset discount if show is changed.
   $: show, resetDiscount()
+
+  // Apply discount immediately if present in the URL.
+  onMount(() => {
+    const discount = $page.url.searchParams.get('discount')
+    if (discount) {
+      discountCode = discount
+      applyDiscount()
+    }
+  })
 
   function resetDiscount() {
     discount = undefined
