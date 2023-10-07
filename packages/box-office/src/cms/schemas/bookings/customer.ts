@@ -44,7 +44,6 @@ export default defineType({
     defineField({
       name: 'stripeId',
       type: 'string',
-      validation: (Rule) => Rule.required(),
       readOnly: true,
     }),
     defineField({

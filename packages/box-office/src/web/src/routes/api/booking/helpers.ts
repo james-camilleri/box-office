@@ -103,12 +103,13 @@ export async function getCustomer({
   log.debug('Getting customer ID for', name, email)
   const customer = (await sanity.fetch(CUSTOMER, { email })) as Customer
 
-  if (customer) {
+  // Only return customer if corresponding stripe customer exists.
+  if (customer && customer.stripeId) {
     log.info(`Customer ID for ${email} found: ${customer._id}`)
     return customer
   }
 
-  log.debug(`Creating customer ${name} (${email})`)
+  log.debug(`${customer ? 'Creating' : 'Updating'} customer ${name} (${email})`)
 
   let stripeCustomer = (
     await stripe.customers.search({ query: `name: '${name}' AND email: '${email}'` })
@@ -123,15 +124,17 @@ export async function getCustomer({
     })
   }
 
-  const response = await sanity.create({
-    _type: 'customer',
-    name,
-    email,
-    phone,
-    stripeId: stripeCustomer.id,
-  })
+  const response = customer
+    ? await sanity.patch(customer._id).set({ stripeId: stripeCustomer.id }).commit<Customer>()
+    : await sanity.create({
+        _type: 'customer',
+        name,
+        email,
+        phone,
+        stripeId: stripeCustomer.id,
+      })
 
-  log.info('Created new customer', response._id)
+  log.info(customer ? 'Created new customer' : 'Updated customer', response._id)
   return response
 }
 
