@@ -3,7 +3,7 @@
 
   import { getContext } from 'svelte'
 
-  import { ALLOW_SELECTION, ROW_ID, SECTION_ID } from './context.js'
+  import { ALLOW_SELECTION, PRE_SELECTION, ROW_ID, SECTION_ID } from './context.js'
   import { pricing, selection, unavailable } from './stores.js'
 
   export let number: number | string
@@ -18,9 +18,9 @@
   const row: string = getContext(ROW_ID) ?? ''
   const id = [section, row, number].filter(Boolean).join('-')
 
+  const preSelection = getContext(PRE_SELECTION) as Writable<string[] | undefined>
   const allowSelection = getContext(ALLOW_SELECTION) as Writable<boolean>
 
-  $: selected = $selection.has(id)
   $: disabled =
     !$unavailable ||
     $unavailable.has(id) ||
@@ -31,6 +31,9 @@
     $pricing.get(`${section}-${row}`) ??
     $pricing.get(`${section}`) ??
     $pricing.get('default')
+
+  $: $preSelection?.includes(id) && toggleSelection()
+  $: selected = $selection.has(id)
 
   function toggleSelection() {
     if (disabled || !$allowSelection) {

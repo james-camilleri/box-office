@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Section from '$lib/components/seatplan/Section.svelte'
   import Row from '$lib/components/seatplan/Row.svelte'
   import Seat from '$lib/components/seatplan/Seat.svelte'
+  import Section from '$lib/components/seatplan/Section.svelte'
 
   const SEAT_SIZE = 40
   const AISLE_WIDTH = 120

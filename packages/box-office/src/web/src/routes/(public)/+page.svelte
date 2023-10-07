@@ -12,6 +12,7 @@
   const { priceTiers, priceConfiguration } = data.ticketConfig
 
   let unavailableSeats: string[] | undefined = undefined
+  let initialSelection: string[] | undefined = undefined
   let loading = false
   let allowSelection = true
 
@@ -30,10 +31,24 @@
       loading = true
     }, 500)
 
-    fetch(`${$page.url.origin}/api/seats/${$selectedShowId}`)
+    const urlSeats = $page.url.searchParams.get('seats')
+    const urlHash = $page.url.searchParams.get('hash')
+
+    let url = `${$page.url.origin}/api/seats/${$selectedShowId}`
+    if (urlSeats && urlHash) {
+      url += `?seats=${urlSeats}&hash=${urlHash}`
+    }
+
+    fetch(url)
       .then((response) => response.json())
       .then(({ unavailable }) => {
         unavailableSeats = unavailable
+
+        // Pre-select seats in URL, if they're available.
+        if (urlSeats) {
+          initialSelection = urlSeats.split(',').filter((seat) => !unavailableSeats?.includes(seat))
+        }
+
         loading = false
         clearTimeout(timeout)
       })
@@ -57,6 +72,7 @@
     {/if}
     <SeatSelection
       showId={$selectedShowId}
+      {initialSelection}
       {priceTiers}
       {priceConfiguration}
       {unavailableSeats}
