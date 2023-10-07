@@ -129,7 +129,7 @@
       },
       body: JSON.stringify({
         name,
-        email,
+        email: email.trim(),
         phone,
         show,
         seatIds: seats.map((seat) => seat._id),
@@ -154,7 +154,7 @@
         payment_method_data: {
           billing_details: {
             name,
-            email,
+            email: email.trim(),
             phone,
           },
         },
