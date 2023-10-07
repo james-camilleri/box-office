@@ -2,14 +2,13 @@ import type { Colour, ConfigurationFull, Discount, Seat, WebConfigurationRaw } f
 import type { RequestHandler } from './$types.js'
 
 import { json } from '@sveltejs/kit'
-import Stripe from 'stripe'
 
-import { STRIPE_LIVE_SECRET_KEY, STRIPE_TEST_SECRET_KEY } from '$env/static/private'
-import { PUBLIC_USE_STRIPE_TEST, PUBLIC_STRIPE_CONNECT_ID } from '$env/static/public'
+import { PUBLIC_STRIPE_CONNECT_ID } from '$env/static/public'
 import { WEBSITE_CONFIGURATION } from '$shared/queries'
 import { getSeatPrice, getTotals } from '$shared/utils'
 
 import { sanity } from '../api/sanity.js'
+import { stripe } from '../api/stripe.js'
 
 interface Payload {
   seats: Seat[]
@@ -17,12 +16,6 @@ interface Payload {
   discountCode?: string
   campaigns?: string[]
 }
-
-const API_KEY =
-  import.meta.env.PROD && PUBLIC_USE_STRIPE_TEST !== 'true'
-    ? STRIPE_LIVE_SECRET_KEY
-    : STRIPE_TEST_SECRET_KEY
-const stripe = new Stripe(API_KEY)
 
 export const POST: RequestHandler = async (event) => {
   const { request, fetch } = event
