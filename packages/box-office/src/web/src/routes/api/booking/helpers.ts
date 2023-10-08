@@ -8,7 +8,7 @@ import { calculateTotal, log } from '$shared/utils'
 
 import { REQUEST_KEY, type DataStore } from '../data-store.js'
 import { sanity } from '../sanity.js'
-import { stripe } from '../stripe.js'
+import { createCorrespondingStripeCustomer, stripe } from '../stripe.js'
 
 export interface BookingData {
   customer: { name: string; email: string; phone: string }
@@ -111,27 +111,22 @@ export async function getCustomer({
 
   log.debug(`${customer ? 'Creating' : 'Updating'} customer ${name} (${email})`)
 
-  let stripeCustomer = (
+  const stripeCustomer = (
     await stripe.customers.search({ query: `name: '${name}' AND email: '${email}'` })
   ).data[0]
 
-  if (!stripeCustomer) {
-    log.debug('No existing Stripe customer, creating new entity')
-    stripeCustomer = await stripe.customers.create({
-      name,
-      email,
-      phone,
-    })
-  }
+  const stripeId = stripeCustomer
+    ? stripeCustomer.id
+    : await createCorrespondingStripeCustomer(customer)
 
   const response = customer
-    ? await sanity.patch(customer._id).set({ stripeId: stripeCustomer.id }).commit<Customer>()
+    ? await sanity.patch(customer._id).set({ stripeId }).commit<Customer>()
     : await sanity.create({
         _type: 'customer',
         name,
         email,
         phone,
-        stripeId: stripeCustomer.id,
+        stripeId,
       })
 
   log.info(customer ? 'Created new customer' : 'Updated customer', response._id)

@@ -58,3 +58,21 @@ export async function getStripeEvent(
     }
   }
 }
+
+export async function createCorrespondingStripeCustomer(customer: {
+  name: string
+  email: string
+  phone: string
+}): Promise<string> {
+  const { name, email, phone } = customer
+
+  log.debug('Creating new Stripe customer')
+
+  const stripeCustomer = await stripe.customers.create({
+    name,
+    email,
+    phone,
+  })
+
+  return stripeCustomer.id
+}

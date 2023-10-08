@@ -5,7 +5,7 @@ import { error } from '@sveltejs/kit'
 import { getLineItem, getTotals, log } from '$shared/utils'
 
 import { DataStore, REQUEST_KEY } from '../data-store.js'
-import { stripe } from '../stripe.js'
+import { createCorrespondingStripeCustomer, stripe } from '../stripe.js'
 
 /*
   This endpoint should be called as a webhook from sanity with the following projection:
@@ -48,8 +48,13 @@ export async function POST({ request, fetch }) {
 }
 
 async function createInvoice(booking: Booking, store: DataStore) {
-  const customer = booking.customer.stripeId
   const currency = 'EUR'
+  let customer = booking.customer.stripeId
+
+  // Customer does not have a Stripe ID, possibly because the record was created manually.
+  if (!customer) {
+    customer = await createCorrespondingStripeCustomer(booking.customer)
+  }
 
   const { vat5, vat0 } = await getTaxRates()
   const { id } = await stripe.invoices.create({
