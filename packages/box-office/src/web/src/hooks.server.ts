@@ -3,7 +3,7 @@ import { createTransport } from 'nodemailer'
 
 import {
   EMAIL,
-  REPORT_EMAILS,
+  LOG_EMAILS,
   MAILJET_API_KEY,
   MAILJET_SECRET_KEY,
   SLACK_WEBHOOK,
@@ -22,7 +22,7 @@ const transport = createTransport({
   secure: true,
 })
 
-const emailPlugins = REPORT_EMAILS?.split(',').map((email) => {
+const emailPlugins = LOG_EMAILS?.split(',').map((email) => {
   const plugin = new EmailPlugin(transport, { from: EMAIL, to: email })
   plugin.level = LOG_LEVEL.ERROR
 
