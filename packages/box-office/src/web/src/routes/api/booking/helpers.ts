@@ -35,9 +35,11 @@ export async function parseStripeChargeEvent(event: Stripe.Event): Promise<Booki
   }
 
   if (await idExists(id)) {
-    log.warn(`Transaction ID "${id}" already exists in Sanity database.`)
+    log.error(`Transaction ID "${id}" already exists in Sanity database.`)
     await log.flush()
-    throw error(409, 'Duplicate transaction')
+
+    // Don't send a 4xx response to stop Stripe from re-spamming the endpoint.
+    throw error(202, 'Duplicate transaction')
   }
 
   const show = metadata.show as string
