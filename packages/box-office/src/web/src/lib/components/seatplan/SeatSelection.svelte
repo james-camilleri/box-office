@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { PriceConfiguration, PriceTier, Seat } from '$shared/types'
+  import type { PriceConfiguration, PriceTier } from '$shared/types'
 
   import SeatPlan from 'seat-plan'
   import { setContext } from 'svelte'
-  import { readable, writable } from 'svelte/store'
+  import { writable } from 'svelte/store'
   import { ZoomSvg } from 'svelte-parts/zoom'
 
   import PriceTiers from './PriceTiers.svelte'

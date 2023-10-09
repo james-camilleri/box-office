@@ -1,9 +1,13 @@
 <script lang="ts">
+  import type { Seat } from '$shared/types'
   import type { PageData } from './$types.js'
 
+  import { browser } from '$app/environment'
+  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import Grid from '$lib/components/layout/Grid.svelte'
   import SeatSelection from '$lib/components/seatplan/SeatSelection.svelte'
+  import { selection } from '$lib/components/seatplan/stores.js'
 
   import Cart from './components/Cart.svelte'
   import { selectedShowId } from './state/selected-show.js'
@@ -20,9 +24,12 @@
     allowSelection = false
   }
 
-  function onRefresh() {
-    fetchSeatData()
+  function refresh() {
+    $selection = new Map<string, Seat>()
     unavailableSeats = undefined
+    initialSelection = undefined
+
+    fetchSeatData()
     allowSelection = true
   }
 
@@ -49,18 +56,17 @@
           initialSelection = urlSeats.split(',').filter((seat) => !unavailableSeats?.includes(seat))
         }
 
+        // Reset any query parameters after they've been used/applied once.
+        if (browser) {
+          goto('?')
+        }
+
         loading = false
         clearTimeout(timeout)
       })
   }
 
-  $: {
-    unavailableSeats = undefined
-
-    if ($selectedShowId) {
-      fetchSeatData()
-    }
-  }
+  $: $selectedShowId && refresh()
 </script>
 
 <Grid columns={['3fr', 'minmax(auto, 1fr)']} gap="0">
@@ -85,7 +91,7 @@
     {priceConfiguration}
     text={data.uiConfig.text}
     on:checkout-start={onCheckoutStart}
-    on:refresh={onRefresh}
+    on:refresh={refresh}
   />
 </Grid>
 
