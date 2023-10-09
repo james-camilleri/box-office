@@ -117,7 +117,7 @@ export async function getCustomer({
 
   const stripeId = stripeCustomer
     ? stripeCustomer.id
-    : await createCorrespondingStripeCustomer(customer)
+    : await createCorrespondingStripeCustomer({ name, email, phone })
 
   const response = customer
     ? await sanity.patch(customer._id).set({ stripeId }).commit<Customer>()
