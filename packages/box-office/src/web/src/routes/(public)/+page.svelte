@@ -56,9 +56,13 @@
           initialSelection = urlSeats.split(',').filter((seat) => !unavailableSeats?.includes(seat))
         }
 
-        // Reset any query parameters after they've been used/applied once.
+        // Reset any selection query parameters after they've been used/applied once.
         if (browser) {
-          goto('?')
+          const searchParams = new URLSearchParams($page.url.searchParams.toString())
+          searchParams.delete('seats')
+          searchParams.delete('show')
+          searchParams.delete('hash')
+          goto(`?${searchParams.toString()}`)
         }
 
         loading = false
