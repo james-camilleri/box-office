@@ -72,7 +72,13 @@ export const baseConfig = {
       }
 
       if (['booking'].includes(context.schemaType)) {
-        return [CreateBooking, CancelBooking, ResendEmail]
+        const customActions = [CreateBooking, CancelBooking, ResendEmail]
+
+        if (process.env.NODE_ENV === 'development') {
+          customActions.push(...actions)
+        }
+
+        return customActions
       }
 
       if (['ticket'].includes(context.schemaType)) {
