@@ -33,6 +33,10 @@ export default defineType({
             const customerExists = await client.fetch(CUSTOMER_EXISTS, { email })
 
             return !customerExists || 'A customer with this email address already exists'
+          })
+          .custom((email) => {
+            const trimmed = email?.trim()
+            return email === trimmed || 'Extra leading/trailing spaces'
           }),
     }),
     defineField({
