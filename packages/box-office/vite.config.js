@@ -44,6 +44,10 @@ export default defineConfig({
         'svelte-preprocess',
         'vite',
       ],
+      // pdfmake, see https://pdfmake.github.io/docs/0.1/getting-started/client-side/
+      moduleContext: {
+        './node_modules/pdfmake/build/vfs_fonts.js': 'window',
+      },
     },
   },
   plugins: [
