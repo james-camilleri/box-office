@@ -35,6 +35,7 @@ export default defineConfig({
         '@sveltejs/kit',
         '@sveltejs/kit/vite',
         'nodemailer',
+        'pdfmake',
         'react',
         'react/jsx-runtime',
         'sanity',
