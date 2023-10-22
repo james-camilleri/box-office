@@ -1,6 +1,6 @@
 {
   "name": "@the-gods/box-office",
-  "version": "1.0.0-alpha.74",
+  "version": "1.0.0-alpha.75",
   "type": "module",
   "exports": {
     "./cms/config": {
@@ -93,6 +93,7 @@
     "nanoid": "^4.0.2",
     "nodemailer": "^6.9.5",
     "parse-full-name": "^1.2.6",
+    "pdfmake": "^0.2.7",
     "prettier": "^3.0.3",
     "qr-scanner": "^1.4.2",
     "qrcode": "^1.5.3",
