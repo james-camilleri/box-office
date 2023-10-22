@@ -6,6 +6,7 @@ import { deskTool } from 'sanity/desk'
 import { CancelBooking } from './desk/actions/cancel-booking.js'
 import { CreateBooking } from './desk/actions/create-booking.js'
 import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
+import { GenerateTicketPdf } from './desk/actions/generate-ticket-pdf.js'
 import { PublishConfig } from './desk/actions/publish-config.js'
 import { ResendEmail } from './desk/actions/resend-email.js'
 import { structure } from './desk/structure.js'
@@ -72,7 +73,7 @@ export const baseConfig = {
       }
 
       if (['booking'].includes(context.schemaType)) {
-        const customActions = [CreateBooking, CancelBooking, ResendEmail]
+        const customActions = [CreateBooking, CancelBooking, ResendEmail, GenerateTicketPdf]
 
         if (process.env.NODE_ENV === 'development') {
           customActions.push(...actions)
