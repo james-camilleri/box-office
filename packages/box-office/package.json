@@ -1,6 +1,6 @@
 {
   "name": "@the-gods/box-office",
-  "version": "1.0.0-alpha.75",
+  "version": "1.0.0-alpha.76",
   "type": "module",
   "exports": {
     "./cms/config": {
