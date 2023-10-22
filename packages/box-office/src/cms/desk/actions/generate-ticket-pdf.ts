@@ -4,8 +4,7 @@ import { API_VERSION } from '$shared/constants'
 import { formatShowDateTime } from '$shared/utils'
 
 import * as pdfMake from 'pdfmake/build/pdfmake'
-import * as pdfFonts from 'pdfmake/build/vfs_fonts'
-pdfMake.vfs = pdfFonts.pdfMake.vfs
+import 'pdfmake/build/vfs_fonts'
 
 import { DocumentPdfIcon } from '@sanity/icons'
 import { useToast } from '@sanity/ui'
