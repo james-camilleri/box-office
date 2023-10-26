@@ -114,7 +114,9 @@ export async function getCustomer({
   log.debug(`${customer ? 'Creating' : 'Updating'} customer ${name} (${email})`)
 
   const stripeCustomer = (
-    await stripe.customers.search({ query: `name: '${name}' AND email: '${email}'` })
+    await stripe.customers.search({
+      query: `name: "${name.replace('"', '')}" AND email: "${email.replace('"', '')}"`,
+    })
   ).data[0]
 
   const stripeId = stripeCustomer
