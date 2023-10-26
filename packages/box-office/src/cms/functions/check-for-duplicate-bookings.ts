@@ -35,7 +35,7 @@ async function getDuplicateBookings(shows: Show[]) {
   const duplicates = shows.reduce((duplicates, show) => {
     duplicates.set(show, new Set<string>())
     return duplicates
-  }, new Map<{ _id: string; date: string }, Set<string>>())
+  }, new Map<{ _id: string; date: string }, Set<string>>()) as Map<{ _id: string; date: string }, Set<string>>()
 
   let lastSeat: string | undefined = undefined
   shows.forEach((show, i) => {
@@ -58,7 +58,7 @@ async function createReport() {
   const duplicates = await getDuplicateBookings(
     config.shows.sort((showA, showB) => showA.date.localeCompare(showB.date)),
   )
-  const noOfDuplicates = Object.values(duplicates).reduce(
+  const noOfDuplicates = [...duplicates.values()].reduce(
     (noOfDuplicates, duplicates) => noOfDuplicates + duplicates.size,
     0,
   )
