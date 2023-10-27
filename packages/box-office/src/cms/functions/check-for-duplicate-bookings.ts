@@ -32,10 +32,16 @@ async function getDuplicateBookings(shows: Show[]) {
   )) as string[][]
   const bookedSeatsSorted = bookedSeats.map((seats) => seats.sort())
 
-  const duplicates = shows.reduce((duplicates, show) => {
-    duplicates.set(show, new Set<string>())
-    return duplicates
-  }, new Map<{ _id: string; date: string }, Set<string>>()) as Map<{ _id: string; date: string }, Set<string>>()
+  const duplicates = shows.reduce(
+    (duplicates, show) => {
+      duplicates.set(show, new Set<string>())
+      return duplicates
+    },
+    new Map<{ _id: string; date: string }, Set<string>>() as Map<
+      { _id: string; date: string },
+      Set<string>
+    >,
+  )
 
   let lastSeat: string | undefined = undefined
   shows.forEach((show, i) => {
