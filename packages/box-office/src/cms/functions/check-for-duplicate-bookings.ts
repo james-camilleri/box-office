@@ -1,4 +1,4 @@
-import { Handler, schedule } from '@netlify/functions'
+import { Handler } from '@netlify/functions'
 import { createClient } from '@sanity/client'
 import nodemailer from 'nodemailer'
 
