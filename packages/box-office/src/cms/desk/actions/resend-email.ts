@@ -2,7 +2,7 @@ import type { BookingDocument } from '$shared/types'
 
 import { EnvelopeIcon } from '@sanity/icons'
 import { useToast } from '@sanity/ui'
-import { DocumentActionDescription, DocumentActionProps, useClient } from 'sanity'
+import { DocumentActionDescription, DocumentActionProps } from 'sanity'
 
 const EMAIL_API_URL = import.meta.env.PROD
   ? '/.netlify/functions/resend-email'

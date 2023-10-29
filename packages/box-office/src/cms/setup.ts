@@ -41,7 +41,7 @@ function isValidSeatingConfig(config: any): config is SeatingPlan {
             Array.isArray(seat) &&
             ((seat.length === 2 && isArrayOfNumbers(seat)) || // Start and end count, e.g. A: [3, 17]
               (seat.length > 0 && isArrayOfStrings(seat)))
-          ) // Individually names seats, e.g. ['TABLE-1-2', 'TABLE-2-3']
+          ) // Individually named seats, e.g. ['TABLE-1-2', 'TABLE-2-3']
         )
       ) {
         return false
