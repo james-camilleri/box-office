@@ -1,3 +1,5 @@
+const LOCALE = 'en-GB'
+
 export function getAllTimeZones(): string[] {
   return Intl.supportedValuesOf('timeZone')
 }
@@ -7,20 +9,18 @@ export function getUserTimeZone() {
 }
 
 export function getZonedDate(dateTime: string, timeZone: string) {
-  return new Intl.DateTimeFormat(undefined, { dateStyle: 'full', timeZone }).format(
-    new Date(dateTime),
-  )
+  return new Intl.DateTimeFormat(LOCALE, { dateStyle: 'full', timeZone }).format(new Date(dateTime))
 }
 
 export function getZonedTime(dateTime: string, timeZone: string) {
-  return new Intl.DateTimeFormat(undefined, { timeStyle: 'short', timeZone }).format(
+  return new Intl.DateTimeFormat(LOCALE, { timeStyle: 'short', timeZone }).format(
     new Date(dateTime),
   )
 }
 
 export function formatShowDateTime(dateString: string, timeZone: string | undefined) {
   const date = new Date(dateString)
-  return `${date.toLocaleDateString()} ${date
+  return `${date.toLocaleDateString(LOCALE)} ${date
     .toLocaleTimeString(undefined, { timeZone })
     .split(':')
     .slice(0, 2)
@@ -29,7 +29,7 @@ export function formatShowDateTime(dateString: string, timeZone: string | undefi
 
 export function formatShowDateTimeLong(dateString: string, timeZone: string | undefined) {
   const date = new Date(dateString)
-  return new Intl.DateTimeFormat(undefined, {
+  return new Intl.DateTimeFormat(LOCALE, {
     weekday: 'short',
     year: 'numeric',
     month: 'numeric',
