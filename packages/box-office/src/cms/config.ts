@@ -3,6 +3,7 @@ import { visionTool } from '@sanity/vision'
 import { DocumentActionComponent } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
+import { CallInvoiceWebhook } from './desk/actions/call-invoice-webhook.js'
 import { CancelBooking } from './desk/actions/cancel-booking.js'
 import { CreateBooking } from './desk/actions/create-booking.js'
 import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
@@ -76,7 +77,7 @@ export const baseConfig = {
         const customActions = [CreateBooking, CancelBooking, ResendEmail, GenerateTicketPdf]
 
         if (process.env.NODE_ENV === 'development') {
-          customActions.push(...actions)
+          customActions.push(CallInvoiceWebhook, ...actions)
         }
 
         return customActions
