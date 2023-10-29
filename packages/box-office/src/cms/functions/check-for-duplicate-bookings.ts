@@ -73,10 +73,12 @@ async function createReport() {
     return
   }
 
-  const text = `Duplicate bookings:\n\n${Array.from(duplicates).map(
-    ([show, duplicates]) =>
-      `${formatShowDateTime(show.date, config.timeZone)}: ${Array.from(duplicates).join(', ')}\n`,
-  )}`
+  const text = `Duplicate bookings:\n\n${Array.from(duplicates)
+    .map(
+      ([show, duplicates]) =>
+        `${formatShowDateTime(show.date, config.timeZone)}: ${Array.from(duplicates).join(', ')}\n`,
+    )
+    .join('')}`
 
   log.error(text)
 
