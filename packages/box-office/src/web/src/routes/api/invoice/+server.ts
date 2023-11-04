@@ -23,6 +23,9 @@ import { createCorrespondingStripeCustomer, stripe } from '../stripe.js'
 */
 
 export async function POST({ request, fetch }) {
+  log.debug('Invoice request from:', request.headers.get('host'))
+  log.debug('Request headers:', request.headers.toString())
+
   try {
     const booking = (await request.json()) as Booking
 
