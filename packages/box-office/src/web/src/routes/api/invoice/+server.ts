@@ -22,11 +22,11 @@ import { createCorrespondingStripeCustomer, stripe } from '../stripe.js'
   }
 */
 
-export async function POST({ request, fetch }) {
-  // log.debug('Invoice request from:', request.headers.get('host'))
+export async function POST({ request, fetch, getClientAddress }) {
+  log.debug('Invoice request from:', getClientAddress())
   log.debug(
     'Request headers:\n',
-    [...request.headers.entries()].map((key, value) => `${key}: ${value}`).join('\n'),
+    [...request.headers.entries()].map(([key, value]) => `${key}: ${value}`).join('\n'),
   )
 
   try {
