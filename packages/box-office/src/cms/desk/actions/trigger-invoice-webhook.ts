@@ -1,12 +1,13 @@
 import type { BookingDocument } from '$shared/types'
 
-import { EnvelopeIcon } from '@sanity/icons'
+import { ErrorOutlineIcon } from '@sanity/icons'
 import { useToast } from '@sanity/ui'
 import { DocumentActionDescription, DocumentActionProps, useClient } from 'sanity'
 import { API_VERSION } from '$shared/constants'
 
-const { FRONT_END_URL } = process.env
-const INVOICE_WEBHOOK_URL = `https://tickets.arthaus.mt/api/invoice`
+const INVOICE_WEBHOOK_URL = import.meta.env.PROD
+  ? '/.netlify/functions/trigger-invoice-webhook'
+  : 'http://localhost:5173/api/invoice'
 
 const bookingQuery = `*[_id == $id][0]{
   ...,
@@ -21,7 +22,7 @@ const bookingQuery = `*[_id == $id][0]{
 }
 `
 
-export function CallInvoiceWebhook({
+export function TriggerInvoiceWebhook({
   published,
   onComplete,
 }: DocumentActionProps): DocumentActionDescription {
@@ -31,7 +32,7 @@ export function CallInvoiceWebhook({
   return {
     disabled: !published || !published.valid,
     label: 'Call invoice webhook',
-    icon: EnvelopeIcon,
+    icon: ErrorOutlineIcon,
     onHandle: async () => {
       const { _id } = published as BookingDocument
       const booking = await client.fetch(bookingQuery, { id: _id })

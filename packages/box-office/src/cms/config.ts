@@ -3,13 +3,13 @@ import { visionTool } from '@sanity/vision'
 import { DocumentActionComponent } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
-import { CallInvoiceWebhook } from './desk/actions/call-invoice-webhook.js'
 import { CancelBooking } from './desk/actions/cancel-booking.js'
 import { CreateBooking } from './desk/actions/create-booking.js'
 import { InvalidateTicket } from './desk/actions/invalidate-ticket.js'
 import { GenerateTicketPdf } from './desk/actions/generate-ticket-pdf.js'
 import { PublishConfig } from './desk/actions/publish-config.js'
 import { ResendEmail } from './desk/actions/resend-email.js'
+import { TriggerInvoiceWebhook } from './desk/actions/trigger-invoice-webhook.js'
 import { structure } from './desk/structure.js'
 import { schemaTypes } from './schemas/index.js'
 import { CustomToolMenu } from './tools/custom-tool-menu/index.jsx'
@@ -74,11 +74,17 @@ export const baseConfig = {
       }
 
       if (['booking'].includes(context.schemaType)) {
-        const customActions = [CreateBooking, CancelBooking, ResendEmail, GenerateTicketPdf]
+        const customActions = [
+          CreateBooking,
+          CancelBooking,
+          ResendEmail,
+          GenerateTicketPdf,
+          TriggerInvoiceWebhook,
+        ]
 
-        if (process.env.NODE_ENV === 'development') {
-          customActions.push(CallInvoiceWebhook, ...actions)
-        }
+        // if (process.env.NODE_ENV === 'development') {
+        //   customActions.push(...actions)
+        // }
 
         return customActions
       }
