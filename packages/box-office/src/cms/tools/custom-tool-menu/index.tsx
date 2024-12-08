@@ -57,8 +57,8 @@ function SalesSummary() {
     client.fetch(NUMBER_OF_SEATS).then(setNoOfSeats)
   }, [client])
 
-  const priceConfiguration = config && JSON.parse(config.priceConfiguration)
-  const priceTiers = config && config.priceTiers
+  const priceConfiguration = config?.priceConfiguration && JSON.parse(config.priceConfiguration)
+  const priceTiers = config?.priceTiers && config.priceTiers
 
   const bookingsWithPrices = useMemo(
     () => addBookingPrices(bookings, priceConfiguration, priceTiers),

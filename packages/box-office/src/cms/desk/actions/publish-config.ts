@@ -13,12 +13,12 @@ import { Configuration } from '$shared/types'
 interface ConfigurationPage extends SanityDocument, Partial<Configuration> {}
 
 function generateCompositePricingConfiguration(draft: ConfigurationPage | null) {
-  if (!draft || !draft.priceConfiguration) {
+  if (!draft || (!draft.defaultPrice && !draft.priceConfiguration)) {
     console.error('Missing data in draft document for publishing.')
-    return ''
+    return '{}'
   }
 
-  const configuration = draft.priceConfiguration
+  const configuration = draft.priceConfiguration ?? []
   const composite: Record<string, Record<string, string>> = {}
 
   configuration.forEach((config) => {
@@ -38,7 +38,11 @@ function generateCompositePricingConfiguration(draft: ConfigurationPage | null) 
 
   const defaultTier = draft.defaultPrice && draft.defaultPrice._ref
   if (defaultTier) {
-    composite['default']['default'] = defaultTier
+    if (!composite.default) {
+      composite.default = {}
+    }
+
+    composite.default.default = defaultTier
   }
 
   return JSON.stringify(composite)
