@@ -16,25 +16,26 @@
       "DOM.Iterable"
     ],
     "moduleResolution": "nodenext",
-    "module": "esnext",
+    "module": "nodenext",
     "target": "esnext",
     "jsx": "react-jsx",
     "paths": {
       "$shared/constants": [
-        "./_shared/constants/index.ts"
+        "./src/_shared/constants/index.ts"
       ],
       "$shared/queries": [
-        "./_shared/queries/index.ts"
+        "./src/_shared/queries/index.ts"
       ],
       "$shared/types": [
-        "./_shared/types/index.ts"
+        "./src/_shared/types/index.ts"
       ],
       "$shared/utils": [
-        "./_shared/utils/index.ts"
+        "./src/_shared/utils/index.ts"
       ]
     }
   },
   "exclude": [
     "node_modules/**",
+    "dist"
   ],
 }
